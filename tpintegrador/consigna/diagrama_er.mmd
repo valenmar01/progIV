@@ -1,0 +1,65 @@
+erDiagram
+    usuarios ||--o{ estudiantes : "registra/modifica"
+    usuarios ||--o{ cursos : "registra/modifica"
+    usuarios ||--o{ inscripciones : "registra/modifica"
+    
+    cursos_estados ||--o{ cursos : "clasifica"
+    inscripciones_estados ||--o{ inscripciones : "clasifica"
+    
+    estudiantes ||--o{ inscripciones : "posee"
+    cursos ||--o{ inscripciones : "contiene"
+
+    usuarios {
+        int id_usuario PK
+        varchar apellido
+        varchar nombre
+        varchar nombre_usuario
+        varchar contrasenia
+        boolean activo
+    }
+
+    estudiantes {
+        int id_estudiante PK
+        varchar documento
+        varchar apellido
+        varchar nombres
+        varchar email
+        date fecha_nacimiento
+        boolean activo
+        int id_usuario_modificacion FK
+        datetime fecha_hora_modificacion
+    }
+
+    cursos {
+        int id_curso PK
+        varchar nombre
+        text descripcion
+        date fecha_inicio
+        int cantidad_horas
+        int inscriptos_max
+        int id_curso_estado FK
+        int id_usuario_modificacion FK
+        datetime fecha_hora_modificacion
+    }
+
+    inscripciones {
+        int id_inscripcion PK
+        int id_curso FK
+        int id_estudiante FK
+        datetime fecha_hora_inscripcion
+        int id_inscripcion_estado FK
+        int id_usuario_modificacion FK
+        datetime fecha_hora_modificacion
+    }
+
+    cursos_estados {
+        int id_curso_estado PK
+        varchar descripcion
+        boolean es_activo
+    }
+
+    inscripciones_estados {
+        int id_inscripcion_estado PK
+        varchar descripcion
+        boolean es_activo
+    }
