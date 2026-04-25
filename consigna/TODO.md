@@ -2,7 +2,7 @@
 
 # 👨‍🎓Agregarse como autores en los README.md 👨‍🎓
 
-## 🔐 Login (VALE)
+## 🔐 Login (VALENTINA)
 
 - [ ] Crear `login.html`
 - [ ] Crear `login.css`
@@ -28,7 +28,7 @@
 
 ---
 
-## 📚 Cursos (TOMI)
+## 📚 Cursos (TOMAS)
 
 - [ ] Crear `cursos.html`
 - [ ] Crear `cursos.js`
@@ -36,7 +36,7 @@
 
 ---
 
-## 📝 Inscripciones (MAGA)
+## 📝 Inscripciones (MAGALI)
 
 - [ ] Crear `inscripciones.html`
 - [ ] Crear `inscripciones.js`
