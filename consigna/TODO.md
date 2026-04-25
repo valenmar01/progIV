@@ -2,7 +2,7 @@
 
 # 👨‍🎓Agregarse como autores en los README.md 👨‍🎓
 
-## 🔐 Login
+## 🔐 Login (VALE)
 
 - [ ] Crear `login.html`
 - [ ] Crear `login.css`
@@ -11,7 +11,7 @@
 
 ---
 
-## 📊 Dashboard
+## 📊 Dashboard (IGNACIO)
 
 - [ ] Crear `dashboard.html`
 - [ ] Crear `dashboard.css`
@@ -19,7 +19,7 @@
 
 ---
 
-## 👨‍🎓 Estudiantes
+## 👨‍🎓 Estudiantes (CLAUDIO)
 
 - [ ] Crear `estudiantes.html`
 - [ ] Crear `estudiantes.js`
@@ -28,7 +28,7 @@
 
 ---
 
-## 📚 Cursos
+## 📚 Cursos (TOMI)
 
 - [ ] Crear `cursos.html`
 - [ ] Crear `cursos.js`
@@ -36,7 +36,7 @@
 
 ---
 
-## 📝 Inscripciones
+## 📝 Inscripciones (MAGA)
 
 - [ ] Crear `inscripciones.html`
 - [ ] Crear `inscripciones.js`
