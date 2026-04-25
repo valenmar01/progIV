@@ -13,7 +13,6 @@ body {
 
 h1 {
     color: #040133;
-    text-align: center;
     margin-top: 20px;
 }
 
@@ -29,16 +28,20 @@ p {
     margin-top: 5px;
 }
 
-button {
+/*button {
     background-color: #040133;
-    color: #ffffff;
+    color: #ffffff; 
     border: none;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
     margin-top: 20px;
-}
+}*/
 
 button:hover {
     background-color: #260672;
+}
+
+.maga {
+    background-color: green;    
 }
