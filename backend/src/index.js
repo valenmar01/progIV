@@ -1,18 +1,24 @@
 const express = require('express');
+const morgan = require('morgan');
+const cors = require('cors');
+
+
+//initializations
 const app = express();
-const PORT = process.env.PORT || 3000;
 
+//middleware
+app.use(express.urlencoded({ extended: false }));
 
+//settings
+app.set('port', process.env.PORT || 3000);
+
+//middlewares
+app.use(cors());
+app.use(morgan('dev'));
 
 //routes
 app.use(require('./routes/estudiantes.routes'));
 
-
-//ejemplo de ruta
-app.get('/', (req, res) => {
-    res.send('Hello, World!');
-});
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+app.listen((app.get('port')), () => {
+    console.log(`Server is running on port ${app.get('port')}`);
 });
