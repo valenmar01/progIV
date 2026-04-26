@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-     <link= href="style.css" rel="stylesheet">
+     <link rel="stylesheet" href="css/inscripciones.css">    
     <title>Inscripciones</title>
 </head>
 <body>
@@ -12,28 +12,31 @@
         <h1>Inscripciones</h1>
     <p>Inscripciones</p>
     <p>Aca se hacen Inscripciones</p>
+    </header>
+        <main>
         <h2>Cursos disponibles: </h2>
         <table border="1">
             <tr> 
                 <th>Estudiante</th>
                 <th>Curso</th>
+                <th>Acciones</th>
                 <th>Fecha</th>
                 <th>Estado</th>
             </tr>
             <tr>
                 <td>Juan Pérez</td>
-                <td>Matemáticas</td>
+                <td>Matemáticas</td> <td><button>Inscribirme</button></td>
                 <td>2026-05-15</td>
                 <td>confirmado</td>
             </tr>
             <tr>
                 <td>María García</td>
-                <td>Física</td>
+                <td>Física</td><td><button>Inscribirme</button></td>
                 <td>2026-05-14</td>
                 <td>confirmado</td>
             </tr>
         </table>
-    <button class= "maga" type="button">Inscripcion a cursos</button>
-    </header>
+        </main>
+    <button class= "maga btn-primary btn" type="button">Inscripcion a cursos</button>
 </body>
 </html>
