@@ -1,11 +1,28 @@
 /* css/dashboard.css */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-/* Variables para mantener la consistencia (Unidad 1-07) */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: #4f70a1;
+}
+
+h1 {
+    color: rgb(13, 13, 29);
+    margin: 0;
+    padding: 10px 100px;
+}
+
+/* Variables para mantener la consistencia */
 :root {
     --color-blue: #3498db;
     --color-green: #2ecc71;
-    --bg-card: #ffffff;
-    --shadow: 0 4px 6px rgba(0,0,0,0.1);
+    --bg-card: #a6b4c9;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.253);
 }
 
 /* Contenedor principal de las estadísticas */
@@ -32,7 +49,7 @@
     transform: translateY(-5px); /* Efecto visual al pasar el mouse */
 }
 
-/* Clases de acento que usado en el HTML */
+/* Colores de acentuacion */
 .card-accent-blue {
     border-left: 6px solid var(--color-blue);
 }
@@ -51,5 +68,5 @@
     font-size: 2rem;
     font-weight: bold;
     margin: 5px 0 0 0;
-    color: #333;
+    color: #131212;
 }
