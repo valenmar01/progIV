@@ -6,21 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dashboard.css">
-    <title>Dashboard</title>
+    <title>📊Dashboard</title>
 </head>
 
 <body>
     <div class="dashboard-container">
-        <aside class="sidebar">
-            <nav></nav>
+        <aside>
+            <nav>
+                <button><a href="index.html">⬅️Inicio</a></button>
+            </nav>
         </aside>
+        <header class="top-bar">
+            <h1>Resumen del Sistema</h1>
+        </header>
 
-        <main class="main-content">
-            <header class="top-bar">
-                <h1>Resumen del Sistema</h1>
-            </header>
-
-            <section class="stats-grid">
+        <section class="stats-grid">
+            <a href="cursos.html" class="card-link">
                 <article class="card card-accent-blue">
                     <div class="card-icon">📚</div>
                     <div class="card-info">
@@ -28,7 +29,8 @@
                         <p class="stat-number" id="count-cursos">0</p>
                     </div>
                 </article>
-
+            </a>
+            <a href="estudiantes.html" class="card-link">
                 <article class="card card-accent-green">
                     <div class="card-icon">🧑‍🎓</div>
                     <div class="card-info">
@@ -36,10 +38,18 @@
                         <p class="stat-number" id="count-estudiantes">0</p>
                     </div>
                 </article>
-
-                <script type="module" src="js/dashboard.js"></script>
-            </section>
-        </main>
+            </a>
+            <a href="inscripciones.html" class="card-link">
+                <article class="card card-accent-orange">
+                    <div class="card-icon">📝</div>
+                    <div class="card-info">
+                        <h3>Total de Inscripciones</h3>
+                        <p class="stat-number" id="total-inscripciones">0</p>
+                    </div>
+                </article>
+            </a>
+            <script type="module" src="js/dashboard.js"></script>
+        </section>
     </div>
 </body>
 

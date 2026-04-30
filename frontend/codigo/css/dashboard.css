@@ -7,7 +7,10 @@ header {
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+    top: -100px;
     margin: 0;
+    padding: 10px 20px 0 20px;
     background-color: #4f70a1;
 }
 
@@ -17,10 +20,19 @@ h1 {
     padding: 10px 100px;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+    margin: auto;
+    padding: 10px ;
+}
+
+
 /* Variables para mantener la consistencia */
 :root {
     --color-blue: #3498db;
     --color-green: #2ecc71;
+    --color-orange: #e74c3c;
     --bg-card: #a6b4c9;
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.253);
 }
@@ -37,7 +49,7 @@ h1 {
 .card {
     background-color: var(--bg-card);
     border-radius: 8px;
-    padding: 20px;
+    padding: 0px 20px;
     flex: 1 1 250px; /* Crece, se achica y su base es 250px */
     display: flex;
     align-items: center;
@@ -56,6 +68,10 @@ h1 {
 
 .card-accent-green {
     border-left: 6px solid var(--color-green);
+}
+
+.card-accent-orange {
+    border-left: 6px solid var(--color-orange);
 }
 
 /* Iconos y números */
