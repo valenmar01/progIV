@@ -1,56 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/dashboard.css">
-    <title>📊Dashboard</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Sistema de Inscripción a Cursos</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
 </head>
 
 <body>
-    <div class="dashboard-container">
-        <aside>
-            <nav>
-                <button><a href="index.html">⬅️Inicio</a></button>
-            </nav>
-        </aside>
-        <header class="top-bar">
-            <h1>Resumen del Sistema</h1>
-        </header>
+    <div class="contenedor-dashboard">
+        <h2>📊 Dashboard</h2>
 
-        <section class="stats-grid">
-            <a href="cursos.html" class="card-link">
-                <article class="card card-accent-blue">
-                    <div class="card-icon">📚</div>
-                    <div class="card-info">
-                        <h3>Cursos Activos</h3>
-                        <p class="stat-number" id="count-cursos">0</p>
-                    </div>
-                </article>
-            </a>
-            <a href="estudiantes.html" class="card-link">
-                <article class="card card-accent-green">
-                    <div class="card-icon">🧑‍🎓</div>
-                    <div class="card-info">
-                        <h3>Total Estudiantes</h3>
-                        <p class="stat-number" id="count-estudiantes">0</p>
-                    </div>
-                </article>
-            </a>
-            <a href="inscripciones.html" class="card-link">
-                <article class="card card-accent-orange">
-                    <div class="card-icon">📝</div>
-                    <div class="card-info">
-                        <h3>Total de Inscripciones</h3>
-                        <p class="stat-number" id="total-inscripciones">0</p>
-                    </div>
-                </article>
-            </a>
-            <script type="module" src="js/dashboard.js"></script>
-        </section>
+        <div class="estadisticas">
+            <div class="tarjeta-estadistica">
+                <h4>Total de Estudiantes</h4>
+                <div class="numero" id="total-estudiantes">0</div>
+            </div>
+            <div class="tarjeta-estadistica">
+                <h4>Estudiantes Activos</h4>
+                <div class="numero" id="estudiantes-activos">0</div>
+            </div>
+            <div class="tarjeta-estadistica">
+                <h4>Total de Cursos</h4>
+                <div class="numero" id="total-cursos">0</div>
+            </div>
+            <div class="tarjeta-estadistica">
+                <h4>Total de Inscripciones</h4>
+                <div class="numero" id="total-inscripciones">0</div>
+            </div>
+        </div>
     </div>
+
+    <script src="/js/api/fetch.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/pages/dashboard.js"></script>
+
 </body>
 
 </html>

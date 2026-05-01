@@ -1,47 +1,142 @@
+ /* ════════════════════════════════════════════════════════════════════════════════
+   Define los estilos fundamentales de toda la aplicación.
+   Contiene variables de colores, tipografía base, header, ventanas,
+   componentes reutilizables (botones, formularios, tablas), y alertas.
+   
+   INCLUIDO EN TODOS LOS ARCHIVOS HTML DEL PROYECTO.
+   ════════════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* Colores principales */
+  --color-primario: #f39d3b; /* Botones y Bordes izquierdos */
+  --color-primario-oscuro: #135581; /* Hover de botones (Efecto visual cuando el usuario pone el mouse sobre ellos) */
+  --color-secundario: #7f8c8d; /* Botones secundarios */
+  
+  /* Bordes y sombras */
+  --radio-borde: 6px; /* Borde de los botones */
+  --sombra-lg: 0 8px 32px rgba(0, 0, 0, 0.2); /* Sombra detras de botones */
+
+  /*  Velocidad de Transiciones */
+  /* ------------ Simple estetica ---------------*/
+  --transicion-rapida: 0.15s ease; /* Transición rápida */
+  --transicion-normal: 0.3s ease;  /* Transición normal */
+}
+
+/* Base - Sirve para que todo entre en la misma pagina y no se superpongan las barras de navegtacion ni lateral */ 
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #ffffff;
+  font-family: Arial, sans-serif;
+  background: #fff9f9;
+  color: rgb(46, 46, 46);
+  line-height: 1.6;
+  min-height: 100vh;
+  padding: 20px;
 }
 
-h1 {
-    color: #040133;
-    margin-top: 20px;
+.contenedor-principal {
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-h2 {
-    color: #260672;
-    text-align: center;
-    margin-top: 10px;
+/* Tipografia */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-secundario);
 }
+
+h1 { font-size: 100px; }
+h2 { font-size: 45px; }
+h3 { font-size: 35px; }
+h4 { font-size: 25px; }
 
 p {
-    color: #252525;
-    text-align: center;
-    margin-top: 5px;
+  margin-bottom: 15px;
 }
 
-/*button {
-    background-color: #040133;
-    color: #ffffff; 
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 20px;
-}*/
-
-button:hover {
-    background-color: #260672;
+.usuario-actual {
+  font-size: 0.9rem;
+  color: var(--color-secundario);
 }
 
-.maga {
-    background-color: green;    
+a {
+  color: var(--color-primario);
+  text-decoration: none;
+  transition: color var(--transicion-rapida);
+}
+
+a:hover {
+  color: var(--color-primario-oscuro);
+}
+
+header {
+  background: rgb(255, 255, 255);
+  padding: 40px 20px;
+  border-radius: var(--radio-borde);
+  margin-bottom: var(--espaciado-lg);
+}
+
+header h1 {
+  font-size: 50px;
+  color: var(--color-primario-oscuro);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+header p {
+  text-align: center;
+  color: var(--color-secundario);
+  font-size: 15px;
+}
+
+.nav-pestanas {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-pestana {
+  padding: 20px 30px;
+  border: 2px solid var(--color-primario);
+  background: transparent;
+  color: var(--color-primario);
+  cursor: pointer;
+  border-radius: var(--radio-borde);
+  font-weight: 600;
+  font-size: 20px;
+  transition: all var(--transicion-normal);
+}
+
+.btn-pestana:hover {
+  background: var(--color-primario);
+  color: rgb(255, 255, 255);
+}
+
+.btn-pestana.activo {
+  background: var(--color-primario);
+  color: rgb(255, 255, 255);
+}
+
+/* Pestañas */
+.pestana {
+  display: none;
+  background: rgb(255, 255, 255);
+  padding: 20px;
+  border-radius: var(--radio-borde);
+  box-shadow: var(--sombra-lg);
+}
+
+.pestana.activa {
+  display: block;
+  animation: var(--transicion-normal);
 }
