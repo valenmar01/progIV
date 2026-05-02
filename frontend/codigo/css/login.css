@@ -1,0 +1,92 @@
+@import url('style.css');
+
+
+/* Fondo */
+body.login-page { 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    min-height: 100vh; 
+    background: var(--color-azul); 
+    padding: 20px; 
+}
+
+main { 
+    width: 100%; 
+    max-width: 450px; 
+}
+
+/* Sección del formulario */
+section { 
+    background: var(--color-blanco); 
+    padding: 40px; 
+    border-radius: 12px; 
+    box-shadow: 0 8px 32px var(--sombra-lg); 
+}
+
+section h1 { 
+    color: var(--color-azul); 
+    font-size: 1.8rem; 
+    text-align: center; 
+    margin-bottom: 30px; 
+    font-weight: 700; 
+}
+
+/* Forma del Formulario */
+form { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px; 
+}
+
+/* Borde de campos de entrada */
+input { 
+    padding: 12px 15px; 
+    border: 2px solid #e8ecef; 
+    border-radius: 6px; 
+    font-size: 1rem; 
+    transition: all 0.3s ease; 
+}
+input:focus { 
+    outline: none; 
+    border-color: var(--color-naranja); 
+}
+
+/* ¿Olvido su contraseña? */
+button { 
+    padding: 12px 20px; 
+    background: var(--color-naranja); 
+    color: #ffffff;
+    border: none; 
+    border-radius: 6px; 
+    font-weight: 700; 
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+}
+button:hover { 
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 20px 
+    var(--color-azul); 
+}
+a { 
+    text-align: center; color: var(--color-naranja); 
+    text-decoration: none; 
+}
+
+/* Alerta de error */
+.mensaje-error { 
+    background: #f8d7da; 
+    color: #721c24; 
+    padding: 12px; 
+    border-radius: 6px; 
+    display: none; }
+.mensaje-error.activo { 
+    display: block; 
+}
+.info-credenciales { 
+    background: #d1ecf1; 
+    color: #0c5460; 
+    padding: 15px; 
+    border-radius: 6px; 
+    margin-top: 20px; 
+    text-align: center; }

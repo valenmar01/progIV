@@ -8,36 +8,35 @@
     <link rel="stylesheet" href="css/style.css" />
 </head>
 
-<bo>
+<body>
+    <header>
+
+        <div>
+            <button class="btn-cerrar-sesion" onclick="cerrarSesion()"> <!-- falta crear funcion inisiarSesion() -->
+                🚪 Cerrar Sesión
+            </button>
+            <p class="usuario-actual">
+                Bienvenido: <strong id="usuario-actual">admin</strong>
+            </p>
+        </div>
+
+        <div>
+            <h1>📚 Sistema de Inscripción a Cursos</h1>
+            <p>Facultad de Ciencias de la Administración - UNER</p>
+        </div>
+
+        <div class="nav-pestanas">
+            <button class="btn-pestana activo" data-pestana="dashboard" onclick="cambiarPestana('dashboard')">📊
+                Dashboard</button>
+            <button class="btn-pestana" data-pestana="estudiantes" onclick="cambiarPestana('estudiantes')">👥
+                Estudiantes</button>
+            <button class="btn-pestana" data-pestana="cursos" onclick="cambiarPestana('cursos')">📖 Cursos</button>
+            <button class="btn-pestana" data-pestana="inscripciones" onclick="cambiarPestana('inscripciones')">✍️
+                Inscripciones</button>
+        </div>
+    </header>
 
     <div class="contenedor-principal">
-        <header>
-
-            <div>
-                <button class="btn" onclick="cerrarSesion()"> <!-- falta crear funcion inisiarSesion() -->
-                    🚪 Cerrar Sesión
-                </button>
-                <p class="usuario-actual">
-                    Bienvenido: <strong id="usuario-actual">admin</strong>
-                </p>
-            </div>
-
-            <div>
-                <h1>📚 Sistema de Inscripción a Cursos</h1>
-                <p>Facultad de Ciencias de la Administración - UNER</p>
-            </div>
-
-            <div class="nav-pestanas">
-                <button class="btn-pestana activo" data-pestana="dashboard" onclick="cambiarPestana('dashboard')">📊
-                    Dashboard</button>
-                <button class="btn-pestana" data-pestana="estudiantes" onclick="cambiarPestana('estudiantes')">👥
-                    Estudiantes</button>
-                <button class="btn-pestana" data-pestana="cursos" onclick="cambiarPestana('cursos')">📖 Cursos</button>
-                <button class="btn-pestana" data-pestana="inscripciones" onclick="cambiarPestana('inscripciones')">✍️
-                    Inscripciones</button>
-            </div>
-        </header>
-
         <div id="alerta-exito" class="alerta alerta-exito"></div>
         <div id="alerta-error" class="alerta alerta-error"></div>
         <div id="alerta-advertencia" class="alerta alerta-advertencia"></div>
@@ -93,6 +92,6 @@
             window.location.href = 'login.html';
         }
     </script>
-    </body>
+</body>
 
 </html>
