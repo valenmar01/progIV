@@ -2,157 +2,51 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Estudiantes - Sistema de Inscripción a Cursos</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/estudiantes.css" />
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
 </head>
 
 <body>
-
-    <div class="contenedor-estudiantes">
-        <h2>👥 Gestión de Estudiantes</h2>
-
-        <!-- Formulario de búsqueda -->
-        <div class="seccion-busqueda">
-            <h3>🔍 Buscar y Filtrar</h3>
-            <div class="fila-filtros">
-                <div class="grupo-filtro">
-                    <label for="buscar-estudiante">Buscar por nombre, DNI o email:</label>
-                    <input type="text" id="buscar-estudiante" placeholder="Ej: Ignacio, 12345678, ignacio@example.com">
+    <section id="seccion-estudiantes" class="seccion activa">
+        <h2>Gestión de Estudiantes</h2>
+        <div class="tarjeta">
+            <h3>Registrar Nuevo Estudiante</h3>
+            <form id="formulario-estudiantes" class="formulario">
+                <div class="grid">
+                    <div class="grupo-campo"><label>Nombre</label><input type="text" id="form-est-nombre"
+                            placeholder="Ej: Ignacio"></div>
+                    <div class="grupo-campo"><label>Apellido</label><input type="text" id="form-est-apellido"
+                            placeholder="Ej: Denis"></div>
+                    <div class="grupo-campo"><label>DNI</label><input type="text" id="form-est-dni"
+                            placeholder="Ej: 12345678"></div>
+                    <div class="grupo-campo"><label>Email</label><input type="email" id="form-est-email"
+                            placeholder="Ej: ignacio.id81@gmail.com"></div>
+                    <div class="grupo-campo"><label>Teléfono</label><input type="text" id="form-est-telefono"
+                            placeholder="Ej: 3454123456"></div>
                 </div>
-                <div class="grupo-filtro">
-                    <label for="filtro-estado-est">Estado:</label>
-                    <select id="filtro-estado-est">
-                        <option value="">-- Todos --</option>
-                        <option value="activo">Activo</option>
-                        <option value="inactivo">Inactivo</option>
-                    </select>
-                </div>
-            </div>
-            <div class="botones-accion">
-                <button class="btn btn-primario">🔍 Buscar</button>
-                <button class="btn btn-secundario">✕ Limpiar Filtros</button>
-            </div>
-        </div>
-
-        <!-- Formulario de agregar -->
-        <div class="formulario">
-            <h3>➕ Agregar Nuevo Estudiante</h3>
-            <form id="form-estudiante">
-                <div class="fila-formulario">
-                    <div class="campo-formulario requerido">
-                        <label for="est-documento">DNI:</label>
-                        <input type="text" id="est-documento" placeholder="Ej: 12345678" required>
-                    </div>
-                    <div class="campo-formulario requerido">
-                        <label for="est-apellido">Apellido:</label>
-                        <input type="text" id="est-apellido" placeholder="Denis" required>
-                    </div>
-                    <div class="campo-formulario requerido">
-                        <label for="est-nombres">Nombres:</label>
-                        <input type="text" id="est-nombres" placeholder="Ignacio" required>
-                    </div>
-                </div>
-                <div class="fila-formulario">
-                    <div class="campo-formulario requerido">
-                        <label for="est-email">Email:</label>
-                        <input type="email" id="est-email" placeholder="ignacio@example.com" required>
-                    </div>
-                    <div class="campo-formulario requerido">
-                        <label for="est-fecha-nac">Fecha de Nacimiento:</label>
-                        <input type="date" id="est-fecha-nac" required>
-                    </div>
-                </div>
-                <div class="botones-formulario">
-                    <button type="submit" class="btn btn-exito btn-grande">✓ Agregar Estudiante</button>
-                </div>
+                <button type="button" class="btn-exito">Agregar Estudiante</button>
             </form>
         </div>
-
-        <!-- Tabla de estudiantes -->
-        <div style="margin-top: 30px;">
-            <h3>📋 Lista de Estudiantes</h3>
-            <div class="info-tabla">
-                <span>Total de registros: <strong id="contador-estudiantes">0</strong></span>
-            </div>
-            <div class="tabla-contenedor">
-                <table id="tabla-estudiantes">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>DNI</th>
-                            <th>Apellido</th>
-                            <th>Nombres</th>
-                            <th>Email</th>
-                            <th>Fecha de Nacimiento</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbody-estudiantes">
-                        <tr>
-                            <td colspan="8" style="text-align: center; color: #7f8c8d;">Cargando...</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div id="paginacion-estudiantes" class="paginacion"></div>
+        <div class="contenedor-tabla">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>DNI</th>
+                        <th>Email</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-estudiantes-body"></tbody>
+            </table>
         </div>
-    </div>
-
-    <div id="modal-editar-estudiante" class="modal">
-        <div class="modal-contenido">
-            <div class="modal-encabezado">
-                <h2>✏️ Editar Estudiante</h2>
-                <button type="button" class="btn-cerrar-modal">✕</button>
-            </div>
-            <form id="form-editar-estudiante">
-                <div class="fila-formulario">
-                    <div class="campo-formulario requerido">
-                        <label for="edit-est-documento">DNI:</label>
-                        <input type="text" id="edit-est-documento" required>
-                    </div>
-                    <div class="campo-formulario requerido">
-                        <label for="edit-est-apellido">Apellido:</label>
-                        <input type="text" id="edit-est-apellido" required>
-                    </div>
-                    <div class="campo-formulario requerido">
-                        <label for="edit-est-nombres">Nombres:</label>
-                        <input type="text" id="edit-est-nombres" required>
-                    </div>
-                </div>
-                <div class="fila-formulario">
-                    <div class="campo-formulario requerido">
-                        <label for="edit-est-email">Email:</label>
-                        <input type="email" id="edit-est-email" required>
-                    </div>
-                    <div class="campo-formulario requerido">
-                        <label for="edit-est-fecha-nac">Fecha de Nacimiento:</label>
-                        <input type="date" id="edit-est-fecha-nac" required>
-                    </div>
-                    <div class="campo-formulario">
-                        <label for="edit-est-activo">Estado:</label>
-                        <select id="edit-est-activo">
-                            <option value="true">Activo</option>
-                            <option value="false">Inactivo</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="botones-formulario">
-                    <button type="submit" class="btn btn-exito">✓ Guardar Cambios</button>
-                    <button type="button" class="btn btn-secundario">✕
-                        Cancelar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <script src="/js/api/fetch.js"></script>
-    <script src="/js/main.js"></script>
-    <script src="/js/pages/estudiantes.js"></script>
-
+    </section>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/pages/estudiantes.js"></script>
 </body>
 
 </html>

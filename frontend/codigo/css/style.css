@@ -1,144 +1,85 @@
- /* ════════════════════════════════════════════════════════════════════════════════
-   Define los estilos fundamentales de toda la aplicación.
-   Contiene variables de colores, tipografía base, header, ventanas,
-   componentes reutilizables (botones, formularios, tablas), y alertas.
-   
-   INCLUIDO EN TODOS LOS ARCHIVOS HTML DEL PROYECTO.
-   ════════════════════════════════════════════════════════════════════════════════ */
 :root {
-  /* Colores */
+  /* colores */
+  --color-azul: #3498db;
+  --color-azul-oscuro: #2c3e50;
+  --color-rojo: #e74c3c;
+  --color-verder: #27ae60;
   --color-blanco: #ffffff;
-  --color-negro: #000000;
-  --color-naranja: #f39d3b; 
-  --color-azul: #001e2d;
-  --color-gris: #7f8c8d; 
+  --color-gris: #bdc3c7;
+  --color-texto: #2c3e50;
+  --color-marron: #856404;
+  --color-crema: #fff3cd; 
   
-  /* Bordes y sombras */
-  --radio-borde: 6px; /* Borde de los botones */
-  --sombra-lg: 0 8px 32px rgba(0, 0, 0, 0.2); /* Sombra detras de botones */
-
-  /*  Velocidad de Transiciones */
-  /* ------------ Simple estetica ---------------*/
-  --transicion-rapida: 0.15s ease; /* Transición rápida */
-  --transicion-normal: 0.3s ease;  /* Transición normal */
+  /* sombras y bordes */
+  --luz-background: #ecf0f1;
+  --sombras: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --radio: 8px;
+  --transicion: all 0.3s ease;
 }
 
-/* Base - Sirve para que todo entre en la misma pagina y no se superpongan las barras de navegtacion ni lateral */ 
-*, *::before, *::after {
-  box-sizing: border-box;
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
-/* Fondo */
 body {
-  font-family: Arial, sans-serif;
-  background: var(--color-azul);
-  color: var(--color-blanco);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--luz-background);
+  color: var(--color-texto);
   line-height: 1.6;
-  min-height: 100vh;
-  padding: 20px;
 }
 
-.contenedor-principal {
-  max-width: 1400px;
-  margin: 0 auto;
-  color: var(--color-blanco)
-}
-
-/* Tipografia */
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 600;
-  line-height: 1.3;
-  color: var(--color-blanco);
-}
-
-h1 { font-size: 65px; }
-h2 { font-size: 45px; }
-h3 { font-size: 35px; }
-h4 { font-size: 25px; }
-
-p {
-  margin-bottom: 15px;
-}
-
-.usuario-actual {
-  font-size: 0.9rem;
-  color: var(--color-naranja);
-}
-
-/* Donde esta el titulo y el Dashboard */
-header {
-  background: var(--color-blanco );
-  padding: 20px 10px;
-  border-radius: var(--radio-borde);
-  margin-bottom: var(--espaciado-lg);
-}
-
-header h1 {
-  color: var(--color-azul);
-  margin-bottom: 10px;
-  text-align: center;
-}
-
-header p {
-  text-align: center;
-  color: var(--color-gris);
-
-  font-size: 15px;
-}
-
-/* Ubicacion del Dashboard */
-.nav-pestanas {
-  display: flex;
-  gap: 20px;
-  margin-top: 30px;
-  justify-content: center;
-}
-
-/*Botones de pestaña header */
-.btn-pestana {
-  padding: 20px 30px;
-  border: 2px solid var(--color-naranja);
-  background: transparent;
-  color: var(--color-naranja);
-  cursor: pointer;
-  border-radius: var(--radio-borde);
-  font-weight: 600;
-  font-size: 20px;
-  transition: all var(--transicion-normal);
-}
-.btn-pestana:hover {
-  background: var(--color-naranja);
-  color: var(--color-blanco);
-}
-.btn-pestana.activo {
-  background: var(--color-naranja);
-  color: var(--color-blanco);
-  border-color: var(--color-gris); 
-}
-
-/* Pestañas */
-.pestana {
-  display: none;
-  background: var(--color-blanco);
-  padding: 20px;
-  border-radius: var(--radio-borde);
-  box-shadow: var(--sombra-lg);
-}
-
-.pestana.activa {
+.logo-header {
+  height: 70px;
+  width: auto;
   display: block;
-  animation: var(--transicion-normal);
 }
 
-.btn-cerrar-sesion {
-  padding: 6px 10px;
-  background: var(--color-azul);
+header {
+  background-color: var(--color-azul-oscuro);
   color: var(--color-blanco);
+  padding: 10px 20px;
+  margin-bottom: 30px;
+  border-radius: var(--radio);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--sombras);
+}
+
+a {
+  text-decoration:none; 
+  display:inline-block;
+}
+
+main {
+  margin-top: 20px;
+}
+
+button, .btn-pestana {
+  padding: 10px 15px;
   border: none;
-  border-radius: var(--radio-borde);
-  font-weight: 600;
+  border-radius: 5px;
   cursor: pointer;
-  transition: var(--transicion-normal);
+  font-weight: 600;
+  transition: var(--transicion);
+  text-decoration: none;
+}
+
+.btn-pestana.activo {
+  background-color: var(--color-azul-oscuro);
+  color: var(--color-blanco);
+}
+
+.btn-exito {
+  background-color: var(--color-verder);
+  color: var(--color-blanco);
+}
+
+.btn-peligro {
+  background-color: var(--color-rojo);
+  color: var(--color-blanco);
+  padding: 5px 10px;
+  border-radius: var(--radio);
 }

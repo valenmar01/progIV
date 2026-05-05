@@ -2,165 +2,51 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cursos - Sistema de Inscripción a Cursos</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/dashboard.css" />
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
 </head>
 
 <body>
-
-    <div class="contenedor-cursos">
-        <h2>📖 Gestión de Cursos</h2>
-
-        <!-- Formulario de búsqueda -->
-        <div class="seccion-busqueda">
-            <h3>🔍 Buscar y Filtrar</h3>
-            <div class="fila-filtros">
-                <div class="grupo-filtro">
-                    <label for="buscar-curso">Buscar por nombre de curso:</label>
-                    <input type="text" id="buscar-curso" placeholder="Ej: HTML, CSS, JavaScript">
-                </div>
-                <div class="grupo-filtro">
-                    <label for="filtro-estado-curso">Estado:</label>
-                    <select id="filtro-estado-curso">
-                        <option value="">-- Todos --</option>
-                        <option value="1">Activo</option>
-                        <option value="2">Cancelado</option>
-                    </select>
-                </div>
-            </div>
-            <div class="botones-accion">
-                <button class="btn btn-primario">🔍 Buscar</button>
-                <button class="btn btn-secundario">✕ Limpiar Filtros</button>
-            </div>
+  <section id="seccion-cursos" class="seccion activa">
+    <h2>Gestión de Cursos</h2>
+    <div class="tarjeta">
+      <h3>Crear Nuevo Curso</h3>
+      <form id="formulario-cursos" class="formulario">
+        <div class="grid">
+          <div class="grupo-campo"><label>Nombre del Curso</label><input type="text" id="form-cur-nombre"
+              placeholder="Ej: Programación IV"></div>
+          <div class="grupo-campo"><label>Descripción</label><input type="text" id="form-cur-descripcion"
+              placeholder="Breve descripción"></div>
+          <div class="grupo-campo"><label>Duración</label><input type="text" id="form-cur-duracion"
+              placeholder="Ej: 4 meses"></div>
+          <div class="grupo-campo"><label>Cupo Máximo</label><input type="number" id="form-cur-cupo"
+              placeholder="Ej: 30"></div>
+          <div class="grupo-campo"><label>Fecha de Inicio</label><input type="date" id="form-cur-fecha"></div>
         </div>
-
-        <!-- Formulario de agregar -->
-        <div class="formulario">
-            <h3>➕ Agregar Nuevo Curso</h3>
-            <form id="form-curso">
-                <div class="fila-formulario">
-                    <div class="campo-formulario requerido">
-                        <label for="curso-nombre">Nombre del Curso:</label>
-                        <input type="text" id="curso-nombre" placeholder="Ej: Programacion IV" required>
-                    </div>
-                </div>
-                <div class="fila-formulario">
-                    <div class="campo-formulario requerido">
-                        <label for="curso-descripcion">Descripción:</label>
-                        <textarea id="curso-descripcion" placeholder="Describe el contenido del curso..."
-                            required></textarea>
-                    </div>
-                </div>
-                <div class="fila-formulario">
-                    <div class="campo-formulario requerido">
-                        <label for="curso-fecha-inicio">Fecha de Inicio:</label>
-                        <input type="date" id="curso-fecha-inicio" required>
-                    </div>
-                    <div class="campo-formulario requerido">
-                        <label for="curso-horas">Cantidad de Horas:</label>
-                        <input type="number" id="curso-horas" min="1" placeholder="40" required>
-                    </div>
-                    <div class="campo-formulario requerido">
-                        <label for="curso-cupo">Cupo Máximo:</label>
-                        <input type="number" id="curso-cupo" min="1" placeholder="20" required>
-                    </div>
-                </div>
-                <div class="botones-formulario">
-                    <button type="submit" class="btn btn-exito btn-grande">✓ Agregar Curso</button>
-                </div>
-            </form>
-        </div>
-
-        <!-- Tabla de cursos -->
-        <div style="margin-top: 30px;">
-            <h3>📋 Lista de Cursos</h3>
-            <div class="info-tabla">
-                <span>Total de registros: <strong id="contador-cursos">0</strong></span>
-            </div>
-            <div class="tabla-contenedor">
-                <table id="tabla-cursos">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Descripción</th>
-                            <th>Fecha de Inicio</th>
-                            <th>Duración</th>
-                            <th>Inscritos</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbody-cursos">
-                        <tr>
-                            <td colspan="8" style="text-align: center; color: #7f8c8d;">Cargando...</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div id="paginacion-cursos" class="paginacion"></div>
-        </div>
+        <button type="button" class="btn-exito">Agregar Curso</button>
+      </form>
     </div>
-
-    <!-- Edicion de Cursos-->
-    <div id="modal-editar-curso" class="modal">
-        <div class="modal-contenido">
-            <div class="modal-encabezado">
-                <h2>✏️ Editar Curso</h2>
-                <button type="button" class="btn-cerrar-modal">✕</button>
-            </div>
-            <form id="form-editar-curso">
-                <div class="fila-formulario">
-                    <div class="campo-formulario requerido">
-                        <label for="edit-curso-nombre">Nombre del Curso:</label>
-                        <input type="text" id="edit-curso-nombre" required>
-                    </div>
-                </div>
-                <div class="fila-formulario">
-                    <div class="campo-formulario requerido">
-                        <label for="edit-curso-descripcion">Descripción:</label>
-                        <textarea id="edit-curso-descripcion" required></textarea>
-                    </div>
-                </div>
-                <div class="fila-formulario">
-                    <div class="campo-formulario requerido">
-                        <label for="edit-curso-fecha-inicio">Fecha de Inicio:</label>
-                        <input type="date" id="edit-curso-fecha-inicio" required>
-                    </div>
-                    <div class="campo-formulario requerido">
-                        <label for="edit-curso-horas">Cantidad de Horas:</label>
-                        <input type="number" id="edit-curso-horas" min="1" required>
-                    </div>
-                    <div class="campo-formulario requerido">
-                        <label for="edit-curso-cupo">Cupo Máximo:</label>
-                        <input type="number" id="edit-curso-cupo" min="1" required>
-                    </div>
-                </div>
-                <div class="fila-formulario">
-                    <div class="campo-formulario">
-                        <label for="edit-curso-estado">Estado:</label>
-                        <select id="edit-curso-estado">
-                            <option value="1">Activo</option>
-                            <option value="2">Cancelado</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="botones-formulario">
-                    <button type="submit" class="btn btn-exito">✓ Guardar Cambios</button>
-                    <button type="button" class="btn btn-secundario">✕
-                        Cancelar</button>
-                </div>
-            </form>
-        </div>
+    <div class="contenedor-tabla">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Duración</th>
+            <th>Cupo</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-cursos-body"></tbody>
+      </table>
     </div>
+  </section>
 
-    <script src="/js/api/fetch.js"></script>
-    <script src="/js/main.js"></script>
-    <script src="/js/pages/cursos.js"></script>
-
+  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/pages/cursos.js"></script>
 </body>
 
 </html>
