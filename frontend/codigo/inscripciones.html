@@ -1,54 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/components.css" />
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/components.css">
-</head>
-
-<body>
+  <body>
     <section id="seccion-inscripciones" class="seccion activa">
-        <h2>Gestión de Inscripciones</h2>
-        <div class="tarjeta">
-            <h3>Inscribir Alumno en Curso</h3>
-            <form id="formulario-inscripciones" class="formulario">
-                <div class="grid">
-                    <div class="grupo-campo">
-                        <label>Seleccionar Estudiante</label>
-                        <select id="form-ins-estudiante">
-                            <option value="">-- Seleccionar --</option>
-                        </select>
-                    </div>
-                    <div class="grupo-campo">
-                        <label>Seleccionar Curso</label>
-                        <select id="form-ins-curso">
-                            <option value="">-- Seleccionar --</option>
-                        </select>
-                    </div>
-                </div>
-                <button type="button" class="btn-exito">Realizar
-                    Inscripción</button>
-            </form>
-        </div>
-        <div class="contenedor-tabla">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Estudiante</th>
-                        <th>Curso</th>
-                        <th>Fecha</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="tabla-inscripciones-body"></tbody>
-            </table>
-        </div>
+      <h2>Gestión de Inscripciones</h2>
+      <div class="tarjeta">
+        <h3>Inscribir Alumno en Curso</h3>
+        <form id="formulario-inscripciones" class="formulario">
+          <div class="grid">
+            <div class="grupo-campo">
+              <label>Seleccionar Estudiante</label>
+              <select id="form-ins-estudiante">
+                <option value="">-- Seleccionar --</option>
+              </select>
+            </div>
+            <div class="grupo-campo">
+              <label>Seleccionar Curso</label>
+              <select id="form-ins-curso">
+                <option value="">-- Seleccionar --</option>
+              </select>
+            </div>
+          </div>
+          <button type="button" class="btn-exito">Realizar Inscripción</button>
+        </form>
+      </div>
+      <div class="contenedor-tabla">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Estudiante</th>
+              <th>Curso</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-inscripciones-body"></tbody>
+        </table>
+      </div>
     </section>
     <script type="module" src="js/main.js"></script>
     <script type="module" src="js/pages/inscripciones.js"></script>
-</body>
-
+  </body>
 </html>

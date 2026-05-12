@@ -1,40 +1,52 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Acceso al Sistema - FCAD UNER</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/login.css">
-</head>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/login.css" />
+  </head>
 
-<body class="pagina-login">
+  <body class="pagina-login">
     <div class="contenedor-login">
-        <div class="logo-login-container">
-            <img src="imagenes/Administración grises PNG.png" alt="Logo FCAD UNER" class="logo-login">
+      <div class="logo-login-container">
+        <img
+          src="imagenes/Administración grises PNG.png"
+          alt="Logo FCAD UNER"
+          class="logo-login"
+        />
+      </div>
+      <h1>Acceso al Sistema</h1>
+      <div id="error-login" class="mensaje-error"></div>
+      <form id="formulario-login" class="formulario-login">
+        <div class="grupo-campo">
+          <label for="input-usuario">Usuario</label>
+          <input
+            type="text"
+            id="input-usuario"
+            placeholder="Ingrese su usuario"
+            required
+          />
         </div>
-        <h1>Acceso al Sistema</h1>
-        <div id="error-login" class="mensaje-error"></div>
-        <form id="formulario-login" class="formulario-login">
-            <div class="grupo-campo">
-                <label for="input-usuario">Usuario</label>
-                <input type="text" id="input-usuario" placeholder="Ingrese su usuario" required>
-            </div>
-            <div class="grupo-campo">
-                <label for="input-contrasena">Contraseña</label>
-                <input type="password" id="input-contrasena" placeholder="Ingrese su contraseña" required>
-            </div>
-            <button type="submit">Ingresar</button>
-        </form>
-        <div class="info-credenciales">
-            <strong>Credenciales de Prueba:</strong>
-            <p>Usuario: <b>admin</b></p>
-            <p>Contraseña: <b>1234</b></p>
+        <div class="grupo-campo">
+          <label for="input-contrasena">Contraseña</label>
+          <input
+            type="password"
+            id="input-contrasena"
+            placeholder="Ingrese su contraseña"
+            required
+          />
         </div>
+        <button type="submit">Ingresar</button>
+      </form>
+      <div class="info-credenciales">
+        <strong>Credenciales de Prueba:</strong>
+        <p>Usuario: <b>admin</b></p>
+        <p>Contraseña: <b>1234</b></p>
+      </div>
     </div>
     <script type="module" src="js/main.js"></script>
     <script type="module" src="js/pages/login.js"></script>
-</body>
-
+  </body>
 </html>

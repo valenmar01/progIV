@@ -15,8 +15,8 @@
   text-align: center;
 }
 
-.tarjeta h3 { 
-  color: var(--color-blanco); 
+.tarjeta h3 {
+  color: var(--color-blanco);
   margin-bottom: 10px;
 }
 
@@ -30,4 +30,4 @@
   color: var(--color-azul-oscuro);
   padding: 10px 15px;
   border-radius: var(--radio);
-} 
+}
