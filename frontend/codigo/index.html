@@ -2,96 +2,38 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sistema de Inscripción a Cursos - UNER</title>
-    <link rel="stylesheet" href="css/style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Inscripción - FCAD UNER</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+  <div id="pantalla-app" class="contenedor" style="display: none;">
     <header>
-
-        <div>
-            <button class="btn-cerrar-sesion" onclick="cerrarSesion()"> <!-- falta crear funcion inisiarSesion() -->
-                🚪 Cerrar Sesión
-            </button>
-            <p class="usuario-actual">
-                Bienvenido: <strong id="usuario-actual">admin</strong>
-            </p>
-        </div>
-
-        <div>
-            <h1>📚 Sistema de Inscripción a Cursos</h1>
-            <p>Facultad de Ciencias de la Administración - UNER</p>
-        </div>
-
-        <div class="nav-pestanas">
-            <button class="btn-pestana activo" data-pestana="dashboard" onclick="cambiarPestana('dashboard')">📊
-                Dashboard</button>
-            <button class="btn-pestana" data-pestana="estudiantes" onclick="cambiarPestana('estudiantes')">👥
-                Estudiantes</button>
-            <button class="btn-pestana" data-pestana="cursos" onclick="cambiarPestana('cursos')">📖 Cursos</button>
-            <button class="btn-pestana" data-pestana="inscripciones" onclick="cambiarPestana('inscripciones')">✍️
-                Inscripciones</button>
-        </div>
+      <div class="header-logo">
+        <img src="imagenes/FCADlogo.png" alt="Logo FCAD UNER" class="logo-header">
+      </div>
+      <div class="header-info">
+        <p>Bienvenido, <strong id="nombre-usuario">Usuario</strong></p>
+        <button class="btn-peligro btn-pequeno" onclick="window.location.href='login.html'">Cerrar Sesión</button>
+      </div>
     </header>
+    <nav class="nav-pestanas" id="nav-principal">
+      <a href="dashboard.html" target="contenedor-paginas" class="btn-pestana activo">Dashboard</a>
+      <a href="estudiantes.html" target="contenedor-paginas" class="btn-pestana">Estudiantes</a>
+      <a href="cursos.html" target="contenedor-paginas" class="btn-pestana">Cursos</a>
+      <a href="inscripciones.html" target="contenedor-paginas" class="btn-pestana">Inscripciones</a>
+    </nav>
 
-    <div class="contenedor-principal">
-        <div id="alerta-exito" class="alerta alerta-exito"></div>
-        <div id="alerta-error" class="alerta alerta-error"></div>
-        <div id="alerta-advertencia" class="alerta alerta-advertencia"></div>
+    <main class="marco-contenido">
+      <iframe name="contenedor-paginas" id="contenedor-paginas" src="dashboard.html" width="100%" height="600px"
+        frameborder="0"></iframe>
+    </main>
+  </div>
 
-        <div id="dashboard" class="pestana activa">
-            <iframe src="dashboard.html" frameborder="0" class="iframe-dashboard" width="100%" height="600px"
-                title="Dashboard">
-            </iframe>
-        </div>
+  <script type="module" src="js/main.js"></script>
 
-        <!--ESTUDIANTES-->
-        <div id="estudiantes" class="pestana">
-            <iframe src="estudiantes.html" frameborder="0" class="iframe-estudiantes" width="100%" height="1200px"
-                title="Gestión de Estudiantes">
-            </iframe>
-        </div>
-
-        <!--CURSOS-->
-        <div id="cursos" class="pestana">
-            <iframe src="cursos.html" frameborder="0" class="iframe-cursos" width="100%" height="1200px"
-                title="Gestión de Cursos">
-            </iframe>
-        </div>
-
-        <!--INSCRIPCIONES-->
-        <div id="inscripciones" class="pestana">
-            <iframe src="inscripciones.html" frameborder="0" class="iframe-inscripciones" width="100%" height="1200px"
-                title="Gestión de Inscripciones">
-            </iframe>
-        </div>
-
-    </div>
-    <!-- Función para cambiar entre pestañas -->
-    <script>
-        function cambiarPestana(pestana) {
-            // Ocultar todas las pestañas
-            const pestanas = document.querySelectorAll('.pestana');
-            pestanas.forEach(p => p.classList.remove('activa'));
-
-            // Mostrar la pestaña seleccionada
-            document.getElementById(pestana).classList.add('activa');
-
-            // Actualizar el estado de los botones
-            const botones = document.querySelectorAll('.btn-pestana');
-            botones.forEach(btn => btn.classList.remove('activo'));
-            document.querySelector(`.btn-pestana[data-pestana="${pestana}"]`).classList.add('activo');
-        }
-    </script>
-
-    <script>
-        function cerrarSesion() {
-            // Redirigir al usuario a la página de login
-            window.location.href = 'login.html';
-        }
-    </script>
 </body>
 
 </html>

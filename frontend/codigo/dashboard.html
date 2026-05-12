@@ -1,42 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard - Sistema de Inscripción a Cursos</title>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/dashboard.css" />
-</head>
+  </head>
 
-<body>
-    <div class="contenedor-dashboard">
-        <h2>📊 Dashboard</h2>
-
-        <div class="estadisticas">
-            <div class="tarjeta-estadistica">
-                <h4>Total de Estudiantes</h4>
-                <div class="numero" id="total-estudiantes">0</div>
-            </div>
-            <div class="tarjeta-estadistica">
-                <h4>Estudiantes Activos</h4>
-                <div class="numero" id="estudiantes-activos">0</div>
-            </div>
-            <div class="tarjeta-estadistica">
-                <h4>Total de Cursos</h4>
-                <div class="numero" id="total-cursos">0</div>
-            </div>
-            <div class="tarjeta-estadistica">
-                <h4>Total de Inscripciones</h4>
-                <div class="numero" id="total-inscripciones">0</div>
-            </div>
+  <body>
+    <section id="seccion-dashboard" class="seccion activa">
+      <h2>Resumen del Sistema</h2>
+      <div class="grid">
+        <div class="tarjeta">
+          <h3>Estudiantes</h3>
+          <p>Total de alumnos registrados en el sistema.</p>
+          <a href="estudiantes.html" class="btn-primario">Ver Estudiantes</a>
         </div>
-    </div>
-
-    <script src="/js/api/fetch.js"></script>
-    <script src="/js/main.js"></script>
-    <script src="/js/pages/dashboard.js"></script>
-
-</body>
-
+        <div class="tarjeta">
+          <h3>Cursos</h3>
+          <p>Oferta académica disponible actualmente.</p>
+          <a href="cursos.html" class="btn-primario">Ver Cursos</a>
+        </div>
+        <div class="tarjeta">
+          <h3>Inscripciones</h3>
+          <p>Gestión de alumnos anotados en cursos.</p>
+          <a href="inscripciones.html" class="btn-primario"
+            >Ver Inscripciones</a
+          >
+        </div>
+      </div>
+    </section>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/pages/dashboard.js"></script>
+  </body>
 </html>

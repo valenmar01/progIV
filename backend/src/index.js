@@ -1,10 +1,23 @@
-const express = require('express');
-const app = express();
-const PORT = process.env.PORT || 3000;
+import "dotenv/config";
+import express from 'express';
+import morgan from 'morgan';
+import cors from 'cors';
+import { PORT } from './config.js';
+import estudiantesRoutes from './routes/estudiantes.routes.js';
 
-app.get('/', (req, res) => {
-    res.send('Hello, World!');
-});
+//initializations
+const app = express();
+
+//middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+//middlewares
+app.use(cors());
+app.use(morgan('dev'));
+
+//routes
+app.use(estudiantesRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

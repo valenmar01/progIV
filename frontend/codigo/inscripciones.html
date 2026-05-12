@@ -1,118 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Inscripciones - Sistema de Inscripción a Cursos</title>
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/inscripciones.css" />
-</head>
+    <link rel="stylesheet" href="css/components.css" />
+  </head>
 
-<body>
-
-    <div class="contenedor-inscripciones">
-        <h2>✍️ Gestión de Inscripciones</h2>
-
-        <!-- Formulario de búsqueda -->
-        <div class="seccion-busqueda">
-            <h3>🔍 Buscar y Filtrar</h3>
-            <div class="fila-filtros">
-                <div class="grupo-filtro">
-                    <label for="buscar-inscripcion">Buscar por estudiante o curso:</label>
-                    <input type="text" id="buscar-inscripcion" placeholder="Ej: Denis, Programación IV...">
-                </div>
-                <div class="grupo-filtro">
-                    <label for="filtro-estado-insc">Estado:</label>
-                    <select id="filtro-estado-insc">
-                        <option value="">-- Todos --</option>
-                        <option value="1">Inscripto</option>
-                        <option value="2">Cancelado</option>
-                    </select>
-                </div>
+  <body>
+    <section id="seccion-inscripciones" class="seccion activa">
+      <h2>Gestión de Inscripciones</h2>
+      <div class="tarjeta">
+        <h3>Inscribir Alumno en Curso</h3>
+        <form id="formulario-inscripciones" class="formulario">
+          <div class="grid">
+            <div class="grupo-campo">
+              <label>Seleccionar Estudiante</label>
+              <select id="form-ins-estudiante">
+                <option value="">-- Seleccionar --</option>
+              </select>
             </div>
-            <div class="botones-accion">
-                <button class="btn btn-primario" onclick="buscarInscripciones()">🔍 Buscar</button>
-                <button class="btn btn-secundario" onclick="limpiarBusquedaInscripciones()">✕ Limpiar Filtros</button>
+            <div class="grupo-campo">
+              <label>Seleccionar Curso</label>
+              <select id="form-ins-curso">
+                <option value="">-- Seleccionar --</option>
+              </select>
             </div>
-        </div>
-
-        <!-- Formulario de inscripción -->
-        <div class="formulario">
-            <h3>➕ Nueva Inscripción</h3>
-
-            <!-- Alerta de cupo lleno -->
-            <div class="alerta alerta-advertencia" id="alerta-cupo-lleno" style="display: none;">
-                ⚠️ Este curso ha alcanzado su cupo máximo. No es posible agregar más inscripciones.
-            </div>
-
-            <!-- Alerta de cupo disponible -->
-            <div class="alerta alerta-exito" id="alerta-cupo-disponible" style="display: none;">
-                ✓ Este curso tiene cupo disponible.
-            </div>
-
-            <form id="form-inscripcion">
-                <div class="fila-formulario">
-                    <div class="campo-formulario requerido">
-                        <label for="insc-estudiante">Seleccionar Estudiante:</label>
-                        <select id="insc-estudiante" required>
-                            <option value="">-- Seleccionar estudiante --</option>
-                        </select>
-                    </div>
-                    <div class="campo-formulario requerido">
-                        <label for="insc-curso">Seleccionar Curso:</label>
-                        <select id="insc-curso" required>
-                            <option value="">-- Seleccionar curso --</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Información del curso seleccionado -->
-                <div id="info-curso-seleccionado" class="info-curso-seleccionado" style="display: none;">
-                    <h4>📋 Información del Curso</h4>
-                    <div class="detalle-curso"></div>
-                </div>
-
-                <div class="botones-formulario">
-                    <button type="submit" class="btn btn-exito btn-grande">✓ Confirmar Inscripción</button>
-                </div>
-            </form>
-        </div>
-
-        <!-- Tabla de inscripciones -->
-        <div style="margin-top: 30px;">
-            <h3>📋 Lista de Inscripciones</h3>
-            <div class="info-tabla">
-                <span>Total de registros: <strong id="contador-inscripciones">0</strong></span>
-            </div>
-            <div class="tabla-contenedor">
-                <table id="tabla-inscripciones">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Estudiante</th>
-                            <th>DNI</th>
-                            <th>Curso</th>
-                            <th>Fecha de Inscripción</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbody-inscripciones">
-                        <tr>
-                            <td colspan="7" style="text-align: center; color: #7f8c8d;">Cargando...</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div id="paginacion-inscripciones" class="paginacion"></div>
-        </div>
-    </div>
-
-    <script src="/js/api/fetch.js"></script>
-    <script src="/js/main.js"></script>
-    <script src="/js/pages/inscripciones.js"></script>
-
-</body>
-
+          </div>
+          <button type="button" class="btn-exito">Realizar Inscripción</button>
+        </form>
+      </div>
+      <div class="contenedor-tabla">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Estudiante</th>
+              <th>Curso</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-inscripciones-body"></tbody>
+        </table>
+      </div>
+    </section>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/pages/inscripciones.js"></script>
+  </body>
 </html>

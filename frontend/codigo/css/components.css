@@ -1,0 +1,88 @@
+@import url('style.css');
+
+/* Tarjetas y Grillas (usadas en todos los formularios) */
+.tarjeta {
+  background-color: var(--color-blanco);
+  padding: 20px;
+  border-radius: var(--radio);
+  box-shadow: var(--sombras);
+  margin-bottom: 30px;
+}
+
+/* Grillas para formularios */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+/* Estilos para grupos de campos en formularios */
+.grupo-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Estilos para etiquetas de campos */
+.grupo-campo label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Estilos para inputs y selects */
+.grupo-campo input, .grupo-campo select {
+  padding: 8px 12px;
+  border: 2px solid var(--color-gris);
+  border-radius: 5px;
+  outline: none;
+  transition: var(--transicion);
+}
+
+/* Efecto de enfoque para inputs y selects */
+.grupo-campo input:focus {
+  border-color: var(--color-azul-oscuro);
+}
+
+/* Estilos para tablas */
+.contenedor-tabla {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-blanco);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+table th {
+  background-color: var(--color-azul-oscuro);
+  color: var(--color-blanco);
+  text-align: left;
+  padding: 12px;
+}
+
+table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--luz-background);
+}
+
+/* Badges de estado */
+.badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.badge-success { 
+    background: var(--color-verder); 
+    color: var(--color-blanco); 
+}
+
+.badge-warning { 
+    background: var(--color-crema); 
+    color: var(--color-marron); 
+}
