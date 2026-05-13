@@ -46,7 +46,7 @@ formulario.addEventListener('submit', async (e) => {
         alert('¡Bienvenido al sistema!');
         
         // Cambia 'dashboard.html' por tu página de destino
-        window.location.href = 'dashboard.html'; 
+        window.location.href = 'index.html';
         
     } else {
         // Error: Mostramos feedback al usuario
