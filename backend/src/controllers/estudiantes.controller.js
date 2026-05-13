@@ -1,11 +1,18 @@
 import { pool } from '../db.js';
+import { getPaginacion, parsearPaginado } from '../helpers/paginar.js';
+import { estudianteDTO } from '../models/estudiante.js';
 
 export const getAllEstudiantes = async (req, res) => {
-    const { rows, rowCount } = await pool.query('SELECT * FROM estudiantes');
-    res.status(200).json({
-        total: rowCount,
-        estudiantes: rows
-    });
+    const { pagina, limite, offset } = getPaginacion(req.query);
+
+    const { rows } = await pool.query(
+        'SELECT *, COUNT(*) OVER() AS total FROM estudiantes LIMIT $1 OFFSET $2',
+        [limite, offset]
+    );
+
+    const { totalPaginas, datos } = parsearPaginado(rows, limite, estudianteDTO);
+
+    res.status(200).json({ totalPaginas, estudiantes: datos });
 }
 
 export const getEstudianteByID = async (req, res) => {

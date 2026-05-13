@@ -1,6 +1,6 @@
-const CANTIDAD_POR_PAGINA = 5;
 let paginaActual = 1;
-let estudiantes = [];
+let totalPaginas = 1;
+let estudiantesPagina = [];
 
 const renderActivo = (activo) => activo == 1
     ? '<span class="badge text-bg-success">Activo</span>'
@@ -25,19 +25,19 @@ const crearFila = (estudiante, n) => `
         <td data-col="acciones">${renderAcciones(estudiante)}</td>
     </tr>`;
 
-const renderTabla = () => {
-    const total = Math.max(1, Math.ceil(estudiantes.length / CANTIDAD_POR_PAGINA));
-    paginaActual = Math.min(Math.max(paginaActual, 1), total);
-    const inicio = (paginaActual - 1) * CANTIDAD_POR_PAGINA;
-    const pagina = estudiantes.slice(inicio, inicio + CANTIDAD_POR_PAGINA);
+const renderTabla = (data) => {
+    estudiantesPagina = data.estudiantes;
+    paginaActual = data.pagina;
+    totalPaginas = data.totalPaginas;
 
-    const filas = pagina.length
-        ? pagina.map((e, i) => crearFila(e, inicio + i + 1)).join("")
+    const inicio = (paginaActual - 1) * 5;
+    const filas = estudiantesPagina.length
+        ? estudiantesPagina.map((e, i) => crearFila(e, inicio + i + 1)).join("")
         : '<tr><td colspan="7" class="text-center py-4">No hay estudiantes para mostrar</td></tr>';
 
     let paginacion = "";
-    if (total > 1) {
-        const numeros = Array.from({ length: total }, (_, i) =>
+    if (totalPaginas > 1) {
+        const numeros = Array.from({ length: totalPaginas }, (_, i) =>
             `<li class="page-item ${i + 1 === paginaActual ? "active" : ""}">
                 <button class="page-link" data-page="${i + 1}">${i + 1}</button></li>`
         ).join("");
@@ -46,7 +46,7 @@ const renderTabla = () => {
                 <li class="page-item ${paginaActual === 1 ? "disabled" : ""}">
                     <button class="page-link" data-page="${paginaActual - 1}">Anterior</button></li>
                 ${numeros}
-                <li class="page-item ${paginaActual === total ? "disabled" : ""}">
+                <li class="page-item ${paginaActual === totalPaginas ? "disabled" : ""}">
                     <button class="page-link" data-page="${paginaActual + 1}">Siguiente</button></li>
             </ul></nav>`;
     }
@@ -58,6 +58,19 @@ const renderTabla = () => {
             </tr></thead>
             <tbody>${filas}</tbody>
         </table>${paginacion}`;
+};
+
+const cargarPagina = async (pagina) => {
+    const contenedor = document.getElementById("tabla-estudiantes");
+    contenedor.innerHTML = '<p class="text-muted">Cargando estudiantes...</p>';
+    try {
+        const res = await fetch(`http://localhost:3000/estudiantes?pagina=${pagina}`);
+        if (!res.ok) throw new Error(`Error HTTP ${res.status}`);
+        const data = await res.json();
+        renderTabla(data);
+    } catch (error) {
+        contenedor.innerHTML = `<div class="alert alert-danger">No se pudo cargar la lista de estudiantes. ${error.message}</div>`;
+    }
 };
 
 const mostrarToast = (mensaje, tipo = "success") => {
@@ -144,14 +157,7 @@ const manejarSubmit = async (evento) => {
         form.reset();
         form.dataset.modo = "crear";
 
-        if (esEdicion) {
-            const idx = estudiantes.findIndex(e => `${e.documento}` === `${payload.documento}`);
-            if (idx !== -1) estudiantes[idx] = { ...estudiantes[idx], ...payload };
-        } else {
-            estudiantes.push(json.estudiante ?? payload);
-            paginaActual = Math.ceil(estudiantes.length / CANTIDAD_POR_PAGINA);
-        }
-        renderTabla();
+        await cargarPagina(esEdicion ? paginaActual : totalPaginas + 1);
     } catch (error) {
         mostrarToast(error.message ?? "No se pudo guardar el estudiante", "danger");
     }
@@ -161,7 +167,7 @@ const manejarClick = async (evento) => {
     const botonPagina = evento.target.closest("[data-page]");
     if (botonPagina) {
         const n = Number(botonPagina.dataset.page);
-        if (!Number.isNaN(n)) { paginaActual = n; renderTabla(); }
+        if (!Number.isNaN(n)) await cargarPagina(n);
         return;
     }
 
@@ -170,7 +176,7 @@ const manejarClick = async (evento) => {
     const { accion, documento, activo } = boton.dataset;
 
     if (accion === "editar") {
-        const estudiante = estudiantes.find(e => `${e.documento}` === `${documento}`);
+        const estudiante = estudiantesPagina.find(e => `${e.documento}` === `${documento}`);
         if (!estudiante) { mostrarToast("No se encontraron los datos del estudiante", "warning"); return; }
         abrirModal("editar", estudiante);
         return;
@@ -187,9 +193,6 @@ const manejarClick = async (evento) => {
             const json = await res.json();
             if (!res.ok) throw new Error(json.message ?? `Error HTTP ${res.status}`);
 
-            const idx = estudiantes.findIndex(e => `${e.documento}` === `${documento}`);
-            if (idx !== -1) estudiantes[idx].activo = nuevoActivo;
-
             const fila = document.querySelector(`tr[data-documento="${documento}"]`);
             if (fila) {
                 fila.querySelector('[data-col="activo"]').innerHTML = renderActivo(nuevoActivo);
@@ -202,21 +205,12 @@ const manejarClick = async (evento) => {
     }
 };
 
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", () => {
     const contenedor = document.getElementById("tabla-estudiantes");
-    contenedor.innerHTML = '<p class="text-muted">Cargando estudiantes...</p>';
     contenedor.addEventListener("click", manejarClick);
 
     document.getElementById("btn-agregar-estudiante")?.addEventListener("click", () => abrirModal("crear"));
     document.getElementById("form-agregar-estudiante")?.addEventListener("submit", manejarSubmit);
 
-    try {
-        const res = await fetch("http://localhost:3000/estudiantes");
-        if (!res.ok) throw new Error(`Error HTTP ${res.status}`);
-        const data = await res.json();
-        estudiantes = Array.isArray(data.estudiantes) ? data.estudiantes : [];
-        renderTabla();
-    } catch (error) {
-        contenedor.innerHTML = `<div class="alert alert-danger">No se pudo cargar la lista de estudiantes. ${error.message}</div>`;
-    }
+    cargarPagina(1);
 });
