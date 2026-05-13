@@ -18,15 +18,20 @@ formulario.addEventListener('submit', async (e) => {
     const usuarioIngresado = inputUsuario.value.trim();
     const contrasenaIngresada = inputContrasena.value;
     
-    const res = await fetch("http://localhost:3000/login", {method: 'get',
+    const res = await fetch("http://localhost:3000/login", {method: 'post',
         headers:
         {
             'Content-Type':'application/json'
-        }
+        },
+        body: JSON.stringify(
+        {
+            usuario: usuarioIngresado,
+            contrasenia: contrasenaIngresada
+        })
     },
     );
 
-    const a = await res;
+    const a = await res.json();
 
 
     console.log(usuarioIngresado);
