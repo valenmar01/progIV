@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import { PORT } from './config.js';
 import estudiantesRoutes from './routes/estudiantes.routes.js';
+import aut from "./routes/auth.routes.js";
 
 //initializations
 const app = express();
@@ -18,6 +19,7 @@ app.use(morgan('dev'));
 
 //routes
 app.use(estudiantesRoutes);
+app.use(aut)
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
