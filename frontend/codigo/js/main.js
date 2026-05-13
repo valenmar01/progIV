@@ -9,6 +9,7 @@
       }
     });
 */
+
 document.querySelectorAll('.btn-pestana').forEach(enlace => {
   enlace.addEventListener('click', function () {
     document.querySelectorAll('.btn-pestana').forEach(el => el.classList.remove('activo'));
