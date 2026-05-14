@@ -6,12 +6,12 @@ const renderActivo = (activo) => activo == 1
     ? '<span class="badge text-bg-success">Activo</span>'
     : '<span class="badge text-bg-dark">Inactivo</span>';
 
-const renderAcciones = ({ documento, activo }) => {
+const renderAcciones = ({ id, documento, activo }) => {
     if (activo != 1) return `
-        <button class="btn btn-sm btn-outline-success" data-accion="activar-desactivar" data-documento="${documento}" data-activo="0">Activar</button>`;
+        <button class="btn btn-sm btn-outline-success" data-accion="activar-desactivar" data-id="${id}" data-documento="${documento}" data-activo="0">Activar</button>`;
     return `
-        <button class="btn btn-sm btn-outline-primary me-1" data-accion="editar" data-documento="${documento}" data-activo="1">Editar</button>
-        <button class="btn btn-sm btn-outline-danger" data-accion="activar-desactivar" data-documento="${documento}" data-activo="1">Desactivar</button>`;
+        <button class="btn btn-sm btn-outline-primary me-1" data-accion="editar" data-id="${id}" data-documento="${documento}" data-activo="1">Editar</button>
+        <button class="btn btn-sm btn-outline-danger" data-accion="activar-desactivar" data-id="${id}" data-documento="${documento}" data-activo="1">Desactivar</button>`;
 };
 
 const crearFila = (estudiante, n) => `
@@ -104,6 +104,7 @@ const abrirModal = (modo = "crear", estudiante = null) => {
         modo === "editar" ? "Guardar cambios" : "Crear";
 
     if (modo === "editar" && estudiante) {
+        form.dataset.id = estudiante.id;
         form.elements.namedItem("nombres").value = estudiante.nombres ?? "";
         form.elements.namedItem("apellido").value = estudiante.apellido ?? "";
         form.elements.namedItem("documento").value = estudiante.documento ?? "";
@@ -138,7 +139,7 @@ const manejarSubmit = async (evento) => {
 
     try {
         const url = esEdicion
-            ? `http://localhost:3000/estudiantes/${payload.documento}`
+            ? `http://localhost:3000/estudiantes/${form.dataset.id}`
             : "http://localhost:3000/estudiantes";
         const body = esEdicion
             ? { apellido: payload.apellido, nombres: payload.nombres, email: payload.email, fecha_nacimiento: payload.fecha_nacimiento, activo: payload.activo }
@@ -173,7 +174,7 @@ const manejarClick = async (evento) => {
 
     const boton = evento.target.closest("[data-accion]");
     if (!boton) return;
-    const { accion, documento, activo } = boton.dataset;
+    const { accion, id, documento, activo } = boton.dataset;
 
     if (accion === "editar") {
         const estudiante = estudiantesPagina.find(e => `${e.documento}` === `${documento}`);
@@ -185,7 +186,7 @@ const manejarClick = async (evento) => {
     if (accion === "activar-desactivar") {
         const nuevoActivo = activo === "1" ? 0 : 1;
         try {
-            const res = await fetch(`http://localhost:3000/estudiantes/${documento}`, {
+            const res = await fetch(`http://localhost:3000/estudiantes/${id}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ activo: nuevoActivo })

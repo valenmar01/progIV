@@ -1,4 +1,5 @@
 export const estudianteDTO = (row) => ({
+    id: row.id_estudiante,
     documento: row.documento,
     apellido: row.apellido,
     nombres: row.nombres,
