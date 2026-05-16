@@ -1,48 +1,85 @@
-/*body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #ffffff;
+:root {
+  /* colores */
+  --color-azul: #3498db;
+  --color-azul-oscuro: #2c3e50;
+  --color-rojo: #e74c3c;
+  --color-verder: #27ae60;
+  --color-blanco: #ffffff;
+  --color-gris: #bdc3c7;
+  --color-texto: #2c3e50;
+  --color-marron: #856404;
+  --color-crema: #fff3cd; 
+  
+  /* sombras y bordes */
+  --luz-background: #ecf0f1;
+  --sombras: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --radio: 8px;
+  --transicion: all 0.3s ease;
 }
 
-h1 {
-    color: #040133;
-    margin-top: 20px;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-h2 {
-    color: #260672;
-    text-align: center;
-    margin-top: 10px;
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--luz-background);
+  color: var(--color-texto);
+  line-height: 1.6;
 }
 
-p {
-    color: #252525;
-    text-align: center;
-    margin-top: 5px;
+.logo-header {
+  height: 70px;
+  width: auto;
+  display: block;
 }
 
-/*button {
-    background-color: #040133;
-    color: #ffffff; 
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 20px;
+header {
+  background-color: var(--color-azul-oscuro);
+  color: var(--color-blanco);
+  padding: 10px 20px;
+  margin-bottom: 30px;
+  border-radius: var(--radio);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--sombras);
 }
 
-button:hover {
-    background-color: #260672;
+a {
+  text-decoration:none; 
+  display:inline-block;
 }
 
-.maga {
-    background-color: green;    
+main {
+  margin-top: 20px;
 }
-*/
+
+button, .btn-pestana {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transicion);
+  text-decoration: none;
+}
+
+.btn-pestana.activo {
+  background-color: var(--color-azul-oscuro);
+  color: var(--color-blanco);
+}
+
+.btn-exito {
+  background-color: var(--color-verder);
+  color: var(--color-blanco);
+}
+
+.btn-peligro {
+  background-color: var(--color-rojo);
+  color: var(--color-blanco);
+  padding: 5px 10px;
+  border-radius: var(--radio);
+}

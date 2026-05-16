@@ -1,12 +1,175 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <title>Estudiantes</title>
+  </head>
+  <body>
+    <main class="container-fluid py-4">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+          <h1 class="mb-3">Estudiantes</h1>
+          <div class="row align-items-center g-2">
+            <div class="col-12 col-md-6">
+              <p class="text-muted">Gestión de estudiantes registrados</p>
+            </div>
+            <div class="col-12 col-md-6 d-flex justify-content-md-end">
+              <button id="btn-agregar-estudiante" class="btn btn-primary">
+                Agregar Estudiante
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-xl-10">
+          <div class="table-responsive">
+            <div id="tabla-estudiantes"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div
+      class="modal fade"
+      id="modal-agregar-estudiante"
+      tabindex="-1"
+      aria-labelledby="modal-agregar-estudiante-label"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-agregar-estudiante-label">
+              Nuevo estudiante
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p class="text-muted mb-4">Completa los datos del estudiante.</p>
+
+            <form id="form-agregar-estudiante" class="row g-3">
+              <div class="col-12 col-md-6">
+                <label for="estudiante-nombre" class="form-label">Nombre</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="estudiante-nombre"
+                  name="nombres"
+                />
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label for="estudiante-apellido" class="form-label"
+                  >Apellido</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="estudiante-apellido"
+                  name="apellido"
+                />
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label for="estudiante-documento" class="form-label">DNI</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="estudiante-documento"
+                  name="documento"
+                />
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label for="estudiante-telefono" class="form-label"
+                  >Teléfono</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="estudiante-telefono"
+                  name="telefono"
+                />
+              </div>
+
+              <div class="col-12">
+                <label for="estudiante-email" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="estudiante-email"
+                  name="email"
+                />
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label for="estudiante-fecha-nacimiento" class="form-label"
+                  >Fecha de nacimiento</label
+                >
+                <input
+                  type="date"
+                  class="form-control"
+                  id="estudiante-fecha-nacimiento"
+                  name="fecha_nacimiento"
+                />
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label for="estudiante-estado" class="form-label">Estado</label>
+                <select
+                  class="form-select"
+                  id="estudiante-estado"
+                  name="activo"
+                >
+                  <option value="1" selected>Activo</option>
+                  <option value="0">Inactivo</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button
+              id="btn-submit-estudiante"
+              type="submit"
+              form="form-agregar-estudiante"
+              class="btn btn-primary"
+            >
+              Crear
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="toast-container position-fixed top-0 end-0 p-3"
+      id="toast-container"
+    ></div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <script type="module" src="./js/pages/estudiantes.js"></script>
+  </body>
 </html>

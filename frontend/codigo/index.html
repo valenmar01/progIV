@@ -1,45 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  </head>
-    <title>Programación IV</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Inscripción - FCAD UNER</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+  <div id="pantalla-app" class="contenedor" style="display: none;">
     <header>
-        <h1>Programación IV - Trabajo Práctico Integrador</h1>
-        <nav>
-            <ul>
-                <li><a href="#introduccion">Introducción</a></li>
-                <li><a href="#desarrollo">Desarrollo</a></li>
-                <li><a href="#conclusion">Conclusión</a></li>
-                <li><a href="#apendice-a">Apéndice A</a></li>
-            </ul>
-        </nav>
+      <div class="header-logo">
+        <img src="imagenes/FCADlogo.png" alt="Logo FCAD UNER" class="logo-header">
+      </div>
+      <div class="header-info">
+        <p>Bienvenido, <strong id="nombre-usuario">Usuario</strong></p>
+        <button class="btn-peligro btn-pequeno" onclick="window.location.href='login.html'">Cerrar Sesión</button>
+      </div>
     </header>
-    <article>
-        <section id="introduccion">
-            <h2>Introducción</h2>
-            <p>En este trabajo práctico integrador, haremos algo bieen copado</p>
-        </section>
-        <section id="desarrollo">
-            <h2>Desarrollo</h2>
-            <p>En esta sección se detalla el proceso de desarrollo del proyecto.</p>
-        </section>
-        <section id="conclusion">
-            <h2>Conclusión</h2>
-            <p>En esta sección se presentan las conclusiones del trabajo práctico integrador.</p>
-        </section>
-    </article>
-    <aside id="apendice-a">
-        <h2>Apéndice A: Información Adicional</h2>
-        <p>Aquí se detallan datos extra, tablas o gráficos complementarios.</p>
-    </aside>
+    <nav class="nav-pestanas" id="nav-principal">
+      <a href="dashboard.html" target="contenedor-paginas" class="btn-pestana activo">Dashboard</a>
+      <a href="estudiantes.html" target="contenedor-paginas" class="btn-pestana">Estudiantes</a>
+      <a href="cursos.html" target="contenedor-paginas" class="btn-pestana">Cursos</a>
+      <a href="inscripciones.html" target="contenedor-paginas" class="btn-pestana">Inscripciones</a>
+    </nav>
+
+    <main class="marco-contenido">
+      <iframe name="contenedor-paginas" id="contenedor-paginas" src="dashboard.html" width="100%" height="600px"
+        frameborder="0"></iframe>
+    </main>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+
 </body>
 
 </html>

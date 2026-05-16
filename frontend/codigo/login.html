@@ -1,12 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acceso al Sistema - FCAD UNER</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/login.css" />
+  </head>
+
+  <body class="pagina-login">
+    <div class="contenedor-login">
+      <div class="logo-login-container">
+        <img
+          src="imagenes/Administración grises PNG.png"
+          alt="Logo FCAD UNER"
+          class="logo-login"
+        />
+      </div>
+      <h1>Acceso al Sistema</h1>
+      <div id="error-login" class="mensaje-error"></div>
+      <form id="formulario-login" class="formulario-login">
+        <div class="grupo-campo">
+          <label for="input-usuario">Usuario</label>
+          <input
+            type="text"
+            id="input-usuario"
+            placeholder="Ingrese su usuario"
+            required
+          />
+        </div>
+        <div class="grupo-campo">
+          <label for="input-contrasena">Contraseña</label>
+          <input
+            type="password"
+            id="input-contrasena"
+            placeholder="Ingrese su contraseña"
+            required
+          />
+        </div>
+        <button type="submit">Ingresar</button>
+      </form>
+      <div class="info-credenciales">
+        <strong>Credenciales de Prueba:</strong>
+        <p>Usuario: <b>admin</b></p>
+        <p>Contraseña: <b>1234</b></p>
+      </div>
+    </div>
+    <script type="module" src="js/pages/login.js"></script>
+  </body>
 </html>
