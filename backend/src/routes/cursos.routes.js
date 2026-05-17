@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import { getAllCursos } from '../controllers/cursos.controller.js';
+import { getAllCursos, getCursoByID, createCurso, activarDesactivarCursoByID, updateCursoByID } from '../controllers/cursos.controller.js';
 const router = Router();
 
-//obtener todas las categorias
-router.get('/cursos', getAllCursos);
-// router.post('/estudiantes', createEstudiante);
-// router.patch('/estudiantes/:id', updateEstudianteByID);
-// router.post('/estudiantes/:id', activarDesactivarEstudianteByID);
-export default router;
 
+router.get('/cursos', getAllCursos);
+router.get('/cursos/:id', getCursoByID);
+router.post('/cursos', createCurso);
+router.patch('/cursos/:id', updateCursoByID);
+router.post('/cursos/:id', activarDesactivarCursoByID);
+export default router;
 
