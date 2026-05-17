@@ -8,5 +8,5 @@ router.get('/cursos/:id', getCursoByID);
 router.post('/cursos', createCurso);
 router.patch('/cursos/:id', updateCursoByID);
 router.post('/cursos/:id', activarDesactivarCursoByID);
-export default router;
+export default router;                                                                                   
 
