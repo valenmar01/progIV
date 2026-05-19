@@ -16,7 +16,6 @@ const renderAcciones = ({ id, documento, activo }) => {
 
 const crearFila = (estudiante, n) => `
     <tr data-documento="${estudiante.documento}">
-        <th scope="row">${n}</th>
         <td>${estudiante.documento}</td>
         <td>${estudiante.apellido}</td>
         <td>${estudiante.nombres}</td>
@@ -54,7 +53,7 @@ const renderTabla = (data) => {
     document.getElementById("tabla-estudiantes").innerHTML = `
         <table class="table table-striped table-hover align-middle">
             <thead><tr>
-                <th>#</th><th>Documento</th><th>Apellido</th><th>Nombres</th><th>Email</th><th>Activo</th><th>Acciones</th>
+                <th>Documento</th><th>Apellido</th><th>Nombres</th><th>Email</th><th>Activo</th><th>Acciones</th>
             </tr></thead>
             <tbody>${filas}</tbody>
         </table>${paginacion}`;
@@ -108,7 +107,6 @@ const abrirModal = (modo = "crear", estudiante = null) => {
         form.elements.namedItem("nombres").value = estudiante.nombres ?? "";
         form.elements.namedItem("apellido").value = estudiante.apellido ?? "";
         form.elements.namedItem("documento").value = estudiante.documento ?? "";
-        form.elements.namedItem("telefono").value = estudiante.telefono ?? "";
         form.elements.namedItem("email").value = estudiante.email ?? "";
         form.elements.namedItem("fecha_nacimiento").value = (estudiante.fecha_nacimiento ?? "").toString().slice(0, 10);
         form.elements.namedItem("activo").value = `${estudiante.activo ?? 1}`;
@@ -131,7 +129,6 @@ const manejarSubmit = async (evento) => {
         documento: data.get("documento")?.trim(),
         apellido: data.get("apellido")?.trim(),
         nombres: data.get("nombres")?.trim(),
-        telefono: data.get("telefono")?.trim(),
         email: data.get("email")?.trim(),
         fecha_nacimiento: data.get("fecha_nacimiento")?.trim(),
         activo: Number(data.get("activo") ?? 1)
