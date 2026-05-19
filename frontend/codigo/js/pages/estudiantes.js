@@ -162,6 +162,8 @@ const manejarSubmit = async (evento) => {
 };
 
 const manejarClick = async (evento) => {
+    console.log("¡Clic detectado en:", evento.target); //revisar
+    
     const botonPagina = evento.target.closest("[data-page]");
     if (botonPagina) {
         const n = Number(botonPagina.dataset.page);
