@@ -6,7 +6,7 @@ const router = Router();
 router.get('/cursos', getAllCursos);
 router.get('/cursos/:id', getCursoByID);
 router.post('/cursos', createCurso);
-router.patch('/cursos/:id', updateCursoByID);
-router.post('/cursos/:id', activarDesactivarCursoByID);
+router.put('/cursos/:id', updateCursoByID);
+router.delete('/cursos/:id', activarDesactivarCursoByID);
 export default router;                                                                                   
 

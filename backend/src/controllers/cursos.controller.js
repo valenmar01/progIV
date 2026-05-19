@@ -28,13 +28,16 @@ export const getCursoByID = async (req, res) => {
         }
         res.status(200).json(cursoDTO(rows[0]));
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: "Error al obtener el curso" });
     }
 }
 
 export const createCurso = async (req, res) => {
     const { nombre, descripcion, fecha_inicio, cantidad_horas, inscriptos_max, } = req.body;
-    const values = [nombre, descripcion, fecha_inicio, cantidad_horas, inscriptos_max];
+    const id_curso_estado = 1;
+    const values = [nombre, descripcion, fecha_inicio, cantidad_horas, inscriptos_max,id_curso_estado];
+
 
     try {
         const { rows } = await pool.query(
@@ -43,8 +46,11 @@ export const createCurso = async (req, res) => {
                 descripcion,
                 fecha_inicio,
                 cantidad_horas,
-                inscriptos_max
-            ) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+                inscriptos_max,
+                id_curso_estado,
+                id_usuario_modificacion,
+                fecha_hora_modificacion
+            ) VALUES ($1, $2, $3, $4, $5,$6,1, NOW()) RETURNING *`,
             values
         );
 
@@ -53,12 +59,13 @@ export const createCurso = async (req, res) => {
             curso: cursoDTO(rows[0])
         });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: "Error al crear el curso" });
     }
 }
 
 export const activarDesactivarCursoByID = async (req, res) => {
-    const { id } = req.params;
+    const { id_curso } = req.params;
     const { activo } = req.body;
     let message = "curso activado correctamente"
     if (activo != 1) {
@@ -67,7 +74,8 @@ export const activarDesactivarCursoByID = async (req, res) => {
 
     try {
         const { rowCount, rows } = await pool.query(
-            `UPDATE cursos SET activo = ${activo} WHERE id_curso = ${id} RETURNING *`
+            `UPDATE cursos SET id_curso_estado = $1 WHERE id_curso = $2 RETURNING *`
+            [activo,id_curso]
         );
 
         if (rowCount === 0) {
@@ -80,6 +88,7 @@ export const activarDesactivarCursoByID = async (req, res) => {
             curso: cursoDesactivado
         });
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: "Error al actualizar el estado del curso" });
     }
 }
@@ -88,22 +97,23 @@ export const updateCursoByID = async (req, res) => {
     console.log(req.params.id);
     console.log(req.body)
     const { id } = req.params;
-    const { nombre, descripcion, fecha_inicio, cantidad_horas, inscriptos_max} = req.body;
-    const v = (val) => val !== undefined ? `'${val}'` : 'NULL';
+    const { nombre, descripcion, fecha_inicio, cantidad_horas, inscriptos_max, id_curso_estado, id_curso} = req.body;
+    const values = [nombre ?? null, descripcion ?? null, fecha_inicio ?? null, cantidad_horas ?? null, inscriptos_max ?? null,id_curso_estado ?? null, id]
 
     try {
         const { rowCount, rows } = await pool.query(
             `UPDATE cursos
-             SET nombre = COALESCE(${v(nombre)}, nombre),
-                 descripcion = COALESCE(${v(descripcion)}, descripcion),
-                 fecha_inicio = COALESCE(${v(fecha_inicio)}, fecha_inicio),
-                 cantidad_horas = COALESCE(${v(cantidad_horas)}, cantidad_horas),
-                 inscriptos_max = COALESCE(${v(inscriptos_max)}, inscriptos_max),
-                 id_curso_estado = COALESCE(${v(id_curso_estado)}, id_curso_estado),
+             SET nombre = COALESCE($1, nombre),
+                 descripcion = COALESCE($2, descripcion),
+                 fecha_inicio = COALESCE($3, fecha_inicio),
+                 cantidad_horas = COALESCE($4, cantidad_horas),
+                 inscriptos_max = COALESCE($5, inscriptos_max),
+                 id_curso_estado = COALESCE($6, id_curso_estado),
                  id_usuario_modificacion = 1,
                  fecha_hora_modificacion = NOW()
-             WHERE id_curso = ${id}
-             RETURNING *`
+             WHERE id_curso = $7
+             RETURNING *`,
+             values
         );
 
         if (rowCount === 0) {
@@ -115,6 +125,7 @@ export const updateCursoByID = async (req, res) => {
             curso: cursoDTO(rows[0])
         });
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: "Error al actualizar el curso" });
     }
 }
