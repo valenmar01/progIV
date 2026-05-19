@@ -6,6 +6,6 @@ const router = Router();
 router.get('/estudiantes', getAllEstudiantes);
 router.get('/estudiantes/:id', getEstudianteByID);
 router.post('/estudiantes', createEstudiante);
-router.patch('/estudiantes/:id', updateEstudianteByID);
-router.post('/estudiantes/:id', activarDesactivarEstudianteByID);
+router.put('/estudiantes/:id', updateEstudianteByID);
+router.delete('/estudiantes/:id', activarDesactivarEstudianteByID);
 export default router;
