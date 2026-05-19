@@ -26,8 +26,8 @@ const crearFila = (estudiante, n) => `
 
 const renderTabla = (data) => {
     estudiantesPagina = data.estudiantes;
-    paginaActual = data.pagina;
-    totalPaginas = data.totalPaginas;
+    paginaActual = Number(data.pagina);       
+    totalPaginas = Number(data.totalPaginas);
 
     const inicio = (paginaActual - 1) * 5;
     const filas = estudiantesPagina.length
@@ -165,7 +165,9 @@ const manejarClick = async (evento) => {
     const botonPagina = evento.target.closest("[data-page]");
     if (botonPagina) {
         const n = Number(botonPagina.dataset.page);
-        if (!Number.isNaN(n)) await cargarPagina(n);
+        if (!Number.isNaN(n) && n > 0 && n <= totalPaginas) {
+            await cargarPagina(n);
+        }
         return;
     }
 
