@@ -61,46 +61,45 @@
 
             <form id="form-agregar-estudiante" class="row g-3">
               <div class="col-12 col-md-6">
-                <label for="estudiante-nombre" class="form-label">Nombre</label>
+                <label for="estudiante-nombre" class="form-label">Nombre <span class="text-danger">*</span></label> 
                 <input
                   type="text"
                   class="form-control"
                   id="estudiante-nombre"
                   name="nombres"
+                  required
+                  pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
+                  maxlength="50"
+                  title="Solo se permiten letras y espacios"
                 />
               </div>
 
               <div class="col-12 col-md-6">
-                <label for="estudiante-apellido" class="form-label"
-                  >Apellido</label
-                >
+                <label for="estudiante-apellido" class="form-label">Apellido <span class="text-danger">*</span></label>
                 <input
                   type="text"
                   class="form-control"
                   id="estudiante-apellido"
                   name="apellido"
+                  required
+                  pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
+                  maxlength="50"
+                  title="Solo se permiten letras y espacios"
                 />
               </div>
 
               <div class="col-12 col-md-6">
-                <label for="estudiante-documento" class="form-label">DNI</label>
+                <label for="estudiante-documento" class="form-label">DNI <span class="text-danger">*</span></label>
                 <input
                   type="text"
                   class="form-control"
                   id="estudiante-documento"
                   name="documento"
-                />
-              </div>
-
-              <div class="col-12 col-md-6">
-                <label for="estudiante-telefono" class="form-label"
-                  >Teléfono</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="estudiante-telefono"
-                  name="telefono"
+                  required
+                  pattern="[0-9]{7,8}"
+                  minlength="7"
+                  maxlength="8"
+                  title="El DNI debe contener solo números (entre 7 y 8 dígitos)"
                 />
               </div>
 
