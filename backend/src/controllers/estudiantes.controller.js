@@ -88,8 +88,6 @@ export const activarDesactivarEstudianteByID = async (req, res) => {
 }
 
 export const updateEstudianteByID = async (req, res) => {
-    console.log(req.params.id);
-    console.log(req.body)
     const { id } = req.params;
     const { apellido, nombres, email, fecha_nacimiento } = req.body;
     const v = (val) => val !== undefined ? `'${val}'` : 'NULL';
@@ -97,10 +95,10 @@ export const updateEstudianteByID = async (req, res) => {
     try {
         const { rowCount, rows } = await pool.query(
             `UPDATE estudiantes
-             SET apellido = COALESCE(${v(apellido)}, apellido),
-                 nombres = COALESCE(${v(nombres)}, nombres),
-                 email = COALESCE(${v(email)}, email),
-                 fecha_nacimiento = COALESCE(${v(fecha_nacimiento)}, fecha_nacimiento),
+             SET apellido = ${v(apellido)},
+                 nombres = ${v(nombres)},
+                 email = ${v(email)},
+                 fecha_nacimiento = ${v(fecha_nacimiento)},
                  id_usuario_modificacion = 1,
                  fecha_hora_modificacion = NOW()
              WHERE id_estudiante = ${id}
