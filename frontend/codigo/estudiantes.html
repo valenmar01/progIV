@@ -114,14 +114,15 @@
               </div>
 
               <div class="col-12 col-md-6">
-                <label for="estudiante-fecha-nacimiento" class="form-label"
-                  >Fecha de nacimiento</label
-                >
+                <label for="estudiante-fecha-nacimiento" class="form-label">Fecha de nacimiento <span class="text-danger">*</span></label>
                 <input
                   type="date"
                   class="form-control"
                   id="estudiante-fecha-nacimiento"
                   name="fecha_nacimiento"
+                  required
+                  min="1930-01-01"
+                  max="2009-12-31"
                 />
               </div>
 
