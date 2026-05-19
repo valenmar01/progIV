@@ -41,3 +41,4 @@ npm run dev
 ## Autores
 
 - [CejasClaudioA](https://github.com/CejasClaudioA)
+- [ValentinaMartinez](https://github.com/valenmar01) 

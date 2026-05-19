@@ -5,12 +5,28 @@ const inputContrasenia = document.getElementById('input-contrasenia');
 const mensajeError = document.getElementById('error-login');
 
 
+// Escuchar el evento de envío TENGO QUE CONFIGURAR EL CONTROLLER PARA QUE TRAIGA EL USUARIO
+//SI STATUS 200, ENTRA. SI NO, NO
+//INYECTR USUARIO A LA BD CON LA CONTRA HASHEADA PARA COMPARAR
+
+//INFO QUE TIENE QUE TRAER: USUARIO, CONTRASEÑA SOLO DE LOS DE ESTADO 1
+//ESTADO 0 NO TIENE QUE TRAER
+const mostrarError = (msg) => {
+  mensajeError.textContent = msg;
+  mensajeError.style.display = "block";
+};
+
+const ocultarError = () => {
+  mensajeError.textContent = "";
+  mensajeError.style.display = "none";
+};
+
 formulario.addEventListener('submit', async (e) => {
     // Evitamos que la página se recargue
     e.preventDefault();
 
     const usuarioIngresado = inputUsuario.value.trim();
-    const contraseniaIngresada = inputContrasenia.value.trim();
+    const contraseniaIngresada = inputContrasenia.value;
     
     const res = await fetch("http://localhost:3000/login", {
         method: 'post',
@@ -20,7 +36,7 @@ formulario.addEventListener('submit', async (e) => {
         body: JSON.stringify(
             {
             usuario: usuarioIngresado,
-            contrasenia: contraseniaIngresada
+            //contrasenia: contraseniaIngresada
         })
     });
 
@@ -29,9 +45,11 @@ formulario.addEventListener('submit', async (e) => {
     console.log(res);
     console.log(usuarioIngresado);
     console.log(contraseniaIngresada);
+    
 
     // Limpiar mensajes previos
-    mensajeError.textContent = '';
+    //mensajeError.textContent = '';
+    ocultarError();
 
     // Lógica de validación
     if (res.status === 200) { 
@@ -46,14 +64,16 @@ formulario.addEventListener('submit', async (e) => {
     } else if (res.status === 404) {
       // El backend nos avisó que no existe
       mensajeError.textContent = 'Usuario o contraseña incorrectos.';
+      mostrarError('Usuario o contraseña incorrectos.');
       inputContrasenia.value = ''; // Limpiamos la clave por seguridad
-
+        console.log(mensajeError);
       inputUsuario.focus();
       inputContrasenia.focus();
 
   } else {
       // Cualquier otro error
-      mensajeError.textContent = 'Ocurrió un error en el servidor.';    
-
+      //mensajeError.textContent = 'Ocurrió un error en el servidor.';
+      mostrarError('Usuario o contraseña incorrectos.');    
+        console.log(mensajeError);
     } 
 });
