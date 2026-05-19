@@ -1,13 +1,15 @@
 import { pool } from '../db.js';
+//import { usuario } from '../models/usuario.js';
 
 export const login = async (req, res) => {
   
-  const {usuario, contrasenia} = req.body;
+  const {usuario} = req.body;
   
   try{
 
-    const {rows} = await pool.query('SELECT * FROM usuarios WHERE nombre_usuario = $1 AND contrasenia = $2  AND activo = 1', [usuario, contrasenia]);
-  
+    //const {rows} = await pool.query('SELECT * FROM usuarios WHERE nombre_usuario = $1 AND contrasenia = $2  AND activo = 1', [usuario, contrasenia]);
+    const {rows} = await pool.query('SELECT * FROM usuarios WHERE nombre_usuario = $1 AND activo = 1', [usuario]);
+    
     if (rows.length === 0) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
