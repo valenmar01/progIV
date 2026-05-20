@@ -108,6 +108,7 @@ const abrirModal = (modo = "crear", estudiante = null) => {
         modo === "editar" ? "Editar estudiante" : "Nuevo estudiante";
     document.getElementById("btn-submit-estudiante").textContent =
         modo === "editar" ? "Guardar cambios" : "Crear";
+        
 
     // si el modo es edición y se proporcionó un estudiante, llena el formulario con los datos del estudiante, de lo contrario, resetea el formulario para crear un nuevo estudiante. Además, si es edición, se bloquea el campo de documento para evitar que se modifique, ya que es un identificador único.
     if (modo === "editar" && estudiante) {
@@ -116,9 +117,8 @@ const abrirModal = (modo = "crear", estudiante = null) => {
         form.elements.namedItem("apellido").value = estudiante.apellido ?? "";
         form.elements.namedItem("documento").value = estudiante.documento ?? "";
         form.elements.namedItem("email").value = estudiante.email ?? "";
-        form.elements.namedItem("fecha_nacimiento").value = (estudiante.fecha_nacimiento ?? "").toString().slice(0, 10);
+        form.elements.namedItem("fecha_nacimiento").value = (estudiante.fechaNacimiento ?? "").toString().slice(0, 10);
         form.elements.namedItem("activo").value = `${estudiante.activo ?? 1}`;
-        //form.elements.namedItem("documento").setAttribute("readonly", "true");
     } else {
         form.reset();
         form.elements.namedItem("documento").removeAttribute("readonly");
@@ -171,7 +171,6 @@ const manejarSubmit = async (evento) => {
         form.reset();
         form.dataset.modo = "crear";
         await cargarPagina(1);
-       // await cargarPagina(esEdicion ? paginaActual : totalPaginas + 1);
 
     } catch (error) {
         mostrarToast(error.message ?? "No se pudo guardar el estudiante", "danger");

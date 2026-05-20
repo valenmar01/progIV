@@ -1,9 +1,9 @@
-export const estudianteDTO = (row) => ({
+export const estudianteOutputDTO = (row) => ({
     id: row.id_estudiante,
     documento: row.documento,
     apellido: row.apellido,
     nombres: row.nombres,
     email: row.email,
-    fecha_nacimiento: row.fecha_nacimiento,
+    fechaNacimiento: row.fecha_nacimiento,
     activo: row.activo
 });

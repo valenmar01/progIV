@@ -1,6 +1,6 @@
 import { pool } from '../db.js';
 import { getPaginacion, parsearPaginado } from '../helpers/paginar.js';
-import { estudianteDTO } from '../models/estudiante.js';
+import { estudianteOutputDTO } from '../models/estudiante.js';
 
 export const getAllEstudiantes = async (req, res) => {
     const { pagina, limite, offset } = getPaginacion(req.query);
@@ -11,7 +11,7 @@ export const getAllEstudiantes = async (req, res) => {
             [limite, offset]
         );
 
-        const { totalPaginas, datos } = parsearPaginado(rows, limite, estudianteDTO);
+        const { totalPaginas, datos } = parsearPaginado(rows, limite, estudianteOutputDTO);
 
         res.status(200).json({ totalPaginas, estudiantes: datos, pagina });
     } catch (error) {
@@ -26,13 +26,15 @@ export const getEstudianteByID = async (req, res) => {
         if (rows.length === 0) {
             return res.status(404).json({ message: "Estudiante no encontrado" });
         }
-        res.status(200).json(estudianteDTO(rows[0]));
+        res.status(200).json(estudianteOutputDTO(rows[0]));
     } catch (error) {
         res.status(500).json({ message: "Error al obtener el estudiante" });
     }
 }
 
 export const createEstudiante = async (req, res) => {
+    console.log("BODY RECIBIDO:", req.body);
+
     const { documento, apellido, nombres, email, fecha_nacimiento } = req.body;
     const values = [documento, apellido, nombres, email, fecha_nacimiento];
 
@@ -50,12 +52,14 @@ export const createEstudiante = async (req, res) => {
             ) VALUES ($1, $2, $3, $4, $5, 1, 2, NOW()) RETURNING *`,
             values
         );
+        console.log("INSERT EXITOSO, FILA CREADA:", rows[0]); // 2. Confirmar escritura 
 
         res.status(201).json({
             message: "Estudiante creado correctamente",
-            estudiante: estudianteDTO(rows[0])
+            estudiante: estudianteOutputDTO(rows[0])
         });
     } catch (error) {
+        console.error("ERROR CRÍTICO EN SQL:", error); // 3. Ver qué rompe la DB
         res.status(500).json({ message: "Error al crear el estudiante" });
     }
 }
@@ -77,7 +81,7 @@ export const activarDesactivarEstudianteByID = async (req, res) => {
         if (rowCount === 0) {
             return res.status(404).json({ message: "Estudiante no encontrado" });
         }
-        const estudianteDesactivado = estudianteDTO(rows[0]);
+        const estudianteDesactivado = estudianteOutputDTO(rows[0]);
 
         res.status(200).json({
             message,
@@ -90,15 +94,19 @@ export const activarDesactivarEstudianteByID = async (req, res) => {
 
 export const updateEstudianteByID = async (req, res) => {
     const { id } = req.params;
-    const { apellido, nombres, email, fecha_nacimiento } = req.body;
-
+//    const { apellido, nombres, email, fecha_nacimiento } = req.body;
+    const apellido = req.body.apellido ?? null;
+    const nombres = req.body.nombres ?? null;
+    const email = req.body.email ?? null;
+    const fecha_nacimiento = req.body.fecha_nacimiento ?? null;
+    
     try {
         const { rowCount, rows } = await pool.query(
             `UPDATE estudiantes
-             SET apellido = $1,
-                 nombres = $2,
-                 email = $3,
-                 fecha_nacimiento = $4,
+             SET apellido = COALESCE($1, apellido),
+                 nombres = COALESCE($2, nombres),
+                 email = COALESCE($3, email),
+                 fecha_nacimiento = COALESCE($4, fecha_nacimiento),
                  id_usuario_modificacion = 1,
                  fecha_hora_modificacion = NOW()
              WHERE id_estudiante = $5
@@ -112,7 +120,7 @@ export const updateEstudianteByID = async (req, res) => {
 
         res.status(200).json({
             message: "Estudiante actualizado correctamente",
-            estudiante: estudianteDTO(rows[0])
+            estudiante: estudianteOutputDTO(rows[0])
         });
     } catch (error) {
         console.error(error);
