@@ -1,3 +1,4 @@
+// esta función se encarga de cargar los cursos desde un archivo JSON, crear filas para cada curso y agregarlas a la tabla en el HTML. Si ocurre un error durante la carga, muestra un mensaje de error en la página.
 const cargarCursos = async () => {
     try {
         const respuesta = await fetch("progIV\frontend\codigo\js\cursos.json");
@@ -22,5 +23,5 @@ const cargarCursos = async () => {
         document.getElementById("error").style.display = "block";
     }
 }
-
+// llama la función cargarCursos cuando el contenido del DOM se haya cargado completamente, asegurando que la tabla esté lista para ser manipulada antes de intentar agregar filas con los datos de los cursos.
 document.addEventListener("DOMContentLoaded", cargarCursos);

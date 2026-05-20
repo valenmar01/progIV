@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="es">
 
-<<<<<<< HEAD
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,63 +13,26 @@
   <div class="contenedor-login">
     <div class="logo-login-container">
       <img src="imagenes/Administración grises PNG.png" alt="Logo FCAD UNER" class="logo-login" />
-=======
-  <body class="pagina-login">
-    <div class="contenedor-login">
-      <div class="logo-login-container">
-        <img
-          src="imagenes/Administración grises PNG.png"
-          alt="Logo FCAD UNER"
-          class="logo-login"
-        />
-      </div>
-      <h1>Acceso al Sistema</h1>
-      <div id="error-login" class="mensaje-error"></div>
-      <form id="formulario-login" class="formulario-login">
-        <div class="grupo-campo">
-          <label for="input-usuario">Usuario</label>
-          <input
-            type="text"
-            id="input-usuario"
-            placeholder="Ingrese su usuario"
-            maxlength="40"
-            required
-          />
-        </div>
-        <div class="grupo-campo">
-          <label for="input-contrasenia">Contraseña</label>
-          <input
-            type="password"
-            id="input-contrasenia"
-            placeholder="Ingrese su contraseña"
-            maxlength="100"
-            required
-          />
-        </div>
-        <button type="submit">Ingresar</button>
-      </form>
-      <div class="info-credenciales">
-        <strong>Credenciales de Prueba:</strong>
-        <p>Usuario: <b> Registrado en la base de datos</b></p>
-        <p>Contraseña: <b> Cualquiera</b></p>
-      </div>
->>>>>>> c9a50f06472a261f40b729778a366f76e32dd7d4
     </div>
     <h1>Acceso al Sistema</h1>
     <div id="error-login" class="mensaje-error"></div>
     <form id="formulario-login" class="formulario-login">
       <div class="grupo-campo">
         <label for="input-usuario">Usuario</label>
-        <input type="text" id="input-usuario" placeholder="Ingrese su usuario" required />
+        <input type="text" id="input-usuario" placeholder="Ingrese su usuario" maxlength="40" required />
       </div>
       <div class="grupo-campo">
-        <label for="input-contrasena">Contraseña</label>
-        <input type="password" id="input-contrasena" placeholder="Ingrese su contraseña" required />
+        <label for="input-contrasenia">Contraseña</label>
+        <input type="password" id="input-contrasenia" placeholder="Ingrese su contraseña" maxlength="100" required />
       </div>
       <button type="submit">Ingresar</button>
     </form>
-  </div>
-  <script type="module" src="js/pages/login.js"></script>
+    <div class="info-credenciales">
+      <strong>Credenciales de Prueba:</strong>
+      <p>Usuario: <b> Registrado en la base de datos</b></p>
+      <p>Contraseña: <b> Cualquiera</b></p>
+    </div>
+    <script type="module" src="js/pages/login.js"></script>
 </body>
 
 </html>
