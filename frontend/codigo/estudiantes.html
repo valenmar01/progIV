@@ -13,16 +13,16 @@
     <h2>Gestión de Estudiantes</h2>
     <div class="tarjeta">
       <h3>Registrar Nuevo Estudiante</h3>
-      <form id="formulario-estudiantes" class="formulario" onsubmit="event.preventDefault();">
+      <form id="form-agregar-estudiante" class="formulario" onsubmit="event.preventDefault();">
         <div class="grid">
-          <div class="grupo-campo"><label>Nombre</label><input type="text" id="form-est-nombre"
+          <div class="grupo-campo"><label>Nombre</label><input type="text" id="nombres"
               placeholder="Ej: Ignacio">
           </div>
-          <div class="grupo-campo"><label>Apellido</label><input type="text" id="form-est-apellido"
+          <div class="grupo-campo"><label>Apellido</label><input type="text" id="apellido"
               placeholder="Ej: Denis"></div>
-          <div class="grupo-campo"><label>DNI</label><input type="text" id="form-est-dni" placeholder="Ej: 12345678">
+          <div class="grupo-campo"><label>DNI</label><input type="text" id="documento" placeholder="Ej: 12345678">
           </div>
-          <div class="grupo-campo"><label>Email</label><input type="email" id="form-est-email"
+          <div class="grupo-campo"><label>Email</label><input type="email" id="email"
               placeholder="Ej: ignacio.id81@gmail.com"></div>
           <div class="grupo-campo"><label>Teléfono</label><input type="text" id="form-est-telefono"
               placeholder="Ej: 3454123456"></div>
@@ -31,7 +31,7 @@
           Estudiante</button>
       </form>
     </div>
-    <div style="overflow-x: auto;">
+    <div id="tabla-estudiantes" style="overflow-x: auto;">
       <table>
         <thead>
           <tr>
