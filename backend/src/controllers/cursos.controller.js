@@ -22,7 +22,7 @@ export const getAllCursos = async (req, res) => {
 export const getCursoByID = async (req, res) => {
     const { id } = req.params;
     try {
-        const { rows } = await pool.query(`SELECT * FROM cursos WHERE id_curso = ${id}`);
+        const { rows } = await pool.query(`SELECT * FROM cursos WHERE id_curso = $1`,[id]);
         if (rows.length === 0) {
             return res.status(404).json({ message: "Curso no encontrado" });
         }
@@ -65,8 +65,8 @@ export const createCurso = async (req, res) => {
 }
 
 export const activarDesactivarCursoByID = async (req, res) => {
-    const { id_curso } = req.params;
-    const { activo } = req.body;
+    const { id } = req.params;
+    let { activo } = req.body;
     let message = "curso activado correctamente"
     if (activo != 1) {
         message = "curso desactivado correctamente"
@@ -74,8 +74,8 @@ export const activarDesactivarCursoByID = async (req, res) => {
 
     try {
         const { rowCount, rows } = await pool.query(
-            `UPDATE cursos SET id_curso_estado = $1 WHERE id_curso = $2 RETURNING *`
-            [activo,id_curso]
+            `UPDATE cursos SET id_curso_estado = $1 WHERE id_curso = $2 RETURNING *`,
+            [activo,id]
         );
 
         if (rowCount === 0) {
