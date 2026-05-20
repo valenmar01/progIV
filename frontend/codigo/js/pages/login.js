@@ -4,13 +4,6 @@ const inputUsuario = document.getElementById('input-usuario');
 const inputContrasenia = document.getElementById('input-contrasenia');
 const mensajeError = document.getElementById('error-login');
 
-
-// Escuchar el evento de envío TENGO QUE CONFIGURAR EL CONTROLLER PARA QUE TRAIGA EL USUARIO
-//SI STATUS 200, ENTRA. SI NO, NO
-//INYECTR USUARIO A LA BD CON LA CONTRA HASHEADA PARA COMPARAR
-
-//INFO QUE TIENE QUE TRAER: USUARIO, CONTRASEÑA SOLO DE LOS DE ESTADO 1
-//ESTADO 0 NO TIENE QUE TRAER
 const mostrarError = (msg) => {
   mensajeError.textContent = msg;
   mensajeError.style.display = "block";
@@ -58,22 +51,21 @@ formulario.addEventListener('submit', async (e) => {
         localStorage.setItem('estaAutenticado', 'true');
         alert('¡Bienvenido al sistema!');
         
-        // Cambia 'dashboard.html' por tu página de destino
         window.location.href = 'index.html';
     
     } else if (res.status === 404) {
-      // El backend nos avisó que no existe
-      mensajeError.textContent = 'Usuario o contraseña incorrectos.';
-      mostrarError('Usuario o contraseña incorrectos.');
-      inputContrasenia.value = ''; // Limpiamos la clave por seguridad
+
+      // El backend avisa que no existe
+        mensajeError.textContent = 'Usuario o contraseña incorrectos.';
+        mostrarError('Usuario o contraseña incorrectos.');
+        inputContrasenia.value = ''; // Limpiar clave por seguridad
         console.log(mensajeError);
-      inputUsuario.focus();
-      inputContrasenia.focus();
+        inputUsuario.focus();
+        inputContrasenia.focus();
 
   } else {
-      // Cualquier otro error
-      //mensajeError.textContent = 'Ocurrió un error en el servidor.';
-      mostrarError('Usuario o contraseña incorrectos.');    
+    
+        mostrarError('Ocurrió un error en el servidor.');    
         console.log(mensajeError);
     } 
 });
