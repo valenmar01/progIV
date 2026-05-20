@@ -13,7 +13,7 @@ export const getAllEstudiantes = async (req, res) => {
 
         const { totalPaginas, datos } = parsearPaginado(rows, limite, estudianteDTO);
 
-        res.status(200).json({ totalPaginas, estudiantes: datos });
+        res.status(200).json({ totalPaginas, estudiantes: datos, pagina });
     } catch (error) {
         res.status(500).json({ message: "Error al obtener los estudiantes" });
     }
@@ -22,7 +22,7 @@ export const getAllEstudiantes = async (req, res) => {
 export const getEstudianteByID = async (req, res) => {
     const { id } = req.params;
     try {
-        const { rows } = await pool.query(`SELECT * FROM estudiantes WHERE id_estudiante = ${id}`);
+        const { rows } = await pool.query('SELECT * FROM estudiantes WHERE id_estudiante = $1', [id]);
         if (rows.length === 0) {
             return res.status(404).json({ message: "Estudiante no encontrado" });
         }
@@ -70,7 +70,8 @@ export const activarDesactivarEstudianteByID = async (req, res) => {
 
     try {
         const { rowCount, rows } = await pool.query(
-            `UPDATE estudiantes SET activo = ${activo} WHERE id_estudiante = ${id} RETURNING *`
+            'UPDATE estudiantes SET activo = $1 WHERE id_estudiante = $2 RETURNING *',
+            [activo, id]
         );
 
         if (rowCount === 0) {
@@ -90,19 +91,19 @@ export const activarDesactivarEstudianteByID = async (req, res) => {
 export const updateEstudianteByID = async (req, res) => {
     const { id } = req.params;
     const { apellido, nombres, email, fecha_nacimiento } = req.body;
-    const v = (val) => val !== undefined ? `'${val}'` : 'NULL';
 
     try {
         const { rowCount, rows } = await pool.query(
             `UPDATE estudiantes
-             SET apellido = ${v(apellido)},
-                 nombres = ${v(nombres)},
-                 email = ${v(email)},
-                 fecha_nacimiento = ${v(fecha_nacimiento)},
+             SET apellido = $1,
+                 nombres = $2,
+                 email = $3,
+                 fecha_nacimiento = $4,
                  id_usuario_modificacion = 1,
                  fecha_hora_modificacion = NOW()
-             WHERE id_estudiante = ${id}
-             RETURNING *`
+             WHERE id_estudiante = $5
+             RETURNING *`,
+            [apellido, nombres, email, fecha_nacimiento, id]
         );
 
         if (rowCount === 0) {
@@ -114,6 +115,7 @@ export const updateEstudianteByID = async (req, res) => {
             estudiante: estudianteDTO(rows[0])
         });
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: "Error al actualizar el estudiante" });
     }
 }
