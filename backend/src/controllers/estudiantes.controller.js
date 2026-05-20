@@ -1,6 +1,6 @@
 import { pool } from '../db.js';
 import { getPaginacion, parsearPaginado } from '../helpers/paginar.js';
-import { estudianteOutputDTO } from '../models/estudiante.js';
+import { estudianteOutputDTO, estudianteInputDTO } from '../models/estudiante.js';
 
 export const getAllEstudiantes = async (req, res) => {
     const { pagina, limite, offset } = getPaginacion(req.query);
@@ -34,9 +34,7 @@ export const getEstudianteByID = async (req, res) => {
 
 export const createEstudiante = async (req, res) => {
     console.log("BODY RECIBIDO:", req.body);
-
-    const { documento, apellido, nombres, email, fecha_nacimiento } = req.body;
-    const values = [documento, apellido, nombres, email, fecha_nacimiento];
+    const nuevoEstudiante = estudianteInputDTO(req.body);
 
     try {
         const { rows } = await pool.query(
@@ -50,7 +48,14 @@ export const createEstudiante = async (req, res) => {
                 id_usuario_modificacion,
                 fecha_hora_modificacion
             ) VALUES ($1, $2, $3, $4, $5, 1, 2, NOW()) RETURNING *`,
-            values
+            [
+                nuevoEstudiante.documento,
+                nuevoEstudiante.apellido,
+                nuevoEstudiante.nombres,
+                nuevoEstudiante.email,
+                nuevoEstudiante.fecha_nacimiento
+            ]
+            
         );
         console.log("INSERT EXITOSO, FILA CREADA:", rows[0]); // 2. Confirmar escritura 
 
@@ -94,12 +99,9 @@ export const activarDesactivarEstudianteByID = async (req, res) => {
 
 export const updateEstudianteByID = async (req, res) => {
     const { id } = req.params;
-//    const { apellido, nombres, email, fecha_nacimiento } = req.body;
-    const apellido = req.body.apellido ?? null;
-    const nombres = req.body.nombres ?? null;
-    const email = req.body.email ?? null;
-    const fecha_nacimiento = req.body.fecha_nacimiento ?? null;
-    
+
+    const datosActualizados = estudianteInputDTO(req.body);
+
     try {
         const { rowCount, rows } = await pool.query(
             `UPDATE estudiantes
@@ -111,7 +113,12 @@ export const updateEstudianteByID = async (req, res) => {
                  fecha_hora_modificacion = NOW()
              WHERE id_estudiante = $5
              RETURNING *`,
-            [apellido, nombres, email, fecha_nacimiento, id]
+            [datosActualizados.apellido,
+             datosActualizados.nombres,
+             datosActualizados.email,
+             datosActualizados.fecha_nacimiento,
+             id
+            ]
         );
 
         if (rowCount === 0) {
