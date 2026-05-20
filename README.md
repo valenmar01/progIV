@@ -42,3 +42,6 @@ El sistema apunta a cubrir:
 
 - [CejasClaudioA](https://github.com/CejasClaudioA)
 - [ValentinaMartinez](https://github.com/valenmar01)
+- [Tomas Segovia](https://github.com/segosal2002)
+- [Ignacio Denis](https://github.com/IgnacioDe)
+- [Magali Castell](https://github.com/magacastell)
