@@ -143,7 +143,7 @@ const manejarSubmit = async (evento) => {
             : payload;
 
         const res = await fetch(url, {
-            method: esEdicion ? "PATCH" : "POST",
+            method: esEdicion ? "PUT" : "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body)
         });
@@ -188,7 +188,7 @@ const manejarClick = async (evento) => {
         const nuevoActivo = activo === "1" ? 0 : 1;
         try {
             const res = await fetch(`http://localhost:3000/estudiantes/${id}`, {
-                method: "POST",
+                method: "DELETE",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ activo: nuevoActivo })
             });
@@ -198,7 +198,7 @@ const manejarClick = async (evento) => {
             const fila = document.querySelector(`tr[data-documento="${documento}"]`);
             if (fila) {
                 fila.querySelector('[data-col="activo"]').innerHTML = renderActivo(nuevoActivo);
-                fila.querySelector('[data-col="acciones"]').innerHTML = renderAcciones({ documento, activo: nuevoActivo });
+                fila.querySelector('[data-col="acciones"]').innerHTML = renderAcciones({ id, documento, activo: nuevoActivo });
             }
             mostrarToast(json.message ?? "Estudiante actualizado");
         } catch (error) {
