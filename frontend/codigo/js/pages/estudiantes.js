@@ -118,7 +118,7 @@ const abrirModal = (modo = "crear", estudiante = null) => {
         form.elements.namedItem("email").value = estudiante.email ?? "";
         form.elements.namedItem("fecha_nacimiento").value = (estudiante.fecha_nacimiento ?? "").toString().slice(0, 10);
         form.elements.namedItem("activo").value = `${estudiante.activo ?? 1}`;
-        form.elements.namedItem("documento").setAttribute("readonly", "true");
+        //form.elements.namedItem("documento").setAttribute("readonly", "true");
     } else {
         form.reset();
         form.elements.namedItem("documento").removeAttribute("readonly");
@@ -170,8 +170,9 @@ const manejarSubmit = async (evento) => {
         window.bootstrap.Modal.getOrCreateInstance(document.getElementById("modal-agregar-estudiante")).hide();
         form.reset();
         form.dataset.modo = "crear";
+        await cargarPagina(1);
+       // await cargarPagina(esEdicion ? paginaActual : totalPaginas + 1);
 
-        await cargarPagina(esEdicion ? paginaActual : totalPaginas + 1);
     } catch (error) {
         mostrarToast(error.message ?? "No se pudo guardar el estudiante", "danger");
     }
