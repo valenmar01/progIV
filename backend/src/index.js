@@ -4,6 +4,8 @@ import morgan from 'morgan';
 import cors from 'cors';
 import { PORT } from './config.js';
 import estudiantesRoutes from './routes/estudiantes.routes.js';
+import cursosRoutes from './routes/cursos.routes.js';
+
 import auth from "./routes/auth.routes.js";
 
 //initializations
@@ -19,6 +21,7 @@ app.use(morgan('dev'));
 
 //routes
 app.use(estudiantesRoutes);
+app.use(cursosRoutes);
 app.use(auth)
 
 app.listen(PORT, () => {

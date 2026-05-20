@@ -4,7 +4,6 @@ export const estudianteDTO = (row) => ({
     apellido: row.apellido,
     nombres: row.nombres,
     email: row.email,
-    telefono: row.telefono,
     fecha_nacimiento: row.fecha_nacimiento,
     activo: row.activo
 });

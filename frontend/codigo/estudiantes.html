@@ -28,9 +28,132 @@
         </div>
       </div>
 
+<<<<<<< HEAD
       <div class="col-12 col-xl-10">
         <div class="table-responsive">
           <div id="tabla-estudiantes"></div>
+=======
+    <div
+      class="modal fade"
+      id="modal-agregar-estudiante"
+      tabindex="-1"
+      aria-labelledby="modal-agregar-estudiante-label"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-agregar-estudiante-label">
+              Nuevo estudiante
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p class="text-muted mb-4">Completa los datos del estudiante.</p>
+
+            <form id="form-agregar-estudiante" class="row g-3">
+              <div class="col-12 col-md-6">
+                <label for="estudiante-nombre" class="form-label">Nombre <span class="text-danger">*</span></label> 
+                <input
+                  type="text"
+                  class="form-control"
+                  id="estudiante-nombre"
+                  name="nombres"
+                  required
+                  pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
+                  maxlength="50"
+                  title="Solo se permiten letras y espacios"
+                />
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label for="estudiante-apellido" class="form-label">Apellido <span class="text-danger">*</span></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="estudiante-apellido"
+                  name="apellido"
+                  required
+                  pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
+                  maxlength="50"
+                  title="Solo se permiten letras y espacios"
+                />
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label for="estudiante-documento" class="form-label">DNI <span class="text-danger">*</span></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="estudiante-documento"
+                  name="documento"
+                  required
+                  pattern="[0-9]{7,8}"
+                  minlength="7"
+                  maxlength="8"
+                  title="El DNI debe contener solo números (entre 7 y 8 dígitos)"
+                />
+              </div>
+
+              <div class="col-12">
+                <label for="estudiante-email" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="estudiante-email"
+                  name="email"
+                />
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label for="estudiante-fecha-nacimiento" class="form-label">Fecha de nacimiento <span class="text-danger">*</span></label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="estudiante-fecha-nacimiento"
+                  name="fecha_nacimiento"
+                  required
+                  min="1930-01-01"
+                  max="2009-12-31"
+                />
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label for="estudiante-estado" class="form-label">Estado</label>
+                <select
+                  class="form-select"
+                  id="estudiante-estado"
+                  name="activo"
+                >
+                  <option value="1" selected>Activo</option>
+                  <option value="0">Inactivo</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button
+              id="btn-submit-estudiante"
+              type="submit"
+              form="form-agregar-estudiante"
+              class="btn btn-primary"
+            >
+              Crear
+            </button>
+          </div>
+>>>>>>> c9a50f06472a261f40b729778a366f76e32dd7d4
         </div>
       </div>
     </div>

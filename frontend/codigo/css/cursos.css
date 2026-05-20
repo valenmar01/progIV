@@ -1,0 +1,76 @@
+header {
+    background-color: #001e2d
+}
+
+header div.contenedor {
+    display: flex;
+
+    width: 100vw;
+
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+header h1 {
+    color: white;
+    font-size: 2.5em;
+}
+
+body {
+    background-color: #efefef;
+}
+
+div.contenedor-principal {
+    display: flex;
+
+    width: 100vw;
+    min-height: 100vh;
+
+    margin: auto;
+
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+nav {
+    width: 20vw;
+    background-color: #001e2d
+}
+
+nav ul{
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li a,
+nav ul li a:visited,
+nav ul li a:active,
+nav ul li a:hover {
+    display: inline-block;
+    width: 100%;
+    padding: 1rem 2rem;
+    color: white;
+    font-size: 1.5em;
+    text-decoration: none;
+}
+
+nav li a:hover {
+    color: white;
+    background-color: rgb(95, 7, 95);
+}
+
+main {
+    padding: 2rem;
+    width: 100vw;
+    background-color: white;
+}
+
+main .botonera{
+    display: flex;
+    justify-content: flex-end;
+}
+
+footer {
+    background-color: orangered;
+}

@@ -41,3 +41,4 @@ El sistema apunta a cubrir:
 ## Autor
 
 - [CejasClaudioA](https://github.com/CejasClaudioA)
+- [ValentinaMartinez](https://github.com/valenmar01)

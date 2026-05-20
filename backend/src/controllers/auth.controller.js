@@ -1,14 +1,27 @@
 import { pool } from '../db.js';
+//import { usuario } from '../models/usuario.js';
 
 export const login = async (req, res) => {
-  const {usuario,constrasenia} = req.body;
-    //const { rows } = await pool.query('SELECT * FROM estudiantes WHERE documento = $1', [id]);
-//    if (rows.length === 0) {
-//        return res.status(404).json({ message: " " });
-//   }
-    const {rows} = await pool.query(`SELECT * FROM usuarios WHERE nombre_usuario = '${usuario}'`);
+  
+  const {usuario} = req.body;
+  
+  try{
+
+    //const {rows} = await pool.query('SELECT * FROM usuarios WHERE nombre_usuario = $1 AND contrasenia = $2  AND activo = 1', [usuario, contrasenia]);
+    const {rows} = await pool.query('SELECT * FROM usuarios WHERE nombre_usuario = $1 AND activo = 1', [usuario]);
+    
+    if (rows.length === 0) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+  
     const user=rows[0];
     res.status(200).json(user);
 
+  } catch (error) {
+  
+    console.error("Error en la base de datos:", error);
+    res.status(500).json({ message: "Error interno del servidor" });
+  
+  }
+  
 }
-
