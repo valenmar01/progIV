@@ -32,6 +32,8 @@ El sistema apunta a cubrir:
 - Gestion de cursos.
 - Gestion de inscripciones.
 
+- ENTIDAD COMPLETA CUBIERTA AL 20/5/2026: ESTUDIANTES
+
 ## Tecnologias
 
 - Backend: Node.js, Express, PostgreSQL.
