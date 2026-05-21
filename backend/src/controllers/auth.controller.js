@@ -1,5 +1,4 @@
 import { pool } from '../db.js';
-//import { usuario } from '../models/usuario.js';
 
 export const login = async (req, res) => {
   

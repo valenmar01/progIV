@@ -149,7 +149,7 @@ const manejarSubmit = async (evento) => {
         mostrarToast("Por favor completa los campos obligatorios", "warning");
         return;
     }
-    // aca se podría agregar más validaciones, como verificar el formato del email, o que la fecha de nacimiento no sea futura, etc.
+    
     try {
         const url = esEdicion
             ? `http://localhost:3000/estudiantes/${form.dataset.id}`
@@ -179,7 +179,7 @@ const manejarSubmit = async (evento) => {
 
 // este manejador se encarga de detectar los clicks en los botones de paginación, edición, activación y desactivación, y ejecutar la acción correspondiente según el botón clickeado
 const manejarClick = async (evento) => {
-    console.log("¡Clic detectado en:", evento.target); //revisar
+    console.log("Clic detectado en:", evento.target); 
     
     // verifica si el clic fue en un botón de paginación
     const botonPagina = evento.target.closest("[data-page]");

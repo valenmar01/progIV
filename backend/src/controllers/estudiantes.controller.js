@@ -33,7 +33,7 @@ export const getEstudianteByID = async (req, res) => {
 }
 
 export const createEstudiante = async (req, res) => {
-    console.log("BODY RECIBIDO:", req.body);
+    
     const nuevoEstudiante = estudianteInputDTO(req.body);
 
     try {
@@ -57,14 +57,14 @@ export const createEstudiante = async (req, res) => {
             ]
             
         );
-        console.log("INSERT EXITOSO, FILA CREADA:", rows[0]); // 2. Confirmar escritura 
+        
 
         res.status(201).json({
             message: "Estudiante creado correctamente",
             estudiante: estudianteOutputDTO(rows[0])
         });
     } catch (error) {
-        console.error("ERROR CRÍTICO EN SQL:", error); // 3. Ver qué rompe la DB
+        
         res.status(500).json({ message: "Error al crear el estudiante" });
     }
 }

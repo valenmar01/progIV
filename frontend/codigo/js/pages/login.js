@@ -47,7 +47,7 @@ formulario.addEventListener('submit', async (e) => {
     // Lógica de validación
     if (res.status === 200) { 
                 
-        // Éxito: Guardamos una sesión simple (opcional) y redirigimos
+        // Éxito
         localStorage.setItem('estaAutenticado', 'true');
         alert('¡Bienvenido al sistema!');
         
