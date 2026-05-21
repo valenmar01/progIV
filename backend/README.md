@@ -30,7 +30,6 @@ PORT=3000
 
 ```bash
 npm install
-npm express-validator
 ```
 
 ## Levantar el servidor en modo prueba
