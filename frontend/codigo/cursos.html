@@ -12,7 +12,8 @@
     <h2>Gestión de Cursos</h2>
     <div class="tarjeta">
       <h3>Crear Nuevo Curso</h3>
-      <form id="formulario-cursos" class="formulario" onsubmit="event.preventDefault();">
+      <form id="formulario-cursos" class="formulario">
+        <button type="submit" id="btn-guardar-curso" class="btn-exito">Agregar Curso</button>
         <div class="grid">
           <div class="grupo-campo"><label>Nombre del Curso</label><input type="text" id="form-cur-nombre"
               placeholder="Ej: Programación I"></div>
@@ -40,7 +41,7 @@
             <th>Acciones</th>
           </tr>
         </thead>
-        <tbody id="tabla-cursos-body"></tbody>
+        <tbody id="tbody-cursos"></tbody>
       </table>
     </div>
   </section>
