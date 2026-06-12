@@ -1,34 +1,51 @@
 <!doctype html>
 <html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/dashboard.css" />
-</head>
+  <body>
+    <section id="seccion-dashboard" class="seccion activa">
+      <h2>Visión general</h2>
+      <div class="grid">
+        <div class="card shadow-sm tarjeta-stat">
+          <div class="card-body text-center py-3">
+            <p class="text-muted small text-uppercase fw-semibold mb-1">
+              Estudiantes
+            </p>
+            <p class="display-6 fw-bold text-dark mb-0" id="count-estudiantes">
+              —
+            </p>
+            <a href="estudiantes.html" class="stretched-link"></a>
+          </div>
+        </div>
 
-<body>
-  <section id="seccion-dashboard" class="seccion activa">
-    <h2>Resumen del Sistema</h2>
-    <div class="grid">
-      <div class="tarjeta">
-        <h3>Estudiantes</h3>
-        <p>Total de alumnos registrados en el sistema.</p>
-        <a href="estudiantes.html" class="btn-primario">Ver Estudiantes</a>
+        <div class="card shadow-sm tarjeta-stat">
+          <div class="card-body text-center py-3">
+            <p class="text-muted small text-uppercase fw-semibold mb-1">
+              Cursos
+            </p>
+            <p class="display-6 fw-bold text-dark mb-0" id="count-cursos">—</p>
+            <a href="cursos.html" class="stretched-link"></a>
+          </div>
+        </div>
       </div>
-      <div class="tarjeta">
-        <h3>Cursos</h3>
-        <p>Oferta académica disponible actualmente.</p>
-        <a href="cursos.html" class="btn-primario">Ver Cursos</a>
-      </div>
-      <div class="tarjeta">
-        <h3>Inscripciones</h3>
-        <p>Gestión de alumnos anotados en cursos.</p>
-        <a href="inscripciones.html" class="btn-primario">Ver Inscripciones</a>
-      </div>
-    </div>
-  </section>
-  <script type="module" src="js/pages/dashboard.js"></script>
-</body>
 
+      <div class="card shadow-sm mt-4">
+        <div class="card-body p-4">
+          <h5 class="fw-bold mb-1">Cursos</h5>
+          <div id="tabla-cursos-activos"></div>
+        </div>
+      </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="js/pages/dashboard.js"></script>
+  </body>
 </html>
