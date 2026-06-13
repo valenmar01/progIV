@@ -1,3 +1,5 @@
+const BASE_URL = 'http://localhost:3000/api/v1';
+
 // Variables para manejar la paginación y el estado actual de los estudiantes mostrados en la tabla
 let paginaActual = 1;
 let totalPaginas = 1;
@@ -68,7 +70,7 @@ const cargarPagina = async (pagina) => {
     const contenedor = document.getElementById("tabla-estudiantes");
     contenedor.innerHTML = '<p class="text-muted">Cargando estudiantes...</p>';
     try {
-        const res = await fetch(`http://localhost:3000/estudiantes?pagina=${pagina}`);
+        const res = await fetch(`${BASE_URL}/estudiantes?pagina=${pagina}`);
         if (!res.ok) throw new Error(`Error HTTP ${res.status}`);
         const data = await res.json();
         renderTabla(data);
@@ -152,8 +154,8 @@ const manejarSubmit = async (evento) => {
     
     try {
         const url = esEdicion
-            ? `http://localhost:3000/estudiantes/${form.dataset.id}`
-            : "http://localhost:3000/estudiantes";
+            ? `${BASE_URL}/estudiantes/${form.dataset.id}`
+            : `${BASE_URL}/estudiantes`;
         const body = esEdicion
             ? { apellido: payload.apellido, nombres: payload.nombres, email: payload.email, fecha_nacimiento: payload.fecha_nacimiento, activo: payload.activo }
             : payload;
@@ -207,7 +209,7 @@ const manejarClick = async (evento) => {
     if (accion === "activar-desactivar") {
         const nuevoActivo = activo === "1" ? 0 : 1;
         try {
-            const res = await fetch(`http://localhost:3000/estudiantes/${id}`, {
+            const res = await fetch(`${BASE_URL}/estudiantes/${id}`, {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ activo: nuevoActivo })
