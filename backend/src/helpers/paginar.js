@@ -15,5 +15,5 @@ export const parsearPaginado = (rows, limite, dto) => {
     const totalPaginas = Math.ceil(total / limite) || 1;
     const datos = rows.map(dto);
 
-    return { totalPaginas, datos };
+    return { totalPaginas, total, datos };
 };

@@ -11,9 +11,9 @@ export const getAllEstudiantes = async (req, res) => {
             [limite, offset]
         );
 
-        const { totalPaginas, datos } = parsearPaginado(rows, limite, estudianteOutputDTO);
+        const { totalPaginas, total, datos } = parsearPaginado(rows, limite, estudianteOutputDTO);
 
-        res.status(200).json({ totalPaginas, estudiantes: datos, pagina });
+        res.status(200).json({ totalPaginas, total, estudiantes: datos, pagina });
     } catch (error) {
         res.status(500).json({ message: "Error al obtener los estudiantes" });
     }

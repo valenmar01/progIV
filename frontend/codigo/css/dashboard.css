@@ -1,33 +1,15 @@
-@import url("style.css");
-
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(3, minmax(0, 180px));
+  gap: 16px;
 }
 
-.tarjeta {
-  background: var(--color-azul-oscuro);
-  padding: 10px 20px;
-  border-radius: var(--radio);
-  border-bottom: 5px solid var(--color-crema);
-  box-shadow: var(--sombras);
-  text-align: center;
+.tarjeta-stat {
+  cursor: pointer;
+  transition: var(--transicion);
 }
 
-.tarjeta h3 {
-  color: var(--color-blanco);
-  margin-bottom: 10px;
-}
-
-.tarjeta p {
-  margin-bottom: 20px;
-  color: var(--color-blanco);
-}
-
-.btn-primario {
-  background-color: var(--color-crema);
-  color: var(--color-azul-oscuro);
-  padding: 10px 15px;
-  border-radius: var(--radio);
+.tarjeta-stat:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12) !important;
 }
