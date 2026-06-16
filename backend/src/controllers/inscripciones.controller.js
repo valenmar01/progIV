@@ -8,7 +8,7 @@ export const getAllInscripciones = async (req, res) => {
 
     try {
         const { rows } = await pool.query(
-            'SELECT i.*, e.nombres, e.apellido, c.nombre as curso_nombre, COUNT(*) OVER() AS total FROM inscripciones i JOIN estudiantes e ON i.id_estudiante = e.id_estudiante JOIN cursos c ON i.id_curso = c.id_curso LIMIT $1 OFFSET $2',
+            'SELECT i.id_inscripcion, i.id_estudiante, i.id_curso, i.fecha_hora_inscripcion as fecha_inscripcion, i.id_inscripcion_estado as activo, e.nombres, e.apellido, c.nombre as curso_nombre, COUNT(*) OVER() AS total FROM inscripciones i JOIN estudiantes e ON i.id_estudiante = e.id_estudiante JOIN cursos c ON i.id_curso = c.id_curso LIMIT $1 OFFSET $2',
             [limite, offset]
         );
 
@@ -25,14 +25,15 @@ export const createInscripcion = async (req, res) => {
     const { id_estudiante, id_curso } = req.body;
 
     try {
-        const cursoRes = await pool.query('SELECT incriptos_max FROM cursos WHERE id_curso = $1 AND activo = 1', [id_curso]); 
-        if (cursoRes.rowCount.length === 0) {
-            return res.status(404).json({ message: "El curso seleccionado no existe"});
+        const cursoRes = await pool.query('SELECT inscriptos_max FROM cursos WHERE id_curso = $1 AND id_curso_estado = 2', [id_curso]); 
+        
+        if (cursoRes.rowCount === 0) {
+            return res.status(404).json({ message: "El curso seleccionado no existe o no tiene inscripciones abiertas"});
         }
 
-        const cupoMaximo = cursoRes.rows[0].incriptos_max;
+        const cupoMaximo = cursoRes.rows[0].inscriptos_max;
 
-        const conteoRes = await pool.query('SELECT COUNT(*) FROM inscripciones WHERE id_curso = $1 AND activo = 1', [id_curso]);
+        const conteoRes = await pool.query('SELECT COUNT(*) FROM inscripciones WHERE id_curso = $1 AND id_inscripcion_estado = 1', [id_curso]);
         const inscritosActuales = parseInt(conteoRes.rows[0].count);
 
         if (inscritosActuales >= cupoMaximo) {
@@ -40,7 +41,7 @@ export const createInscripcion = async (req, res) => {
         }
 
         const {rows} = await pool.query(
-            'INSERT INTO inscripciones (id_estudiante, id_curso, fecha_inscripcion, activo, id_usuario_creacion, fecha_hora_creacion) VALUES ($1, $2, NOW(), 1, 1, NOW()) RETURNING *',
+            'INSERT INTO inscripciones (id_estudiante, id_curso, fecha_hora_inscripcion, id_inscripcion_estado, id_usuario_modificacion, fecha_hora_modificacion) VALUES ($1, $2, NOW(), 1, 1, NOW()) RETURNING *',
             [id_estudiante, id_curso]
         );
 
@@ -54,20 +55,23 @@ export const createInscripcion = async (req, res) => {
 // Controlador para activar/desactivar una inscripción por ID
 export const activarDesactivarInscripcionByID = async (req, res) => {
     const { id } = req.params;
-    const { activo } = req.body;
+    const { activo } = req.body; // Viene 1 (Confirmar) o 0 (Cancelar, que en BD es 2)
+
+    const idEstadoDB = activo == 1 ? 1 : 2; // Si del front mandan 0, en la BD guardamos 2 (Cancelada)
 
     try {
         const { rowCount } = await pool.query(
-            'UPDATE inscripciones SET activo = $1, id_usuario_modificacion = 1, fecha_hora_modificacion = NOW() WHERE id_inscripcion = $2',
-            [activo, id]
+            // Corregido: Se usa id_inscripcion_estado
+            'UPDATE inscripciones SET id_inscripcion_estado = $1, id_usuario_modificacion = 1, fecha_hora_modificacion = NOW() WHERE id_inscripcion = $2',
+            [idEstadoDB, id]
         );
 
         if (rowCount === 0) {
             return res.status(404).json({ message: "Inscripción no encontrada" });
-    }
+        }
 
-    const mensaje = activo==1 ? "Inscripción activada con éxito" : "Inscripción desactivada con éxito";
-    res.status(200).json({ message: mensaje });
+        const mensaje = idEstadoDB == 1 ? "Inscripción confirmada con éxito" : "Inscripción cancelada con éxito";
+        res.status(200).json({ message: mensaje });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error al actualizar el estado de la inscripción" });
