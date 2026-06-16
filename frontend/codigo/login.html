@@ -16,7 +16,6 @@
       <img src="imagenes/Administración grises PNG.png" alt="Logo FCAD UNER" class="logo-login" />
     </div>
     <h1>Acceso al Sistema</h1>
-    <div id="error-login" class="mensaje-error"></div>
     <form id="formulario-login" class="formulario-login">
       <div class="grupo-campo">
         <label for="input-usuario">Usuario</label>
@@ -27,12 +26,8 @@
         <input type="password" id="input-contrasenia" placeholder="Ingrese su contraseña" maxlength="100" required />
       </div>
       <button type="submit">Ingresar</button>
+      <div id="error-login" class="mensaje-error"></div>
     </form>
-    <div class="info-credenciales">
-      <strong>Credenciales de Prueba:</strong>
-      <p>Usuario: <b> Registrado en la base de datos</b></p>
-      <p>Contraseña: <b> Cualquiera</b></p>
-    </div>
     <script type="module" src="js/pages/login.js"></script>
 </body>
 

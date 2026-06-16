@@ -13,6 +13,8 @@ const ocultarError = () => {
   mensajeError.textContent = "";
   mensajeError.style.display = "none";
 };
+// borra sesiones viejas
+sessionStorage.clear(); 
 
 formulario.addEventListener('submit', async (e) => {
     // Evita que la página se recargue
