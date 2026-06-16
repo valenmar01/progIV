@@ -13,6 +13,16 @@ document.addEventListener('DOMContentLoaded', () => {
       pantallaApp.style.display = 'block';
   }
 
+  //cerrar sesión
+  const btnCerrarSesion = document.getElementById('btn-cerrar-sesion');
+  if (btnCerrarSesion){
+    btnCerrarSesion.addEventListener("click", () => {
+      sessionStorage.removeItem('token');
+      sessionStorage.clear(); //limpia memoria de sesion
+      window.location.href = 'login.html';
+    })
+  }
+
   // logica para el iframe
   const iframe = document.querySelector('iframe[name="contenedor-paginas"]');
   document.querySelectorAll('.btn-pestana').forEach(enlace => {
