@@ -3,7 +3,8 @@ import {login} from "../controllers/auth.controller.js" ;
 
 const router = Router();
 
-//obtener todas las categorias
+// Endpoint: POST /api/v1/auth/login
 router.post('/login', login);
 
 export default router;
+
