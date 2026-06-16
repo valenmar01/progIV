@@ -21,7 +21,7 @@ app.use(morgan('dev'));
 
 //routes
 app.use('/api/v1', estudiantesRoutes);
-app.use(cursosRoutes);
+app.use('/api/v1',cursosRoutes);
 app.use(inscripcionesRoutes);
 app.use(auth);
 
