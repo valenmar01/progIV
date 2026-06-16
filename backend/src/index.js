@@ -26,7 +26,7 @@ app.use(passport.initialize());
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1', estudiantesRoutes);
 app.use('/api/v1',cursosRoutes);
-app.use(inscripcionesRoutes);
+app.use('/api/v1', inscripcionesRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
