@@ -4,7 +4,6 @@ const headersJWT = {
     "Content-Type": "application/json",
     "Authorization": `Bearer ${sessionStorage.getItem('token')}`
 };
-const res = await fetch(`${API_URL}/cursos`, { headersJWT });
 
 // Función para renderizar el estado de la inscripción como un badge
 const renderEstadoBadge = (activo) => activo == 1
@@ -14,12 +13,12 @@ const renderEstadoBadge = (activo) => activo == 1
 // Función para cargar los selectores de estudiantes y cursos en el formulario de inscripciones
 const cargarSelectores = async () => {
     try {
-        const resEst = await fetch(`${API_URL}/estudiantes`, { headersJWT });
+        const resEst = await fetch(`${API_URL}/estudiantes`, { headers: headersJWT }); // Corregido
         const dataEst = await resEst.json();
         const selectEstudiante = document.getElementById("form-ins-estudiante");
 
         if (selectEstudiante && dataEst.estudiantes) {
-            dataEst.estudiantes.filter(e => e.activo === 1).forEach(e=>{
+            dataEst.estudiantes.filter(e => e.activo === 1).forEach(e => {
                 const option = document.createElement("option");
                 option.value = e.id;
                 option.textContent = `${e.apellido}, ${e.nombre} (DNI: ${e.documento})`; 
@@ -27,15 +26,15 @@ const cargarSelectores = async () => {
             });
         }
 
-        const resCur = await fetch(`${API_URL}/cursos`, { headersJWT });
+        const resCur = await fetch(`${API_URL}/cursos`, { headers: headersJWT }); // Corregido
         const dataCur = await resCur.json();
         const selectCurso = document.getElementById("form-ins-curso");
 
         if (selectCurso && dataCur.cursos) {
-            dataCur.cursos.forEach(c=>{
+            dataCur.cursos.forEach(c => {
                 const option = document.createElement("option");
                 option.value = c.id;
-                option.textContent = `${c.nombre} (Max: ${c.incriptos_max} cupos)`;
+                option.textContent = `${c.nombre} (Max: ${c.inscriptos_max} cupos)`; // Corregido el typo
                 selectCurso.appendChild(option);
             });
         }
@@ -47,7 +46,7 @@ const cargarSelectores = async () => {
 // Función para cargar la tabla de inscripciones con paginación
 const cargarTablaInscripciones = async (pagina = 1) => {
     try {
-        const res = await fetch(`${API_URL}/inscripciones?pagina=${pagina}`, { headersJWT });
+        const res = await fetch(`${API_URL}/inscripciones?pagina=${pagina}`, { headers: headersJWT }); // Corregido
         const data = await res.json();
         const tbody = document.getElementById("tabla-inscripciones-body");
 
@@ -69,14 +68,13 @@ const cargarTablaInscripciones = async (pagina = 1) => {
                     <td>${new Date(ins.fecha).toLocaleDateString()}</td>
                     <td>${renderEstadoBadge(ins.activo)}</td>
                     <td>
-                        <button class="btn ${claseBoton} btn-pequeno" data-accion="cambiar-estado" data-id="${ins.id}" data-activo="${ins.activo}">${textoBoton}
-                        </button>
+                        <button class="btn ${claseBoton} btn-pequeno" data-accion="cambiar-estado" data-id="${ins.id}" data-activo="${ins.activo}">${textoBoton}</button>
                     </td>
                 `;
                 tbody.appendChild(fila);
             });
         } else {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center: padding: 20px;">No se encontraron inscripciones registradas.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 20px;">No se encontraron inscripciones registradas.</td></tr>`;
         }
     } catch (error) {
         console.error("Error al cargar la tabla de inscripciones:", error);
@@ -96,11 +94,8 @@ const realizarInscripcion = async () => {
     try {
         const res = await fetch(`${API_URL}/inscripciones`, {
             method: "POST",
-            headers: headersJWT,
-            body: JSON.stringify({
-                id_estudiante,
-                id_curso
-            })
+            headers: headersJWT, // Acá sí está bien porque es asignación directa al objeto options
+            body: JSON.stringify({ id_estudiante, id_curso })
         });
 
         const json = await res.json();
@@ -109,7 +104,7 @@ const realizarInscripcion = async () => {
 
         alert(`Inscripción realizada con éxito: ${json.message}`);
         document.getElementById("formulario-inscripciones").reset();
-        cargarTablaInscripciones(1); // Recargar la tabla para mostrar la nueva inscripción
+        cargarTablaInscripciones(1);
     } catch (error) { 
         alert(`Error: ${error.message}`);
     }
@@ -127,7 +122,7 @@ const manejarAccionesTabla = async (e) => {
         try {
             const res = await fetch(`${API_URL}/inscripciones/${id}`, {
                 method: "DELETE",
-                headers: headersJWT,
+                headers: headersJWT, // Acá también está bien
                 body: JSON.stringify({ activo: nuevoActivo })
             });
 
@@ -135,7 +130,7 @@ const manejarAccionesTabla = async (e) => {
             if (!res.ok) throw new Error(json.message);
 
             alert(json.message);
-            cargarTablaInscripciones(1); // Recargar la tabla para mostrar la nueva inscripción
+            cargarTablaInscripciones(1);
         } catch (error) {
             alert(`Error: ${error.message}`);
         }
