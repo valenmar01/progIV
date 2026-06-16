@@ -2,8 +2,12 @@ import {Router} from 'express';
 import {check} from 'express-validator';
 import {validarCampos} from '../middlewares/validar-campos.js';
 import { getAllInscripciones, createInscripcion, activarDesactivarInscripcionByID } from '../controllers/inscripciones.controller.js';
+import passport from 'passport';
 
 const router = Router();
+
+//cualquier petición necesita un Token válido en el header
+router.use(passport.authenticate('jwt', { session: false }));
 
 router.get('/inscripciones', getAllInscripciones);
 router.post('/inscripciones', [

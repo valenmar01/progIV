@@ -17,15 +17,15 @@ export const estudianteService = {
         return estudianteOutputDTO(row);
     },
 
-    async create(body) {
+    async create(body, userId) {
         const datos = estudianteInputDTO(body);
-        const row = await estudianteRepository.create(datos);
+        const row = await estudianteRepository.create(datos, userId);
         return estudianteOutputDTO(row);
     },
 
-    async update(id, body) {
+    async update(id, body, userId) {
         const datos = estudianteInputDTO(body);
-        const row = await estudianteRepository.update(id, datos);
+        const row = await estudianteRepository.update(id, datos, userId);
         if (!row) return null;
         return estudianteOutputDTO(row);
     },

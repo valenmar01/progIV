@@ -15,57 +15,52 @@ const ocultarError = () => {
 };
 
 formulario.addEventListener('submit', async (e) => {
-    // Evitamos que la página se recargue
+    // Evita que la página se recargue
     e.preventDefault();
 
     const usuarioIngresado = inputUsuario.value.trim();
     const contraseniaIngresada = inputContrasenia.value;
     
-    const res = await fetch("http://localhost:3000/login", {
-        method: 'post',
-        headers: {
-            'Content-Type':'application/json'
-        },
-        body: JSON.stringify(
-            {
-            usuario: usuarioIngresado,
-            //contrasenia: contraseniaIngresada
-        })
-    });
+    try {
+        const res = await fetch("http://localhost:3000/api/v1/auth/login", {
+            method: 'post',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                usuario: usuarioIngresado,
+                contrasenia: contraseniaIngresada
+            })
+        });
 
-    const data = await res.json();
+        const data = await res.json();
+        console.log(res);
+        console.log(usuarioIngresado);
+        console.log(contraseniaIngresada);
 
-    console.log(res);
-    console.log(usuarioIngresado);
-    console.log(contraseniaIngresada);
-    
+    // Limpia mensajes previos
+        ocultarError();
 
-    // Limpiar mensajes previos
-    //mensajeError.textContent = '';
-    ocultarError();
-
-    // Lógica de validación
-    if (res.status === 200) { 
-                
-        // Éxito
-        localStorage.setItem('estaAutenticado', 'true');
-        alert('¡Bienvenido al sistema!');
+        // validación con el Token
+        if (res.ok) { 
+            // Guarda el Token
+            sessionStorage.setItem('token', data.token);
+            //guarda los datos del usuario por si necesitas usar su nombre
+            sessionStorage.setItem('usuarioLogueado', JSON.stringify(data.usuario));
+            
+            alert('¡Bienvenido al sistema!');
+            window.location.href = 'index.html';
         
-        window.location.href = 'index.html';
-    
-    } else if (res.status === 404) {
-
-      // El backend avisa que no existe
-        mensajeError.textContent = 'Usuario o contraseña incorrectos.';
-        mostrarError('Usuario o contraseña incorrectos.');
-        inputContrasenia.value = ''; // Limpiar clave por seguridad
-        console.log(mensajeError);
-        inputUsuario.focus();
-        inputContrasenia.focus();
-
-  } else {
-    
-        mostrarError('Ocurrió un error en el servidor.');    
-        console.log(mensajeError);
-    } 
+        } else if (res.status === 401 || res.status === 404) {
+            // Error de autenticación devuelto por Passport o el Controlador
+            mostrarError(data.message || 'Usuario o contraseña incorrectos.');
+            inputContrasenia.value = '';
+            inputContrasenia.focus();
+        } else {
+            mostrarError('Ocurrió un error inesperado.');    
+        }
+    } catch (error) {
+        mostrarError('No se pudo conectar con el servidor.');
+        console.error(error);
+    }
 });

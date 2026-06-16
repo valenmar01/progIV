@@ -13,7 +13,7 @@ export const getAllInscripciones = async (req, res) => {
         );
 
         const {totalPaginas, datos} = parsearPaginado(rows, limite, inscripcionOutputDTO);
-        res.status(200).json({ totalPaginas, inscripciones: datos, paginas});
+        res.status(200).json({ totalPaginas, inscripciones: datos, pagina });
     } catch (error) {
         console.error("Error al obtener inscripciones:", error);
         res.status(500).json({message:"Error al obtener las inscripciones" });

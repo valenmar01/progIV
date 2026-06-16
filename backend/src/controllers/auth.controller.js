@@ -1,26 +1,39 @@
-import { pool } from '../db.js';
+import jwt from 'jsonwebtoken';
+import passport from 'passport';
 
-export const login = async (req, res) => {
-  
-  const {usuario} = req.body;
-  
-  try{
+export const login = (req, res, next) => {
 
-    //const {rows} = await pool.query('SELECT * FROM usuarios WHERE nombre_usuario = $1 AND contrasenia = $2  AND activo = 1', [usuario, contrasenia]);
-    const {rows} = await pool.query('SELECT * FROM usuarios WHERE nombre_usuario = $1 AND activo = 1', [usuario]);
+  console.log("0. Body recibido en el Controlador:", req.body);////////////////////////////////////////////
+  
+  // llama a passport usando la estrategia 'local'
+  // { session: false } para API REST sin estado
+  passport.authenticate('local', { session: false }, (err, user, info) => {
     
-    if (rows.length === 0) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
-    }
-  
-    const user=rows[0];
-    res.status(200).json(user);
-
-  } catch (error) {
-  
-    console.error("Error en la base de datos:", error);
-    res.status(500).json({ message: "Error interno del servidor" });
-  
+  // Si hubo un error interno
+  if (err) {
+    console.error("Error interno en autenticación:", err);
+    return res.status(500).json({ message: "Error interno del servidor" });
   }
-  
-}
+
+  // Fallo de credenciales (usuario no encontrado, contraseña incorrecta o usuario inactivo)
+  if (!user) {
+    return res.status(401).json({ message: info.message || "No autorizado" });
+  }
+
+  // Si todo salió bien, hay JWT
+  const payload = {
+    id_usuario: user.id
+  };
+
+  const token = jwt.sign(payload, process.env.JWT_SECRET, {
+    expiresIn: '2m'
+  });
+
+  return res.status(200).json({
+      message: "Login exitoso",
+      token: token,
+      usuario: user
+    });
+
+  })(req, res, next);
+};

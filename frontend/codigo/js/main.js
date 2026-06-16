@@ -1,12 +1,17 @@
  // verifica si el usuario está autenticado al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('pantalla-app').style.display = 'block';
-  //const sesionActiva = localStorage.getItem('estaAutenticado');
-  //if (sesionActiva !== 'true' && !window.location.href.includes('login.html')) {
-  //  window.location.href = 'login.html';
-  //} else {
-  //  document.getElementById('pantalla-app').style.display = 'block';
-  //}
+ 
+  const tokenGuardado = sessionStorage.getItem('token');
+  
+  if (!tokenGuardado && !window.location.href.includes('login.html')) {
+    window.location.href = 'login.html';
+    return;
+  } 
+  const pantallaApp = document.getElementById('pantalla-app');
+  if (pantallaApp) {
+      pantallaApp.style.display = 'block';
+  }
 
   // logica para el iframe
   const iframe = document.querySelector('iframe[name="contenedor-paginas"]');

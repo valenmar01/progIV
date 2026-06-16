@@ -1,5 +1,7 @@
 const BASE_URL = 'http://localhost:3000/api/v1';
 
+const authHeader = { 'Authorization': `Bearer ${sessionStorage.getItem('token')}`, 'Content-Type': 'application/json' };
+
 // Variables para manejar la paginación y el estado actual de los estudiantes mostrados en la tabla
 let paginaActual = 1;
 let totalPaginas = 1;
@@ -70,7 +72,9 @@ const cargarPagina = async (pagina) => {
     const contenedor = document.getElementById("tabla-estudiantes");
     contenedor.innerHTML = '<p class="text-muted">Cargando estudiantes...</p>';
     try {
-        const res = await fetch(`${BASE_URL}/estudiantes?pagina=${pagina}`);
+        const res = await fetch(`${BASE_URL}/estudiantes?pagina=${pagina}`, {
+            headers: authHeader
+        });
         if (!res.ok) throw new Error(`Error HTTP ${res.status}`);
         const data = await res.json();
         renderTabla(data);
@@ -162,7 +166,7 @@ const manejarSubmit = async (evento) => {
 
         const res = await fetch(url, {
             method: esEdicion ? "PUT" : "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: authHeader,
             body: JSON.stringify(body)
         });
         const json = await res.json();
@@ -211,7 +215,7 @@ const manejarClick = async (evento) => {
         try {
             const res = await fetch(`${BASE_URL}/estudiantes/${id}`, {
                 method: "DELETE",
-                headers: { "Content-Type": "application/json" },
+                headers: authHeader,
                 body: JSON.stringify({ activo: nuevoActivo })
             });
             const json = await res.json();
@@ -229,13 +233,32 @@ const manejarClick = async (evento) => {
     }
 };
 
-// esto sirve para cargar la lista de estudiantes al abrir la página, y también asigna los eventos a los botones de paginación, edición, activación y desactivación, así como al formulario del modal para agregar/editar estudiantes
+const filtrarTabla = (termino) => {
+    const t = termino.toLowerCase().trim();
+    const filtrados = t
+        ? estudiantesPagina.filter(e =>
+            `${e.documento}`.includes(t) ||
+            e.apellido?.toLowerCase().includes(t) ||
+            e.nombres?.toLowerCase().includes(t) ||
+            e.email?.toLowerCase().includes(t))
+        : estudiantesPagina;
+
+    const tbody = document.querySelector("#tabla-estudiantes tbody");
+    if (!tbody) return;
+
+    tbody.innerHTML = filtrados.length
+        ? filtrados.map((e, i) => crearFila(e, i)).join("")
+        : '<tr><td colspan="6" class="text-center py-4 text-muted">No se encontraron resultados</td></tr>';
+};
+
 document.addEventListener("DOMContentLoaded", () => {
     const contenedor = document.getElementById("tabla-estudiantes");
     contenedor.addEventListener("click", manejarClick);
 
     document.getElementById("btn-agregar-estudiante")?.addEventListener("click", () => abrirModal("crear"));
     document.getElementById("form-agregar-estudiante")?.addEventListener("submit", manejarSubmit);
+
+    document.getElementById("buscar-estudiante")?.addEventListener("input", e => filtrarTabla(e.target.value));
 
     cargarPagina(1);
 });
