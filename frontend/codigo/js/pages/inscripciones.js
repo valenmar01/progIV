@@ -1,4 +1,10 @@
-const API_URL = "http://localhost:3000";
+const API_URL = 'http://localhost:3000/api/v1';
+
+const headersJWT = {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${sessionStorage.getItem('token')}`
+};
+const res = await fetch(`${API_URL}/cursos`, { headersJWT });
 
 // Función para renderizar el estado de la inscripción como un badge
 const renderEstadoBadge = (activo) => activo == 1
@@ -8,7 +14,7 @@ const renderEstadoBadge = (activo) => activo == 1
 // Función para cargar los selectores de estudiantes y cursos en el formulario de inscripciones
 const cargarSelectores = async () => {
     try {
-        const resEst = await fetch(`${API_URL}/estudiantes`);
+        const resEst = await fetch(`${API_URL}/estudiantes`, { headersJWT });
         const dataEst = await resEst.json();
         const selectEstudiante = document.getElementById("form-ins-estudiante");
 
@@ -21,7 +27,7 @@ const cargarSelectores = async () => {
             });
         }
 
-        const resCur = await fetch(`${API_URL}/cursos`);
+        const resCur = await fetch(`${API_URL}/cursos`, { headersJWT });
         const dataCur = await resCur.json();
         const selectCurso = document.getElementById("form-ins-curso");
 
@@ -41,7 +47,7 @@ const cargarSelectores = async () => {
 // Función para cargar la tabla de inscripciones con paginación
 const cargarTablaInscripciones = async (pagina = 1) => {
     try {
-        const res = await fetch(`${API_URL}/inscripciones?pagina=${pagina}`);
+        const res = await fetch(`${API_URL}/inscripciones?pagina=${pagina}`, { headersJWT });
         const data = await res.json();
         const tbody = document.getElementById("tabla-inscripciones-body");
 
@@ -90,9 +96,7 @@ const realizarInscripcion = async () => {
     try {
         const res = await fetch(`${API_URL}/inscripciones`, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: headersJWT,
             body: JSON.stringify({
                 id_estudiante,
                 id_curso
@@ -103,17 +107,17 @@ const realizarInscripcion = async () => {
 
         if (!res.ok) throw new Error(json.message || "Error al procesar la inscripción");
 
-        alert('${json.message}');
+        alert(`Inscripción realizada con éxito: ${json.message}`);
         document.getElementById("formulario-inscripciones").reset();
         cargarTablaInscripciones(1); // Recargar la tabla para mostrar la nueva inscripción
     } catch (error) { 
-        alert('${error.message}');
+        alert(`Error: ${error.message}`);
     }
 };
 
 // Sirve para manejar acciones como activar/desactivar desde la tabla de inscripciones
 const manejarAccionesTabla = async (e) => {
-    if (e.target.tagName === "BUTTON" && e.target.getAtribute("data-accion") === "cambiar-estado") {
+    if (e.target.tagName === "BUTTON" && e.target.getAttribute("data-accion") === "cambiar-estado") {
         const id = e.target.getAttribute("data-id");
         const activoActual = e.target.getAttribute("data-activo");
         const nuevoActivo = activoActual == 1 ? 0 : 1;
@@ -123,7 +127,7 @@ const manejarAccionesTabla = async (e) => {
         try {
             const res = await fetch(`${API_URL}/inscripciones/${id}`, {
                 method: "DELETE",
-                headers: {"Content-Type": "application/json"},
+                headers: headersJWT,
                 body: JSON.stringify({ activo: nuevoActivo })
             });
 
@@ -133,7 +137,7 @@ const manejarAccionesTabla = async (e) => {
             alert(json.message);
             cargarTablaInscripciones(1); // Recargar la tabla para mostrar la nueva inscripción
         } catch (error) {
-            alert('Error: ${error.message}');
+            alert(`Error: ${error.message}`);
         }
     }
 };
