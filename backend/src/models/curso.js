@@ -7,7 +7,7 @@ export const cursoOutputDTO = (row) => ({
     inscriptos_max: row.inscriptos_max,    
     id_curso_estado: row.id_curso_estado,
     inscriptos_actuales: parseInt(row.inscriptos_actuales) || 0,
-    estado: row.estado_texto || (row.id_curso_estado == 1 ? 'abierta' : 'cerrada')
+    estado: row.estado_texto
 });
 
 export const cursoInputDTO = (body) => ({

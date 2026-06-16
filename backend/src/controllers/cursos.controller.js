@@ -30,14 +30,14 @@ export const createCurso = async (req, res) => {
     }
 };
 
-export const activarDesactivarCursoByID = async (req, res) => {
+export const cambiarEstadoCursoByID = async (req, res) => {
     try {
-        const { activo } = req.body; // 1 o 0 recibido desde el frontend
-        const curso = await cursoService.activarDesactivar(req.params.id, activo);
+        // Recibimos el estado al que queremos pasar (soft delete o restauración) vía body
+        const { id_curso_estado } = req.body; 
+        const curso = await cursoService.cambiarEstado(req.params.id, id_curso_estado);
         if (!curso) return res.status(404).json({ message: "Curso no encontrado" });
         
-        const message = activo == 1 ? "Curso activado correctamente" : "Curso desactivado correctamente";
-        res.status(200).json({ message, curso });
+        res.status(200).json({ message: "Estado del curso actualizado", curso });
     } catch (error) {
         res.status(500).json({ message: "Error al actualizar el estado del curso" });
     }

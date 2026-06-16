@@ -1,14 +1,14 @@
 import { pool } from '../db.js';
 
 export const cursoRepository = {
-
     async findAll(limite, offset) {
         let query = `
             SELECT c.*, 
                    COALESCE(i.total_inscriptos, 0) AS inscriptos_actuales,
-                   CASE WHEN c.id_curso_estado = 1 THEN 'abierta' ELSE 'cerrada' END AS estado_texto,
+                   ce.descripcion AS estado_texto,
                    COUNT(*) OVER() AS total 
             FROM cursos c
+            JOIN cursos_estados ce ON c.id_curso_estado = ce.id_curso_estado
             LEFT JOIN (
                 SELECT id_curso, COUNT(*) AS total_inscriptos 
                 FROM inscripciones 
@@ -31,8 +31,9 @@ export const cursoRepository = {
         const { rows } = await pool.query(
             `SELECT c.*, 
                     COALESCE(i.total_inscriptos, 0) AS inscriptos_actuales,
-                    CASE WHEN c.id_curso_estado = 1 THEN 'abierta' ELSE 'cerrada' END AS estado_texto
+                    ce.descripcion AS estado_texto
              FROM cursos c
+             JOIN cursos_estados ce ON c.id_curso_estado = ce.id_curso_estado
              LEFT JOIN (
                  SELECT id_curso, COUNT(*) AS total_inscriptos 
                  FROM inscripciones 
@@ -47,8 +48,8 @@ export const cursoRepository = {
     async create(datos) {
         const { rows } = await pool.query(
             `INSERT INTO cursos (nombre, descripcion, fecha_inicio, cantidad_horas, inscriptos_max, id_curso_estado, id_usuario_modificacion, fecha_hora_modificacion)
-             VALUES ($1, $2, $3, $4, $5, 1, 1, NOW()) RETURNING *`,
-            [datos.nombre, datos.descripcion, datos.fecha_inicio, datos.cantidad_horas, datos.inscriptos_max]
+             VALUES ($1, $2, $3, $4, $5, COALESCE($6, 1), 1, NOW()) RETURNING *`,
+            [datos.nombre, datos.descripcion, datos.fecha_inicio, datos.cantidad_horas, datos.inscriptos_max, datos.id_curso_estado]
         );
         return rows[0];
     },
@@ -71,10 +72,14 @@ export const cursoRepository = {
         return rowCount > 0 ? rows[0] : null;
     },
 
-    async activarDesactivar(id, activo) {
+    async cambiarEstado(id, id_curso_estado) {
         const { rowCount, rows } = await pool.query(
-            'UPDATE cursos SET id_curso_estado = $1 WHERE id_curso = $2 RETURNING *',
-            [activo, id]
+            `UPDATE cursos 
+             SET id_curso_estado = $1, 
+                 id_usuario_modificacion = 1, 
+                 fecha_hora_modificacion = NOW() 
+             WHERE id_curso = $2 RETURNING *`,
+            [id_curso_estado, id]
         );
         return rowCount > 0 ? rows[0] : null;
     }

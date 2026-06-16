@@ -36,8 +36,8 @@ export const cursoService = {
         return cursoOutputDTO(row);
     },
 
-    async activarDesactivar(id, activo) {
-        const row = await cursoRepository.activarDesactivar(id, activo);
+    async cambiarEstado(id, id_curso_estado) {
+        const row = await cursoRepository.cambiarEstado(id, id_curso_estado);
         if (!row) return null;
         return cursoOutputDTO(row);
     }

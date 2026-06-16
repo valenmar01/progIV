@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'http://localhost:3000/api/v1';
 const ESTADO_EXCLUIDO = 'borrador';
 
 const labelCorto = (estado = '') => {

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAllCursos, getCursoByID, createCurso, activarDesactivarCursoByID, updateCursoByID } from '../controllers/cursos.controller.js';
+import { getAllCursos, getCursoByID, createCurso, cambiarEstadoCursoByID, updateCursoByID } from '../controllers/cursos.controller.js';
 import passport from 'passport';
 const router = Router();
 
@@ -10,6 +10,6 @@ router.get('/cursos', getAllCursos);
 router.get('/cursos/:id', getCursoByID);
 router.post('/cursos', createCurso);
 router.put('/cursos/:id', updateCursoByID);
-router.delete('/cursos/:id', activarDesactivarCursoByID);
+router.delete('/cursos/:id', cambiarEstadoCursoByID); 
 export default router;                                                                                   
 
