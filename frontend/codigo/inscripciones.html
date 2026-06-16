@@ -10,31 +10,44 @@
 <body>
   <section id="seccion-inscripciones" class="seccion activa">
     <h2>Gestión de Inscripciones</h2>
+
     <div class="tarjeta">
       <h3>Inscribir Alumno en Curso</h3>
       <form id="formulario-inscripciones" class="formulario">
         <div class="grid">
           <div class="grupo-campo">
             <label>Seleccionar Estudiante</label>
-            <select id="form-ins-estudiante">
+            <select id="form-ins-estudiante"
+              style="padding: 8px; border: 2px solid var(--color-gris); border-radius: 5px;">
               <option value="">-- Seleccionar --</option>
             </select>
           </div>
           <div class="grupo-campo">
             <label>Seleccionar Curso</label>
-            <select id="form-ins-curso">
+            <select id="form-ins-curso" style="padding: 8px; border: 2px solid var(--color-gris); border-radius: 5px;">
               <option value="">-- Seleccionar --</option>
             </select>
           </div>
         </div>
-        <button type="button" class="btn-exito">Realizar Inscripción</button>
+        <button type="button" id="btn-realizar-inscripcion" class="btn-exito">Realizar Inscripción</button>
       </form>
     </div>
-    <div class="contenedor-tabla">
+
+    <div style="display: flex; justify-content: space-between; margin-bottom: 15px; align-items: center;">
+      <div class="grupo-campo">
+        <input type="text" id="buscar-inscripcion" placeholder="Buscar por alumno o curso..." style="min-width: 300px;">
+      </div>
+      <div>
+        <span id="label-total-inscriptos"
+          style="font-weight: bold; color: var(--color-azul-oscuro); background: var(--luz-background); padding: 5px 15px; border-radius: var(--radio);">Total
+          Histórico: 0</span>
+      </div>
+    </div>
+
+    <div id="contenedor-tabla-inscripciones" class="contenedor-tabla">
       <table>
         <thead>
           <tr>
-            <th>ID</th>
             <th>Estudiante</th>
             <th>Curso</th>
             <th>Fecha</th>
@@ -45,6 +58,10 @@
         <tbody id="tabla-inscripciones-body"></tbody>
       </table>
     </div>
+
+    <div id="paginacion-inscripciones"
+      style="margin-top: 15px; text-align: right; display: flex; gap: 5px; justify-content: flex-end;"></div>
+
   </section>
   <script type="module" src="js/pages/inscripciones.js"></script>
 </body>
