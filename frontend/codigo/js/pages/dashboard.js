@@ -1,5 +1,10 @@
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'http://localhost:3000/api/v1';
 const ESTADO_EXCLUIDO = 'borrador';
+
+const headersJWT = {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${sessionStorage.getItem('token')}`
+};
 
 const labelCorto = (estado = '') => {
     const e = estado.toLowerCase();
@@ -118,9 +123,10 @@ const renderCursosActivos = (cursos) => {
 
 const cargarDashboard = async () => {
     try {
+        // 3. Corregido: Se le pasan los headers con el token a ambos fetch
         const [resEstudiantes, resCursos] = await Promise.all([
-            fetch(`${BASE_URL}/estudiantes`),
-            fetch(`${BASE_URL}/cursos`)
+            fetch(`${BASE_URL}/estudiantes`, { headers: headersJWT }),
+            fetch(`${BASE_URL}/cursos`, { headers: headersJWT })
         ]);
 
         if (resEstudiantes.ok) {
@@ -137,8 +143,8 @@ const cargarDashboard = async () => {
             renderCursosActivos(cursosFiltrados);
             renderGrafico(cursosFiltrados);
         }
-    } catch (e) {
-        console.error('Error al cargar el dashboard:', e);
+    } catch (error) {
+        console.error("Error al cargar el dashboard:", error);
     }
 };
 
