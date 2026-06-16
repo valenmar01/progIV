@@ -2,8 +2,6 @@ import jwt from 'jsonwebtoken';
 import passport from 'passport';
 
 export const login = (req, res, next) => {
-
-  console.log("0. Body recibido en el Controlador:", req.body);////////////////////////////////////////////
   
   // llama a passport usando la estrategia 'local'
   // { session: false } para API REST sin estado
@@ -26,7 +24,7 @@ export const login = (req, res, next) => {
   };
 
   const token = jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: '2m'
+    expiresIn: '1h'
   });
 
   return res.status(200).json({
