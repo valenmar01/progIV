@@ -234,6 +234,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const tablaContainer = document.getElementById("contenedor-tabla-inscripciones");
     if (tablaContainer) tablaContainer.addEventListener("click", manejarAccionesTabla);
 
+    const paginacionContainer = document.getElementById("paginacion-inscripciones");
+    if (paginacionContainer) paginacionContainer.addEventListener("click", manejarAccionesTabla);
+
     const inputBuscador = document.getElementById("buscar-inscripcion");
     if (inputBuscador) inputBuscador.addEventListener("input", e => filtrarTabla(e.target.value));
 });
