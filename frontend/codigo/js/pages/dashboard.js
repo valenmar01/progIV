@@ -126,14 +126,21 @@ const renderCursosActivos = (cursos) => {
 const cargarDashboard = async () => {
     try {
         // 3. Corregido: Se le pasan los headers con el token a ambos fetch
-        const [resEstudiantes, resCursos] = await Promise.all([
+        const [resEstudiantes, resCursos, resInscripciones] = await Promise.all([
             fetchAuth(`${BASE_URL}/estudiantes`, { headers: headersJWT }),
-            fetchAuth(`${BASE_URL}/cursos`, { headers: headersJWT })
+            fetchAuth(`${BASE_URL}/cursos`, { headers: headersJWT }),
+            fetchAuth(`${BASE_URL}/inscripciones`, { headers: headersJWT })
         ]);
 
         if (resEstudiantes.ok) {
             const { total } = await resEstudiantes.json();
             const el = document.getElementById('count-estudiantes');
+            if (el) el.textContent = total ?? '—';
+        }
+
+        if (resInscripciones.ok) {
+            const { total } = await resInscripciones.json();
+            const el = document.getElementById('count-inscripciones');
             if (el) el.textContent = total ?? '—';
         }
 

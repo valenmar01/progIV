@@ -7,7 +7,7 @@ export const obtenerInscripcionesService = async (limite, offset) => {
     const { totalPaginas, datos } = parsearPaginado(rows, limite, inscripcionOutputDTO);
     const totalInscriptos = rows.length > 0 ? rows[0].total : 0; 
     
-    return { totalPaginas, inscripciones: datos, totalInscriptos };
+    return { totalPaginas, inscripciones: datos, total: totalInscriptos };
 };
 
 export const crearInscripcionService = async (id_estudiante, id_curso) => {
