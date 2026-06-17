@@ -10,7 +10,7 @@ export const obtenerInscripcionesService = async (limite, offset) => {
     return { totalPaginas, inscripciones: datos, total: totalInscriptos };
 };
 
-export const crearInscripcionService = async (id_estudiante, id_curso) => {
+export const crearInscripcionService = async (id_estudiante, id_curso, userId) => {
     const cursoRes = await inscripcionRepo.getCursoMaximoQuery(id_curso);
     if (cursoRes.rowCount === 0) {
         throw { status: 404, message: "El curso seleccionado no existe o no tiene inscripciones abiertas" };
@@ -23,7 +23,7 @@ export const crearInscripcionService = async (id_estudiante, id_curso) => {
     if (inscritosActuales >= cupoMaximo) {
         throw { status: 400, message: "No se puede inscribir, el curso ya alcanzó su cupo máximo" };
     }
-    const { rows } = await inscripcionRepo.insertInscripcionQuery(id_estudiante, id_curso);
+    const { rows } = await inscripcionRepo.insertInscripcionQuery(id_estudiante, id_curso, userId);
     return rows[0];
 };
 
@@ -40,9 +40,9 @@ export const generarDiplomaService = async (idInscripcion) => {
     };
 };
 
-export const cambiarEstadoService = async (id, activo) => {
+export const cambiarEstadoService = async (id, activo, userId) => {
     const idEstadoDB = activo == 1 ? 1 : 2;
-    const { rowCount } = await inscripcionRepo.updateEstadoInscripcionQuery(idEstadoDB, id);
+    const { rowCount } = await inscripcionRepo.updateEstadoInscripcionQuery(idEstadoDB, id, userId);
     
     if (rowCount === 0) {
         throw { status: 404, message: "Inscripción no encontrada" };

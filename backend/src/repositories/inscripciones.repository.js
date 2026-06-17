@@ -15,17 +15,17 @@ export const countInscriptosActivosQuery = async (id_curso) => {
     return await pool.query('SELECT COUNT(*) FROM inscripciones WHERE id_curso = $1 AND id_inscripcion_estado = 1', [id_curso]);
 };
 
-export const insertInscripcionQuery = async (id_estudiante, id_curso) => {
+export const insertInscripcionQuery = async (id_estudiante, id_curso, userId) => {
     return await pool.query(
-        'INSERT INTO inscripciones (id_estudiante, id_curso, fecha_hora_inscripcion, id_inscripcion_estado, id_usuario_modificacion, fecha_hora_modificacion) VALUES ($1, $2, NOW(), 1, 1, NOW()) RETURNING *',
-        [id_estudiante, id_curso]
+        'INSERT INTO inscripciones (id_estudiante, id_curso, fecha_hora_inscripcion, id_inscripcion_estado, id_usuario_modificacion, fecha_hora_modificacion) VALUES ($1, $2, NOW(), 1, $3, NOW()) RETURNING *',
+        [id_estudiante, id_curso, userId]
     );
 };
 
-export const updateEstadoInscripcionQuery = async (idEstadoDB, id) => {
+export const updateEstadoInscripcionQuery = async (idEstadoDB, id, userId) => {
     return await pool.query(
-        'UPDATE inscripciones SET id_inscripcion_estado = $1, id_usuario_modificacion = 1, fecha_hora_modificacion = NOW() WHERE id_inscripcion = $2',
-        [idEstadoDB, id]
+        'UPDATE inscripciones SET id_inscripcion_estado = $1, id_usuario_modificacion = $3, fecha_hora_modificacion = NOW() WHERE id_inscripcion = $2',
+        [idEstadoDB, id, userId]
     );
 };
 
