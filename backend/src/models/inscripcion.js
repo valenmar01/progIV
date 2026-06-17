@@ -5,5 +5,6 @@ export const inscripcionOutputDTO = (row) => ({
   id_curso: row.id_curso,
   curso: row.curso_nombre,
   fecha_inscripcion: row.fecha_hora_inscripcion,
-  activo: row.id_inscripcion_estado,                      
+  activo: row.id_inscripcion_estado,
+  id_curso_estado: row.id_curso_estado,
 });

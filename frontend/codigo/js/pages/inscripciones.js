@@ -5,17 +5,33 @@ const headersJWT = {
     "Authorization": `Bearer ${sessionStorage.getItem('token')}`
 };
 
+const generarCertificado = async (idInscripcion, boton) => {
+    boton.disabled = true;
+    boton.textContent = 'Generando...';
+    try {
+        const res = await fetch(`${API_URL}/inscripciones/${idInscripcion}/diploma`, { headers: headersJWT });
+        if (!res.ok) throw new Error(`Error HTTP ${res.status}`);
+        const blob = await res.blob();
+        window.open(URL.createObjectURL(blob), '_blank');
+    } catch (error) {
+        alert(`No se pudo generar el diploma: ${error.message}`);
+    } finally {
+        boton.disabled = false;
+        boton.textContent = 'Generar Certificado';
+    }
+};
+
 let paginaActual = 1;
 let totalPaginas = 1;
 let inscripcionesPagina = [];
 
-const renderEstadoBadge = (activo) => activo == 1
+const renderEstadoBadge = (activo) => activo != 1
     ? '<span class="badge badge-success">Confirmada</span>'
     : '<span class="badge badge-warning">Cancelada</span>';
 
 const cargarSelectores = async () => {
     try {
-        const resEst = await fetch(`${API_URL}/estudiantes?limite=1000`, { headers: headersJWT }); 
+        const resEst = await fetch(`${API_URL}/estudiantes?limite=1000`, { headers: headersJWT });
         const dataEst = await resEst.json();
         const selectEstudiante = document.getElementById("form-ins-estudiante");
 
@@ -23,7 +39,7 @@ const cargarSelectores = async () => {
             dataEst.estudiantes.filter(e => e.activo === 1).forEach(e => {
                 const option = document.createElement("option");
                 option.value = e.id;
-                option.textContent = `${e.apellido}, ${e.nombres} (DNI: ${e.documento})`; 
+                option.textContent = `${e.apellido}, ${e.nombres} (DNI: ${e.documento})`;
                 selectEstudiante.appendChild(option);
             });
         }
@@ -36,7 +52,7 @@ const cargarSelectores = async () => {
             dataCur.cursos.filter(c => c.id_curso_estado === 2).forEach(c => {
                 const option = document.createElement("option");
                 option.value = c.id;
-                option.textContent = `${c.nombre} (Max: ${c.inscriptos_max} cupos)`; 
+                option.textContent = `${c.nombre} (Max: ${c.inscriptos_max} cupos)`;
                 selectCurso.appendChild(option);
             });
         }
@@ -49,24 +65,24 @@ const renderTabla = (data) => {
     inscripcionesPagina = data.inscripciones;
     paginaActual = Number(data.pagina) || 1;
     totalPaginas = Number(data.totalPaginas);
-    
+
     const totalInscriptos = data.totalInscriptos || 0;
     const labelTotal = document.getElementById("label-total-inscriptos");
-    if(labelTotal) labelTotal.textContent = `Total Histórico: ${totalInscriptos}`;
+    if (labelTotal) labelTotal.textContent = `Total Histórico: ${totalInscriptos}`;
 
     const tbody = document.getElementById("tabla-inscripciones-body");
     if (!tbody) return;
-    
-    tbody.innerHTML = inscripcionesPagina.length > 0 
+
+    tbody.innerHTML = inscripcionesPagina.length > 0
         ? inscripcionesPagina.map(ins => crearFila(ins)).join("")
-        : `<tr><td colspan="5" class="text-center">No se encontraron inscripciones.</td></tr>`;
+        : `<tr><td colspan="6" class="text-center">No se encontraron inscripciones.</td></tr>`;
 
     renderPaginacion();
 };
 
 const crearFila = (ins) => {
-    const textoBoton = ins.activo == 1 ? "Cancelar Insc." : "Confirmar Insc.";
-    const claseBoton = ins.activo == 1 ? "btn-peligro" : "btn-exito"; // Usamos tus botones
+    const textoBoton = ins.activo != 1 ? "Cancelar Insc." : "Confirmar Insc.";
+    const claseBoton = ins.activo != 1 ? "btn-peligro" : "btn-exito"; // Usamos tus botones
 
     return `
         <tr data-id="${ins.id}">
@@ -77,6 +93,15 @@ const crearFila = (ins) => {
             <td>
                 <button class="btn ${claseBoton}" style="padding: 5px 10px; font-size: 0.85rem;" data-accion="cambiar-estado" data-id="${ins.id}" data-activo="${ins.activo}">
                     ${textoBoton}
+                </button>
+            </td>
+            <td>
+                <button
+                    class="btn ${ins.id_curso_estado === 3 ? 'btn-exito' : ''}"
+                    style="padding: 5px 10px; font-size: 0.85rem; ${ins.id_curso_estado !== 3 ? 'background-color:#6c757d; border-color:#6c757d; color:#fff; opacity:0.65; cursor:not-allowed;' : ''}"
+                    data-accion="certificado" data-id="${ins.id}"
+                    ${ins.id_curso_estado !== 3 ? 'disabled' : ''}>
+                    Generar Certificado
                 </button>
             </td>
         </tr>
@@ -130,13 +155,13 @@ const filtrarTabla = (termino) => {
 
     tbody.innerHTML = filtrados.length
         ? filtrados.map(ins => crearFila(ins)).join("")
-        : '<tr><td colspan="5" class="text-center py-4 text-muted">No se encontraron resultados</td></tr>';
+        : '<tr><td colspan="6" class="text-center py-4 text-muted">No se encontraron resultados</td></tr>';
 };
 
 const realizarInscripcion = async () => {
     const id_estudiante = document.getElementById("form-ins-estudiante").value;
     const id_curso = document.getElementById("form-ins-curso").value;
-    
+
     if (!id_estudiante || !id_curso) {
         alert("Por favor, seleccione un estudiante y un curso válido.");
         return;
@@ -153,7 +178,7 @@ const realizarInscripcion = async () => {
 
         alert(`Éxito: ${json.message}`);
         cargarTablaInscripciones(paginaActual); // Recarga la página actual
-    } catch (error) { 
+    } catch (error) {
         alert(`Error: ${error.message}`);
     }
 };
@@ -163,6 +188,12 @@ const manejarAccionesTabla = async (e) => {
     if (botonPagina) {
         const n = Number(botonPagina.dataset.page);
         if (n > 0 && n <= totalPaginas) await cargarTablaInscripciones(n);
+        return;
+    }
+
+    const botonCertificado = e.target.closest('button[data-accion="certificado"]');
+    if (botonCertificado) {
+        await generarCertificado(botonCertificado.dataset.id, botonCertificado);
         return;
     }
 
@@ -184,14 +215,14 @@ const manejarAccionesTabla = async (e) => {
             if (!res.ok) throw new Error(json.message);
 
             alert(json.message);
-            cargarTablaInscripciones(paginaActual); 
+            cargarTablaInscripciones(paginaActual);
         } catch (error) {
             alert(`Error: ${error.message}`);
         }
     }
 };
 
-document.addEventListener("DOMContentLoaded", () => { 
+document.addEventListener("DOMContentLoaded", () => {
     cargarSelectores();
     cargarTablaInscripciones(1);
 

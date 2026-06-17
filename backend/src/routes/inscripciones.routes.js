@@ -1,7 +1,7 @@
-import {Router} from 'express';
-import {check} from 'express-validator';
-import {validarCampos} from '../middlewares/validar-campos.js';
-import { getAllInscripciones, createInscripcion, activarDesactivarInscripcionByID } from '../controllers/inscripciones.controller.js';
+import { Router } from 'express';
+import { check } from 'express-validator';
+import { validarCampos } from '../middlewares/validar-campos.js';
+import { getAllInscripciones, createInscripcion, activarDesactivarInscripcionByID, getDiplomaInscripcion } from '../controllers/inscripciones.controller.js';
 import passport from 'passport';
 
 const router = Router();
@@ -15,7 +15,7 @@ router.post('/inscripciones', [
     check('id_curso', 'Debe seleccionar un curso valido').not().isEmpty(),
     validarCampos
 ], createInscripcion);
-
 router.delete('/inscripciones/:id', activarDesactivarInscripcionByID);
+router.get('/inscripciones/:id/diploma', getDiplomaInscripcion);
 
 export default router;

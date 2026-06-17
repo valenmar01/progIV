@@ -2,9 +2,6 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { authService } from '../services/auth.service.js';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 // ESTRATEGIA LOCAL: como se validan los ususarios
 passport.use(

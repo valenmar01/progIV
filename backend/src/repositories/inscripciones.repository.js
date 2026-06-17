@@ -2,7 +2,7 @@ import { pool } from '../db.js';
 
 export const getInscripcionesQuery = async (limite, offset) => {
     return await pool.query(
-        'SELECT i.id_inscripcion, i.id_estudiante, i.id_curso, i.fecha_hora_inscripcion, i.id_inscripcion_estado as activo, e.nombres, e.apellido, c.nombre as curso_nombre, COUNT(*) OVER() AS total FROM inscripciones i JOIN estudiantes e ON i.id_estudiante = e.id_estudiante JOIN cursos c ON i.id_curso = c.id_curso LIMIT $1 OFFSET $2',
+        'SELECT i.id_inscripcion, i.id_estudiante, i.id_curso, i.fecha_hora_inscripcion, i.id_inscripcion_estado as activo, e.nombres, e.apellido, c.nombre as curso_nombre, c.id_curso_estado, COUNT(*) OVER() AS total FROM inscripciones i JOIN estudiantes e ON i.id_estudiante = e.id_estudiante JOIN cursos c ON i.id_curso = c.id_curso LIMIT $1 OFFSET $2',
         [limite, offset]
     );
 };
@@ -28,3 +28,15 @@ export const updateEstadoInscripcionQuery = async (idEstadoDB, id) => {
         [idEstadoDB, id]
     );
 };
+
+export const getDiplomaDataQuery = async (idInscripcion) => {
+    return await pool.query(
+        `SELECT e.apellido, e.nombres, e.documento, c.nombre AS curso_nombre, c.cantidad_horas
+         FROM inscripciones i
+         JOIN estudiantes e ON i.id_estudiante = e.id_estudiante
+         JOIN cursos c ON i.id_curso = c.id_curso
+         WHERE i.id_inscripcion = $1`,
+        [idInscripcion]
+    );
+};
+

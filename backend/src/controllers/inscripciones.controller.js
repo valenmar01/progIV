@@ -1,5 +1,16 @@
 import * as inscripcionService from '../services/inscripciones.service.js';
 import { getPaginacion } from '../helpers/paginar.js';
+import { generarDiplomaIndividual } from '../helpers/generarDiploma.js';
+
+export const getDiplomaInscripcion = async (req, res) => {
+    try {
+        const datos = await inscripcionService.generarDiplomaService(req.params.id);
+        generarDiplomaIndividual(res, datos);
+    } catch (error) {
+        const status = error.status || 500;
+        res.status(status).json({ message: error.message || 'Error al generar el diploma' });
+    }
+};
 
 export const getAllInscripciones = async (req, res) => {
     try {

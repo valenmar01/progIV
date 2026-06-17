@@ -27,6 +27,19 @@ export const crearInscripcionService = async (id_estudiante, id_curso) => {
     return rows[0];
 };
 
+export const generarDiplomaService = async (idInscripcion) => {
+    const { rows } = await inscripcionRepo.getDiplomaDataQuery(idInscripcion);
+    if (!rows[0]) throw { status: 404, message: 'Inscripción no encontrada' };
+    const r = rows[0];
+    return {
+        nombres: r.nombres,
+        apellido: r.apellido,
+        documento: r.documento,
+        nombreCurso: r.curso_nombre,
+        cantidadHoras: r.cantidad_horas,
+    };
+};
+
 export const cambiarEstadoService = async (id, activo) => {
     const idEstadoDB = activo == 1 ? 1 : 2;
     const { rowCount } = await inscripcionRepo.updateEstadoInscripcionQuery(idEstadoDB, id);
