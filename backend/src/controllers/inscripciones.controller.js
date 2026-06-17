@@ -26,7 +26,7 @@ export const getAllInscripciones = async (req, res) => {
 export const createInscripcion = async (req, res) => {
     try {
         const { id_estudiante, id_curso } = req.body;
-        const nuevaInscripcion = await inscripcionService.crearInscripcionService(id_estudiante, id_curso);
+        const nuevaInscripcion = await inscripcionService.crearInscripcionService(id_estudiante, id_curso, req.user.id);
         
         res.status(201).json({ message: "Inscripción creada exitosamente", inscripcion: nuevaInscripcion });
     } catch (error) {
@@ -40,7 +40,7 @@ export const activarDesactivarInscripcionByID = async (req, res) => {
         const { id } = req.params;
         const { activo } = req.body;
         
-        const mensaje = await inscripcionService.cambiarEstadoService(id, activo);
+        const mensaje = await inscripcionService.cambiarEstadoService(id, activo, req.user.id);
         res.status(200).json({ message: mensaje });
     } catch (error) {
         const status = error.status || 500;
