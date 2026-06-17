@@ -9,12 +9,15 @@ let paginaActual = 1;
 let totalPaginas = 1;
 let estudiantesPagina = [];
 
-// esta función se encarga de renderizar el estado de activo o inactivo de un estudiante, mostrando un badge verde para los activos y un badge oscuro para los inactivos
+// renderiza el estado de activo o inactivo de un estudiante
+// mostrando un badge verde para los activos y un badge oscuro para los inactivos
 const renderActivo = (activo) => activo == 1
     ? '<span class="badge text-bg-success">Activo</span>'
     : '<span class="badge text-bg-dark">Inactivo</span>';
 
-// esta función se encarga de renderizar los botones de acción para cada estudiante, dependiendo de si el estudiante está activo o inactivo, mostrando un botón de editar y desactivar para los activos, y un botón de activar para los inactivos
+// renderiza los botones de acción para cada estudiante, 
+// dependiendo de si el estudiante está activo o inactivo, 
+// mostrando un botón de editar y desactivar para los activos, y un botón de activar para los inactivos
 const renderAcciones = ({ id, documento, activo }) => {
     if (activo != 1) return `
         <button class="btn btn-sm btn-outline-success" data-accion="activar-desactivar" data-id="${id}" data-documento="${documento}" data-activo="0">Activar</button>`;
@@ -23,7 +26,8 @@ const renderAcciones = ({ id, documento, activo }) => {
         <button class="btn btn-sm btn-outline-danger" data-accion="activar-desactivar" data-id="${id}" data-documento="${documento}" data-activo="1">Desactivar</button>`;
 };
 
-// esta función se encarga de crear una fila de la tabla de estudiantes a partir de los datos de un estudiante, incluyendo el estado de activo/inactivo y los botones de acción correspondientes
+// crea una fila de la tabla de estudiantes a partir de los datos de un estudiante, 
+// incluyendo el estado de activo/inactivo y los botones de acción correspondientes
 const crearFila = (estudiante, n) => `
     <tr data-documento="${estudiante.documento}">
         <td>${estudiante.documento}</td>
@@ -69,7 +73,10 @@ const renderTabla = (data) => {
         </table>${paginacion}`;
 };
 
-// esta función se encarga de cargar la lista de estudiantes desde el backend, mostrando un mensaje de carga mientras se obtiene la información, y luego renderizando la tabla con los datos recibidos. Si ocurre un error durante la carga, muestra un mensaje de error en lugar de la tabla.
+// carga la lista de estudiantes desde el backend,
+// muestra un mensaje de carga mientras se obtiene la información, 
+// y luego renderizando la tabla con los datos recibidos. 
+// Si ocurre un error, muestra un mensaje de error en lugar de la tabla.
 const cargarPagina = async (pagina) => {
     const contenedor = document.getElementById("tabla-estudiantes");
     contenedor.innerHTML = '<p class="text-muted">Cargando estudiantes...</p>';
@@ -85,7 +92,9 @@ const cargarPagina = async (pagina) => {
     }
 };
 
-// esta función se encarga de mostrar un mensaje tipo toast en la esquina inferior derecha de la pantalla, con el mensaje y el tipo (success, warning, danger) que se le pase como argumento, y se oculta automáticamente después de unos segundos
+// muestra un mensaje tipo toast en la esquina inferior derecha de la pantalla, 
+// con el mensaje y el tipo (success, warning, danger) que se le pase como argumento, 
+// y se oculta automáticamente después de unos segundos
 const mostrarToast = (mensaje, tipo = "success") => {
     const contenedor = document.getElementById("toast-container");
     if (!contenedor || !window.bootstrap) return;
@@ -105,7 +114,12 @@ const mostrarToast = (mensaje, tipo = "success") => {
     toast.show();
 };
 
-// esta función se encarga de abrir el modal para agregar o editar un estudiante, dependiendo del modo en que se llame (crear o editar), y si es edición, también recibe los datos del estudiante a editar para llenar el formulario con esa información. Además, se asegura de configurar correctamente el título del modal y el texto del botón de submit según el modo, y de bloquear el campo de documento en caso de edición para evitar que se modifique un identificador único.
+// esta función se encarga de abrir el modal para agregar o editar un estudiante,
+// dependiendo del modo en que se llame (crear o editar),
+// y si es edición, también recibe los datos del estudiante a editar para llenar 
+// el formulario con esa información. Además, se asegura de configurar correctamente 
+// el título del modal y el texto del botón de submit según el modo, y de bloquear
+//  el campo de documento en caso de edición para evitar que se modifique un identificador único.
 const abrirModal = (modo = "crear", estudiante = null) => {
     const modalEl = document.getElementById("modal-agregar-estudiante");
     const form = document.getElementById("form-agregar-estudiante");
@@ -118,7 +132,11 @@ const abrirModal = (modo = "crear", estudiante = null) => {
         modo === "editar" ? "Guardar cambios" : "Crear";
         
 
-    // si el modo es edición y se proporcionó un estudiante, llena el formulario con los datos del estudiante, de lo contrario, resetea el formulario para crear un nuevo estudiante. Además, si es edición, se bloquea el campo de documento para evitar que se modifique, ya que es un identificador único.
+    // si el modo es edición y se proporcionó un estudiante, 
+    // llena el formulario con los datos del estudiante, de lo contrario, 
+    // resetea el formulario para crear un nuevo estudiante. 
+    // Además, si es edición, se bloquea el campo de documento para evitar que se modifique, 
+    // ya que es un identificador único.
     if (modo === "editar" && estudiante) {
         form.dataset.id = estudiante.id;
         form.elements.namedItem("nombres").value = estudiante.nombres ?? "";
@@ -135,14 +153,19 @@ const abrirModal = (modo = "crear", estudiante = null) => {
     window.bootstrap.Modal.getOrCreateInstance(modalEl).show();
 };
 
-// este manejador se encarga de detectar el submit del formulario para agregar o editar un estudiante, y enviar la solicitud correspondiente al backend, ya sea para crear un nuevo estudiante o actualizar uno existente, dependiendo del modo en que se haya abierto el modal
+// este manejador se encarga de detectar el submit del formulario para agregar 
+// o editar un estudiante, y enviar la solicitud correspondiente al backend, 
+// ya sea para crear un nuevo estudiante o actualizar uno existente, 
+// dependiendo del modo en que se haya abierto el modal
+
 const manejarSubmit = async (evento) => {
     evento.preventDefault();
     const form = evento.currentTarget;
     const esEdicion = form.dataset.modo === "editar";
     const data = new FormData(form);
 
-    // crea el payload con los datos del formulario, asegurándose de convertir el campo "activo" a número y de manejar los valores nulos o indefinidos
+    // crea el payload con los datos del formulario, 
+    // asegurándose de convertir el campo "activo" a número y de manejar los valores nulos o indefinidos
     const payload = {
         documento: data.get("documento")?.trim(),
         apellido: data.get("apellido")?.trim(),
@@ -185,7 +208,8 @@ const manejarSubmit = async (evento) => {
     }
 };
 
-// este manejador se encarga de detectar los clicks en los botones de paginación, edición, activación y desactivación, y ejecutar la acción correspondiente según el botón clickeado
+// este manejador se encarga de detectar los clicks en los botones de paginación, 
+// edición, activación y desactivación, y ejecutar la acción correspondiente según el botón clickeado
 const manejarClick = async (evento) => {
     console.log("Clic detectado en:", evento.target); 
     
@@ -211,7 +235,8 @@ const manejarClick = async (evento) => {
         return;
     }
 
-    // si la acción es activar/desactivar, envía la solicitud al backend para actualizar el estado del estudiante, y luego actualiza la fila correspondiente en la tabla sin recargar toda la página
+    // si la acción es activar/desactivar, envía la solicitud al backend para actualizar 
+    // el estado del estudiante, y luego actualiza la fila correspondiente en la tabla sin recargar toda la página
     if (accion === "activar-desactivar") {
         const nuevoActivo = activo === "1" ? 0 : 1;
         try {

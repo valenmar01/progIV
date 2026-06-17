@@ -37,8 +37,6 @@ formulario.addEventListener('submit', async (e) => {
 
         const data = await res.json();
         console.log(res);
-        console.log(usuarioIngresado);
-        console.log(contraseniaIngresada);
 
     // Limpia mensajes previos
         ocultarError();

@@ -5,7 +5,6 @@ export const usuarioRepository = {
 
     //busca ususario y verifica la contraseña usando SHA-256
     async findByCredentials(nombreUsuario, contraseniaPlana) {
-        console.log("1. Backend recibió:", nombreUsuario, contraseniaPlana); ///////////////////////////////////////////////
         const { rows } = await pool.query(
             `SELECT 
                 id_usuario, 
@@ -22,9 +21,7 @@ export const usuarioRepository = {
             [nombreUsuario, contraseniaPlana]
         );
 
-        console.log("2. Base de datos devolvió:", rows); /////////////////////////////////////////////////
-
-        // Si encuentra coincidencia, devuelve el usuario (la contraseña no viaja al controlador)
+        // Si encuentra coincidencia, devuelve el usuario
         // Si no encuentra nada, devuelve null
         return rows[0] ?? null;
 },

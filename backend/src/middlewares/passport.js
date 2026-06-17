@@ -13,7 +13,7 @@ passport.use(
     },
     async (usuario, contrasenia, done) => {
         try {
-        // Armamos un objeto que simula el 'body' de la petición para que
+        // objeto que simula el 'body' de la petición para que
         // el servicio y el DTO lo puedan procesar correctamente.
         const user = await authService.login({ usuario, contrasenia });
 
