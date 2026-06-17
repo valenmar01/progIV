@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import './middlewares/passport.js';
 import passport from 'passport';
