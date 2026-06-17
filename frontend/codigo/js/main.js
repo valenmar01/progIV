@@ -7,11 +7,22 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!tokenGuardado && !window.location.href.includes('login.html')) {
     window.location.href = 'login.html';
     return;
-  } 
+  }
+
   const pantallaApp = document.getElementById('pantalla-app');
   if (pantallaApp) {
       pantallaApp.style.display = 'block';
   }
+
+  const datosUsuario = sessionStorage.getItem('usuarioLogueado');
+  if (datosUsuario) {
+      const usuario = JSON.parse(datosUsuario);
+      const contenedorNombre = document.getElementById('nombre-usuario');
+      if (contenedorNombre) {
+          contenedorNombre.textContent = `${usuario.nombre}`;
+      }
+  }
+
 
   //cerrar sesión
   const btnCerrarSesion = document.getElementById('btn-cerrar-sesion');
