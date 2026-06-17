@@ -223,6 +223,9 @@ const manejarClick = async (evento) => {
             const json = await res.json();
             if (!res.ok) throw new Error(json.message ?? `Error HTTP ${res.status}`);
 
+            const idx = estudiantesPagina.findIndex(e => `${e.id}` === `${id}`);
+            if (idx !== -1) estudiantesPagina[idx] = { ...estudiantesPagina[idx], activo: nuevoActivo };
+
             const fila = document.querySelector(`tr[data-documento="${documento}"]`);
             if (fila) {
                 fila.querySelector('[data-col="activo"]').innerHTML = renderActivo(nuevoActivo);
