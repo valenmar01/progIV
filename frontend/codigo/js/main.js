@@ -36,6 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // sirve para mostrar el menu lateral en dispositivos moviles
-document.getElementById('btn-menu').addEventListener('click', () => {
-  document.getElementById('menu-lateral').classList.toggle('mostrar');
-});
+const btnMenu = document.getElementById('btn-menu');
+if (btnMenu) {
+  btnMenu.addEventListener('click', () => {
+    document.getElementById('menu-lateral').classList.toggle('mostrar');
+  });
+}

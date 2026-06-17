@@ -15,7 +15,7 @@ router.post('/inscripciones', [
     check('id_curso', 'Debe seleccionar un curso valido').not().isEmpty(),
     validarCampos
 ], createInscripcion);
-router.delete('/inscripciones/:id', activarDesactivarInscripcionByID);
+router.patch('/inscripciones/:id', activarDesactivarInscripcionByID);
 router.get('/inscripciones/:id/diploma', getDiplomaInscripcion);
 
 export default router;

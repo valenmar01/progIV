@@ -93,13 +93,13 @@ const crearFila = (ins) => {
             <td>${new Date(ins.fecha_inscripcion).toLocaleDateString()}</td>
             <td>${renderEstadoBadge(ins.activo)}</td>
             <td>
-                <button class="btn ${claseBoton}" style="padding: 5px 10px; font-size: 0.85rem;" data-accion="cambiar-estado" data-id="${ins.id}" data-activo="${ins.activo}">
+                <button class="${claseBoton}" style="padding: 5px 10px; font-size: 0.85rem;" data-accion="cambiar-estado" data-id="${ins.id}" data-activo="${ins.activo}">
                     ${textoBoton}
                 </button>
             </td>
             <td>
                 <button
-                    class="btn ${ins.id_curso_estado === 3 ? 'btn-exito' : ''}"
+                    class="${ins.id_curso_estado === 3 ? 'btn-exito' : ''}"
                     style="padding: 5px 10px; font-size: 0.85rem; ${ins.id_curso_estado !== 3 ? 'background-color:#6c757d; border-color:#6c757d; color:#fff; opacity:0.65; cursor:not-allowed;' : ''}"
                     data-accion="certificado" data-id="${ins.id}"
                     ${ins.id_curso_estado !== 3 ? 'disabled' : ''}>
@@ -209,7 +209,7 @@ const manejarAccionesTabla = async (e) => {
 
         try {
             const res = await fetchAuth(`${API_URL}/inscripciones/${id}`, {
-                method: "DELETE",
+                method: "PATCH",
                 headers: headersJWT,
                 body: JSON.stringify({ activo: nuevoActivo })
             });
