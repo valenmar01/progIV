@@ -86,3 +86,43 @@ table td {
     background: var(--color-crema); 
     color: var(--color-marron); 
 }
+
+.pagination {
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+  gap: 5px;
+  margin: 0;
+}
+
+.justify-content-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.page-item .page-link {
+  display: block;
+  padding: 8px 14px;
+  color: var(--color-azul-oscuro);
+  background-color: var(--color-blanco);
+  border: 2px solid var(--color-gris);
+  border-radius: var(--radio);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: var(--transicion);
+  cursor: pointer;
+}
+
+/* Estado del botón de la página actual */
+.page-item.active .page-link {
+  background-color: var(--color-azul);
+  color: var(--color-blanco);
+  border-color: var(--color-azul);
+}
+
+/* Efecto hover para botones no activos */
+.page-item .page-link:hover:not(.active) {
+  border-color: var(--color-azul-oscuro);
+  background-color: var(--luz-background);
+}

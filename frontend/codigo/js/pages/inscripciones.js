@@ -27,7 +27,7 @@ let paginaActual = 1;
 let totalPaginas = 1;
 let inscripcionesPagina = [];
 
-const renderEstadoBadge = (activo) => activo != 1
+const renderEstadoBadge = (activo) => activo == 1
     ? '<span class="badge badge-success">Confirmada</span>'
     : '<span class="badge badge-warning">Cancelada</span>';
 
@@ -83,8 +83,8 @@ const renderTabla = (data) => {
 };
 
 const crearFila = (ins) => {
-    const textoBoton = ins.activo != 1 ? "Cancelar Insc." : "Confirmar Insc.";
-    const claseBoton = ins.activo != 1 ? "btn-peligro" : "btn-exito"; // Usamos tus botones
+    const textoBoton = ins.activo == 1 ? "Cancelar Insc." : "Confirmar Insc.";
+    const claseBoton = ins.activo == 1 ? "btn-peligro" : "btn-exito"; 
 
     return `
         <tr data-id="${ins.id}">
@@ -111,7 +111,7 @@ const crearFila = (ins) => {
 };
 
 const renderPaginacion = () => {
-    const contenedor = document.getElementById("paginacion-inscripciones"); // Creá un div con este id en tu HTML abajo de la tabla
+    const contenedor = document.getElementById("paginacion-inscripciones"); 
     if (!contenedor) return;
 
     if (totalPaginas <= 1) {
@@ -203,7 +203,7 @@ const manejarAccionesTabla = async (e) => {
     if (botonEstado) {
         const id = botonEstado.getAttribute("data-id");
         const activoActual = botonEstado.getAttribute("data-activo");
-        const nuevoActivo = activoActual == 1 ? 0 : 1;
+        const nuevoActivo = activoActual == 1 ? 2 : 1;
 
         if (!confirm('¿Está seguro de cambiar el estado de esta inscripción?')) return;
 
@@ -217,7 +217,7 @@ const manejarAccionesTabla = async (e) => {
             if (!res.ok) throw new Error(json.message);
 
             alert(json.message);
-            cargarTablaInscripciones(paginaActual);
+            await cargarTablaInscripciones(paginaActual); 
         } catch (error) {
             alert(`Error: ${error.message}`);
         }
