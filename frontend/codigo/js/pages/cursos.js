@@ -1,6 +1,7 @@
 // js/pages/cursos.js
+import { fetchAuth } from '../fetchAuth.js';
 
-const BASE_URL = 'http://localhost:3000/api/v1'; 
+const BASE_URL = 'http://localhost:3000/api/v1';
 const authHeader = {
       'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
       'Content-Type': 'application/json'
@@ -89,7 +90,7 @@ const cargarPagina = async (pagina) => {
     if (!contenedor) return;
     contenedor.innerHTML = '<p class="text-muted">Cargando cursos...</p>';
     try {
-        const res = await fetch(`${BASE_URL}/cursos?pagina=${pagina}`, {
+        const res = await fetchAuth(`${BASE_URL}/cursos?pagina=${pagina}`, {
             headers: authHeader
         });
         if (!res.ok) throw new Error(`Error HTTP ${res.status}`);
@@ -171,7 +172,7 @@ const manejarSubmit = async (evento) => {
     try {
         const url = esEdicion ? `${BASE_URL}/cursos/${form.dataset.id}` : `${BASE_URL}/cursos`;
         
-        const res = await fetch(url, {
+        const res = await fetchAuth(url, {
             method: esEdicion ? "PUT" : "POST",
             headers: authHeader,
             body: JSON.stringify(payload)
@@ -223,7 +224,7 @@ const manejarCambioEstado = async (evento) => {
 
     try {
         // Ejecutamos el DELETE respetando la consigna y mandando el nuevo estado
-        const res = await fetch(`${BASE_URL}/cursos/${id}`, {
+        const res = await fetchAuth(`${BASE_URL}/cursos/${id}`, {
             method: "DELETE",
             headers: authHeader,
             body: JSON.stringify({ id_curso_estado: Number(nuevoEstado) })

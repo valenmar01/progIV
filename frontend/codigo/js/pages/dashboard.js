@@ -1,3 +1,5 @@
+import { fetchAuth } from '../fetchAuth.js';
+
 const BASE_URL = 'http://localhost:3000/api/v1';
 const ESTADO_EXCLUIDO = 'borrador';
 
@@ -125,8 +127,8 @@ const cargarDashboard = async () => {
     try {
         // 3. Corregido: Se le pasan los headers con el token a ambos fetch
         const [resEstudiantes, resCursos] = await Promise.all([
-            fetch(`${BASE_URL}/estudiantes`, { headers: headersJWT }),
-            fetch(`${BASE_URL}/cursos`, { headers: headersJWT })
+            fetchAuth(`${BASE_URL}/estudiantes`, { headers: headersJWT }),
+            fetchAuth(`${BASE_URL}/cursos`, { headers: headersJWT })
         ]);
 
         if (resEstudiantes.ok) {

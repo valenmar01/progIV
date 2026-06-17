@@ -1,3 +1,5 @@
+import { fetchAuth } from '../fetchAuth.js';
+
 const BASE_URL = 'http://localhost:3000/api/v1';
 
 const authHeader = { 'Authorization': `Bearer ${sessionStorage.getItem('token')}`, 'Content-Type': 'application/json' };
@@ -72,7 +74,7 @@ const cargarPagina = async (pagina) => {
     const contenedor = document.getElementById("tabla-estudiantes");
     contenedor.innerHTML = '<p class="text-muted">Cargando estudiantes...</p>';
     try {
-        const res = await fetch(`${BASE_URL}/estudiantes?pagina=${pagina}`, {
+        const res = await fetchAuth(`${BASE_URL}/estudiantes?pagina=${pagina}`, {
             headers: authHeader
         });
         if (!res.ok) throw new Error(`Error HTTP ${res.status}`);
@@ -164,7 +166,7 @@ const manejarSubmit = async (evento) => {
             ? { apellido: payload.apellido, nombres: payload.nombres, email: payload.email, fecha_nacimiento: payload.fecha_nacimiento, activo: payload.activo }
             : payload;
 
-        const res = await fetch(url, {
+        const res = await fetchAuth(url, {
             method: esEdicion ? "PUT" : "POST",
             headers: authHeader,
             body: JSON.stringify(body)
@@ -213,7 +215,7 @@ const manejarClick = async (evento) => {
     if (accion === "activar-desactivar") {
         const nuevoActivo = activo === "1" ? 0 : 1;
         try {
-            const res = await fetch(`${BASE_URL}/estudiantes/${id}`, {
+            const res = await fetchAuth(`${BASE_URL}/estudiantes/${id}`, {
                 method: "DELETE",
                 headers: authHeader,
                 body: JSON.stringify({ activo: nuevoActivo })

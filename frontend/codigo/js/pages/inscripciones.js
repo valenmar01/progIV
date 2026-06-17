@@ -1,3 +1,5 @@
+import { fetchAuth } from '../fetchAuth.js';
+
 const API_URL = 'http://localhost:3000/api/v1';
 
 const headersJWT = {
@@ -9,7 +11,7 @@ const generarCertificado = async (idInscripcion, boton) => {
     boton.disabled = true;
     boton.textContent = 'Generando...';
     try {
-        const res = await fetch(`${API_URL}/inscripciones/${idInscripcion}/diploma`, { headers: headersJWT });
+        const res = await fetchAuth(`${API_URL}/inscripciones/${idInscripcion}/diploma`, { headers: headersJWT });
         if (!res.ok) throw new Error(`Error HTTP ${res.status}`);
         const blob = await res.blob();
         window.open(URL.createObjectURL(blob), '_blank');
@@ -31,7 +33,7 @@ const renderEstadoBadge = (activo) => activo != 1
 
 const cargarSelectores = async () => {
     try {
-        const resEst = await fetch(`${API_URL}/estudiantes?limite=1000`, { headers: headersJWT });
+        const resEst = await fetchAuth(`${API_URL}/estudiantes?limite=1000`, { headers: headersJWT });
         const dataEst = await resEst.json();
         const selectEstudiante = document.getElementById("form-ins-estudiante");
 
@@ -44,7 +46,7 @@ const cargarSelectores = async () => {
             });
         }
 
-        const resCur = await fetch(`${API_URL}/cursos?limite=1000`, { headers: headersJWT });
+        const resCur = await fetchAuth(`${API_URL}/cursos?limite=1000`, { headers: headersJWT });
         const dataCur = await resCur.json();
         const selectCurso = document.getElementById("form-ins-curso");
 
@@ -134,7 +136,7 @@ const renderPaginacion = () => {
 
 const cargarTablaInscripciones = async (pagina = 1) => {
     try {
-        const res = await fetch(`${API_URL}/inscripciones?pagina=${pagina}`, { headers: headersJWT });
+        const res = await fetchAuth(`${API_URL}/inscripciones?pagina=${pagina}`, { headers: headersJWT });
         const data = await res.json();
         renderTabla(data);
     } catch (error) {
@@ -168,7 +170,7 @@ const realizarInscripcion = async () => {
     }
 
     try {
-        const res = await fetch(`${API_URL}/inscripciones`, {
+        const res = await fetchAuth(`${API_URL}/inscripciones`, {
             method: "POST",
             headers: headersJWT,
             body: JSON.stringify({ id_estudiante, id_curso })
@@ -206,7 +208,7 @@ const manejarAccionesTabla = async (e) => {
         if (!confirm('¿Está seguro de cambiar el estado de esta inscripción?')) return;
 
         try {
-            const res = await fetch(`${API_URL}/inscripciones/${id}`, {
+            const res = await fetchAuth(`${API_URL}/inscripciones/${id}`, {
                 method: "DELETE",
                 headers: headersJWT,
                 body: JSON.stringify({ activo: nuevoActivo })
